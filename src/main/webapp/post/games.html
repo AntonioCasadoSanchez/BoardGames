@@ -1,0 +1,30 @@
+<div>
+	<select id="selectGames"></select>
+	<button onclick="joinGame()">Join game</button>
+</div>
+
+<script src="ws.js"></script>
+<script>
+function loadGames() {
+	$.get("/games", function(respuesta, estado) {
+		if (estado=="success") {
+			for (var i=0; i<respuesta.length; i++) {
+				var option=document.createElement("option");
+				option.setAttribute("value", respuesta[i]);
+				option.innerHTML=respuesta[i];
+				$("#selectGames").append(option);
+			}
+		}
+	});
+}
+
+function joinGame() {
+	var gameName=$("#selectGames").val();
+	$.post("joinGame", gameName, function(respuesta, estado) {
+		if (estado=="success") {
+			$("#divMovement").load("movement.html");
+			conectar();
+		}
+	});
+}
+</script>

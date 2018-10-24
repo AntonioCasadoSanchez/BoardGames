@@ -1,0 +1,78 @@
+@import url(http: //fonts.googleapis.com/css?family=Open+Sans);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: block;
+}
+
+body {
+    margin: 0;
+    font-family: 'Open Sans'sans-serif;
+    background: grey;
+}
+
+.header {
+    width: 100%;
+    height: 40px;
+    background: rgb(34, 38, 41);
+    color: fff;
+    font-family: 'Raleway', sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.header-content {
+    width: 32%;
+    margin: auto;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.content {
+    width: 66%;
+    padding: 0px;
+    position: relative;
+    margin: auto;
+    margin-top: 40px;
+    overflow: hidden;
+    border: 1px solid white;
+    background: rgb(50, 55, 60);
+    color: white;
+}
+
+.content-text {
+    margin: 0px 2px;
+}
+
+.content-text h3, p {
+    margin-bottom: 5px;
+}
+
+.content-text h3 {
+    margin-top: 10px;
+}
+
+.content-form {
+    margin: 15px 10px;
+}
+
+.inside-form {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+
+}
+
+input {
+    width: 75%;
+}
+
+button {
+    width: 50px;
+    margin: auto;
+}

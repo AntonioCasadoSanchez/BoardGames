@@ -1,0 +1,23 @@
+<div>
+	<input type="text" id="lUserName" placeholder="user name" value="pepe"><br>
+	<input type="password" id="lPwd" placeholder="password" value="pepe123"><br>
+	<button onclick="login()">Login</button>
+</div>
+
+<script>
+function login() {
+	var p = {
+		userName : lUserName.value,
+		pwd : lPwd.value
+	};
+	$.post("/login", p, function(respuesta, estado) {
+		alert("hola" + p.userName);
+		alert("hola" + respuesta.userName);
+		alert("adios" + sessionStorage.userName);
+		if (estado=="success") {
+			loadGames();
+			sessionStorage.userName=respuesta.userName;
+		}
+	});
+}
+</script>

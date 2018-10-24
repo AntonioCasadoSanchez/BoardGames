@@ -1,0 +1,163 @@
+<html>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="Game.js"></script>
+<style>
+	.square {
+		border: 1px outset black;
+		height:25px;
+		width:25px;
+		cursor:pointer;
+	}
+</style>
+<body>
+
+<h2>Ejemplos Spring</h2>
+<h3>index con AngularJS en el cliente, POST en el servidor y comunicación con JSON</h3>
+
+<table border="1" data-ng-app="GameApp" data-ng-controller="GameController">
+	<tr>
+		<th>Register</th>
+		<th>Login</th>
+		<th>Games</th>
+		<th>Movement</th>
+	</tr>
+	<tr>
+		<td id="divRegister">
+			<div>
+				<input type="email" id="email" placeholder="email"><br>
+				<input type="text" id="userName" placeholder="user name"><br>
+				<input type="password" id="pwd1" placeholder="password"><br>
+				<input type="password" id="pwd2" placeholder="repeat your password"><br>
+				<button>Register</button>
+			</div>		
+		</td>
+		<td id="divLogin">
+			<div>
+				<input type="text" data-ng-model="userName" placeholder="user name" value="pepe"><br>
+				<input type="password" data-ng-model="pwd" placeholder="password" value="pepe123"><br>
+				<button data-ng-click="login()">Login</button>
+			</div>
+		</td>
+		<td id="divGames">
+			<div>
+				<select data-ng-model="game.name" data-ng-options="game for game in games"></select>
+				<button data-ng-click="joinGame()">Join game</button>
+			</div>
+		</td>
+		<td id="divMovement">
+			<span data-ng-bind="estado"></span><br>
+			<label data-ng-model="userName"></label><br>
+			<button data-ng-click="move([0,0])" class="square" id="00"></button>
+			<button data-ng-click="move([0,1])" class="square" id="01"></button>
+			<button data-ng-click="move([0,2])" class="square" id="02"></button><br>
+			<button data-ng-click="move([1,0])" class="square" id="10"></button>
+			<button data-ng-click="move([1,1])" class="square" id="11"></button>
+			<button data-ng-click="move([1,2])" class="square" id="12"></button><br>
+			<button data-ng-click="move([2,0])" class="square" id="20"></button>
+			<button data-ng-click="move([2,1])" class="square" id="21"></button>
+			<button data-ng-click="move([2,2])" class="square" id="22"></button><br>
+			<label data-ng-bind="opponentName"></label>
+		</td>
+	</tr>
+</table>
+	<a href="index.html">Ir a ejemplos sin JSON y por GET</a>
+	
+<script>
+var app=angular.module("GameApp", []);
+app.controller("GameController", function($scope, $http) {
+	$scope.userName="";
+	$scope.pwd="";
+	$scope.estado="Desconectado";
+	$scope.opponentName="Waiting for an opponent...";
+	$scope.game=new Game();
+	$scope.login = function() {
+		var recurso="/login";
+		var data= "userName=" + $scope.userName + "&pwd=" + $scope.pwd;
+		var config = {
+			headers : {
+				'Content-Type' : 'application/x-www-form-urlencoded'
+			}		
+		};
+		$http.post(recurso, data, config).then(
+			function(response) {
+				$scope.loadGames();
+				sessionStorage.userName=response.userName;
+			},
+			function(response) {
+				alert("Error");
+			}
+		);
+	};
+	$scope.loadGames = function() {
+		$http.get("/games").then(
+			function(respuesta) {
+				$scope.games=respuesta.data;
+				$scope.conectar();
+			}
+		);
+	};
+	$scope.joinGame = function() {
+		var recurso="/joinGame";
+		var data= $scope.game.name;
+		var config = {
+			headers : {
+				'Content-Type' : 'application/x-www-form-urlencoded'
+			}		
+		};
+		$http.post(recurso, data, config).then(
+			function(response) {
+				console.log(response);
+				response=response.data;
+				if(response.currentPlayer!=-1){
+					var players= response.players;
+					$scope.opponentName="";
+					for(var i=0;i<players.length;i++){
+						if(players[i].userName!=$scope.userName)
+							$scope.opponentName=$scope.opponentName + players[i].userName + " ";
+					}
+				}
+			},
+			function(response) {
+				alert("Error");
+			}
+		);
+	};
+	$scope.conectar = function() {
+		$scope.ws=new WebSocket("ws://localhost:8080/gamews");
+		$scope.ws.onopen = function() {
+			$scope.$apply($scope.estado="Conectado");
+		}
+		$scope.ws.onmessage = function(mensaje) {
+			var data= mensaje.data;
+			data=JSON.parse(data);
+			if(data.TYPE=='MATCH'){
+				if(data.currentPlayer!=-1){
+					$scope.$apply($scope.estado="Partida comenzada");
+				}
+					
+			}
+			
+			console.log(mensaje.data);
+		}
+		
+		$scope.ws.onerror = function(mensaje) {
+			$scope.$apply($scope.estado="Error: " + mensaje.data);
+			console.log("Error: " + mensaje.data);
+		}
+		
+		$scope.ws.onclose = function(mensaje) {
+			$scope.$apply($scope.estado="Closed");
+		}
+	};
+	$scope.move = function(coordinates) {
+		var p = {
+			type : "MOVEMENT",
+			coordinates : coordinates
+		};
+		$scope.ws.send(JSON.stringify(p));
+	}
+});
+</script>
+</body>
+</html>

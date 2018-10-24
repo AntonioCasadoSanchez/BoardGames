@@ -1,0 +1,30 @@
+<style>
+	.square {
+		border: 1px outset black;
+		height:25px;
+		width:25px;
+		cursor:pointer;
+	}
+</style>
+
+<div>
+	<span id="spanEstado"></span><br>
+	<label id="myName"></label><br>
+	<button onclick="move([0,0])" class="square" id="00"></button><button onclick="move([0,1])" class="square" id="01"></button><button onclick="move([0,2])" class="square" id="02"></button><br>
+	<button onclick="move([1,0])" class="square" id="10"></button><button onclick="move([1,1])" class="square" id="11"></button><button onclick="move([1,2])" class="square" id="12"></button><br>
+	<button onclick="move([2,0])" class="square" id="20"></button><button onclick="move([2,1])" class="square" id="21"></button><button onclick="move([2,2])" class="square" id="22"></button><br>
+	<label id="opponentName">Waiting for an opponent...</label>
+</div>
+
+<script>
+myName.innerHTML=sessionStorage.userName;
+
+function move(coordinates) {
+	var p = {
+		type : "MOVEMENT",
+		coordinates : coordinates
+	};
+	ws.send(JSON.stringify(p));
+}
+
+</script>

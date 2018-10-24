@@ -1,0 +1,32 @@
+<html>
+<meta charset="UTF-8">
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<h2>Ejemplos Spring</h2>
+<h3>index con jQuery en el cliente, POST en el servidor y comunicación con JSON</h3>
+
+<table border="1">
+	<tr>
+		<th>Register</th>
+		<th>Login</th>
+		<th>Games</th>
+		<th>Movement</th>
+	</tr>
+	<tr>
+		<td id="divRegister"></td>
+		<td id="divLogin"></td>
+		<td id="divGames"></td>
+		<td id="divMovement"></td>
+	</tr>
+</table>
+	<a href="index.html">Ir a ejemplos sin JSON y por GET</a>
+<script>
+
+$(document).ready(function() {
+	$("#divRegister").load("register.html");
+	$("#divLogin").load("login.html");
+	$("#divGames").load("games.html");
+});
+</script>
+</body>
+</html>
