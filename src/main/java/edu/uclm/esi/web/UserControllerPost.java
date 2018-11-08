@@ -49,7 +49,7 @@ public class UserControllerPost {
   @RequestMapping(value="/login", method=RequestMethod.POST, consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
   public Player loginPost(HttpSession session, String userName, String pwd) throws Exception {
     Player player=Player.identify(userName, pwd);
-    session.setAttribute("player", player);
+    session.setAttribute("player", player);//Si estas haciendo un session.setatribute player, porque luego haces un return player?
     return player;
   }
   
