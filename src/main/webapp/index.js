@@ -14,8 +14,6 @@ app.controller("GameController", function($scope, $http) {
 					  ws=new WebSocket("ws://localhost:8080/gamews");
 					  ws.onopen=function(){
 						  add("Conectado");
-						  //window.location.href = "http://webpub.esi.uclm.es/spa";
-						  window.location.href = "salaEspera.html";
 					  }
 					  ws.onerror=function(){
 						  add("Error al conectar WS");
@@ -25,6 +23,8 @@ app.controller("GameController", function($scope, $http) {
 						  data = JSON.parse(data);
 						  if(data.TYPE=="MATCH"){
 							  add(JSON.stringify(data));
+							//window.location.href = "http://webpub.esi.uclm.es/spa";
+							  window.location.href = "salaEspera.html";
 						  } else
 							  add("Mensaje desconocido");
 					  }
