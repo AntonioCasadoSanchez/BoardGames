@@ -1,53 +1,52 @@
 <html>
 <head>
-	<title>Pepe Games</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-	<script src="registryPrueba.js"></script>
-	<link rel="stylesheet" href="estilos/registry.css">
-	<link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+  <title>Pepe Games</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="registryPrueba.js"></script>
+  <link rel="stylesheet" href="estilos/registry.css">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
 
 </head>
 <body data-ng-app="GameApp" data-ng-controller="GameController">
 <div class="principal">
-		<div class="header">
-			<div class=header-content>
-				<p>Alias</p>
-			</div>
-			<div class=header-content>
-				<p>Recuadro</p>
-			</div>
-			<div class=header-content>
-				<p>Recuadro2</p>
-			</div>
-		</div>
-		<div class="content">
-			<div class="content-text">
-				<h3>PEPE GAMES</h3>
-				<p><strong>Registro</strong></p>
-			</div>
-			<div class="content-form">
-				<form>
-					Correo electrónico<br>
-					<input type="text" id="email" data-ng-model="email" placeholder="email" value="User@user.com">
-					<br>Nombre<br>
-					<input type="text" id="userName" data-ng-model="userName" placeholder="user name" value="User">
-					<br>Contraseña<br>
-					<input type="password" id="pwd" data-ng-model="pwd" placeholder="password" value="User123">
-					<br>Repita la contraseña<br>
-					<input type="password" id="pwd2" data-ng-model="pwd2" placeholder="password2" value="User123"><br>
-					<div class="inside-form">
-						<p>¿Ya tienes una cuenta? <a href="index.html">Logueate</a></p>
-						<button data-ng-click="register()">Guardar</button>
-						<label data-ng-bind="estado"></label>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+    <div class="header">
+      <div class=header-content>
+        <p>Alias</p>
+      </div>
+      <div class=header-content>
+        <p>Recuadro</p>
+      </div>
+      <div class=header-content>
+        <p>Recuadro2</p>
+      </div>
+    </div>
+    <div class="content">
+      <div class="content-text">
+        <h3>PEPE GAMES</h3>
+        <p><strong>Registro</strong></p>
+      </div>
+      <div class="content-form">
+        <form>
+          Correo electrónico<br>
+          <input type="text" id="email" data-ng-model="email" placeholder="email" value="User@user.com">
+          <br>Nombre<br>
+          <input type="text" id="userName" data-ng-model="userName" placeholder="user name" value="User">
+          <br>Contraseña<br>
+          <input type="password" id="pwd" data-ng-model="pwd" placeholder="password" value="User123">
+          <br>Repita la contraseña<br>
+          <input type="password" id="pwd2" data-ng-model="pwd2" placeholder="password2" value="User123"><br>
+          <div class="inside-form">
+            <p>¿Ya tienes una cuenta? <a href="index.html">Logueate</a></p>
+            <button data-ng-click="register()">Guardar</button>
+            <label data-ng-bind="estado"></label>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
-

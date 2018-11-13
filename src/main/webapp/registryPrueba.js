@@ -8,7 +8,9 @@ app.controller("GameController", function($scope, $http) {
 	$scope.estado = "Sin enviar";
 	$scope.register = function() {
 		var request = new XMLHttpRequest();
-		request.open("GET", "http://localhost:8080/register?email=" + $scope.email + "&userName=" + $scope.userName + "&pwd1=" + $scope.pwd + "&pwd2=" + $scope.pwd2);
+		request.open("GET", "http://localhost:8080/register?email="
+				+ $scope.email + "&userName=" + $scope.userName + "&pwd1="
+				+ $scope.pwd + "&pwd2=" + $scope.pwd2);
 		// request.setRequestHeader('Content-type',
 		// 'application/x-www-form-urlencoded');
 		$scope.estado = "Conectando";

@@ -4,6 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="index.js"></script>
 <link rel="stylesheet" href="estilos/main.css">
 <link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
@@ -13,43 +14,43 @@
 </head>
 
 <body data-ng-app="GameApp" data-ng-controller="GameController">
-	<div class="principal">
-		<div class="header">
-			<div class=header-content>
-				<p id="Alias">Alias</p>
-			</div>
-			<div class=header-content>
-				<p id="Correo">Correo</p>
-			</div>
-			<div class=header-content>
-				<p id="Puntos">Puntos??</p>
-			</div>
-		</div>
-		<div class="content">
-			<div class="content-text">
-				<h3>PEPE GAMES</h3>
-				<p>
-					<strong>Iniciar Sesión</strong>
-				</p>
-			</div>
-			<div class="content-form">
-				<form>
-					<input type="text" id="UserName" data-ng-model="userName"
-						placeholder="user name" value="User"><br> <input
-						type="password" id="Pwd" data-ng-model="pwd"
-						placeholder="password" value="User123"><br>
-					<div class="inside-form">
-						<p>
-							¿No tienes cuenta? <a href="registryPrueba.html">Registrate</a>
-						</p>
-						<button data-ng-click="login()">Entrar</button>
-						<label data-ng-bind="estado"></label>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	
+  <div class="principal">
+    <div class="header">
+      <div class=header-content>
+        <p id="Alias">Alias</p>
+      </div>
+      <div class=header-content>
+        <p id="Correo">Correo</p>
+      </div>
+      <div class=header-content>
+        <p id="Puntos">Puntos??</p>
+      </div>
+    </div>
+    <div class="content" id="contenido">
+      <div class="content-text">
+        <h3>PEPE GAMES</h3>
+        <p>
+          <strong>Iniciar Sesión</strong>
+        </p>
+      </div>
+      <div class="content-form">
+        <form>
+          <input type="text" id="UserName" data-ng-model="userName"
+            placeholder="user name" value="User"><br> <input
+            type="password" id="Pwd" data-ng-model="pwd"
+            placeholder="password" value="User123"><br>
+          <div class="inside-form">
+            <p>
+              ¿No tienes cuenta? <a href="registryPrueba.html">Registrate</a>
+            </p>
+            <button data-ng-click="login()">Entrar</button>
+            <label data-ng-bind="estado"></label>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
 </body>
 
 </html>
