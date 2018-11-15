@@ -17,7 +17,8 @@ app.controller("GameController", function($scope, $http) {
 					ws = new WebSocket("ws://localhost:8080/gamews");
 					ws.onopen = function() {
 
-						$("#contenido").load("salaEspera.html");
+						//$("#contenido").load("salaEspera2.html");
+						window.location.assign("salaEspera2.html");
 					}
 					ws.onerror = function() {
 						add("Error al conectar WS");
@@ -55,4 +56,12 @@ app.controller("GameController", function($scope, $http) {
 		$scope.estado = $scope.estado + texto;
 		$scope.estado = $scope.estado + "hola!";
 	}
+	$scope.loadGames = function() {
+		$http.get("/games").then(
+			function(respuesta) {
+				$scope.games=respuesta.data;
+			}
+		);
+		sessionStorage.userName=response.userName;
+	};
 });

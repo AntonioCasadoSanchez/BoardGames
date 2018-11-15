@@ -1,26 +1,32 @@
-<div class="principal">
-    <div class="header">
-      <div class=header-content>
-        <p>Alias</p>
-      </div>
-      <div class=header-content>
-        <p>Recuadro</p>
-      </div>
-      <div class=header-content>
-        <p>Recuadro2</p>
-      </div>
-    </div>
-    <div class="content">
-      <div class="content-text">
-        <h3>PEPE GAMES</h3>
-        <p><strong>Iniciar Sesión</strong></p>
-      </div>
-      <div class="content-form">
-        <h1>Esto es la sala de espera!! :D</h1>
-        <h2>Juegos</h2>
-        <a href="ppt.html">Piedra, Papel, Tijera</a>
-        <a href="ddp.html">Destape de Palabras</a>
-      </div>
 
-    </div>
-  </div>
+	<div class="principal">
+	    <div class="header">
+	      <div class=header-content>
+	        <p>Alias</p>
+	      </div>
+	      <div class=header-content>
+	        <p>Recuadro</p>
+	      </div>
+	      <div class=header-content>
+	        <p>Recuadro2</p>
+	      </div>
+	    </div>
+	    <div class="content">
+	      <div class="content-text">
+	        <h3>PEPE GAMES</h3>
+	        <p><strong>Iniciar Sesión</strong></p>
+	      </div>
+	      <div class="content-form"  border="1" data-ng-app="GameApp" data-ng-controller="GameController">
+	        <h1>Esto es la sala de espera!! :D</h1>
+	        <h2>Juegos</h2>
+	        <div>
+	        	<button onClick="loadGames()">Juegos Disponibles</button>
+	         </div>
+	    	<div>
+				<select data-ng-model="game.name" data-ng-options="game for game in games"></select>
+				<button>Join game</button>
+			</div>
+	      </div>
+	
+	    </div>
+	  </div>
