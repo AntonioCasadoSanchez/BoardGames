@@ -1,5 +1,5 @@
 function inicio() {
-	alert(sessionStorage.userName);
+	alert(sessionStorage.userName);//mostrar el contenido de este mensaje en los divs de arriba.
 	alert(sessionStorage.email);
 	ws = new WebSocket("ws://localhost:8080/gamews");
 	ws.onopen = function() {
