@@ -42,7 +42,6 @@ public class Player {
 		BsonDocument criterion=new BsonDocument();
 		criterion.append("userName", new BsonString(userName)).put("pwd", new BsonString(pwd));
 		Player player=(Player) MongoBroker.get().loadOne(Player.class, criterion);
-		Player player2= new Player();
 		return player;
 	}
 
