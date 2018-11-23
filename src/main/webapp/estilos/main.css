@@ -70,7 +70,9 @@ body {
 
 
 }
-
+.estado{
+	color:red;
+}
 input {
     width: 75%;
 }
