@@ -6,7 +6,7 @@ function inicio() {
 		alert("hehehe!");
 	}
 	ws.onerror = function() {
-		add("Error al conectar WS");
+		alert("Error al conectar WS");
 	}
 	ws.onmessage = function(message) {
 		alert("recibo cosas!");
@@ -20,5 +20,7 @@ function inicio() {
 			// window.location.href = "salaEspera.html";
 		//} else
 			//add("Mensaje desconocido");
+		
 	}
 };
+
