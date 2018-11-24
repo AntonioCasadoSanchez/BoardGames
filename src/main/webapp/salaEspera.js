@@ -24,3 +24,7 @@ function inicio() {
 	}
 };
 
+function elegirJuego(){
+	alert("hola");
+}
+

@@ -41,8 +41,8 @@
 		        	<button data-ng-click="loadGames()">Juegos Disponibles</button>
 		         </div>
 		    	<div>
-					<select id="combo1" data-ng-model="game.name" data-ng-options="game for game in games"></select>
-					<button id="btn2" onclick="elegirJuego()" disabled="disabled">Join game</button>
+					<select name= "combo1" id="combo1" data-ng-model="game.name" data-ng-options="game for game in games"></select>
+					<button id="btn2" disabled="disabled">Join game</button>
 				</div>
 			</div>
 		</div>
@@ -52,13 +52,15 @@
 
 <script>
 <!--ESTO ES JQUERY, PARA ACTIVAR EL BOTÓN UNA VEZ QUE ELEGIMOS JUEGO DEL COMBOBOX-->
-function activarPrimerBoton() {
+function activarSegundoBoton() {
 	  if (!$("#btn2").hasClass("Activo")) {
 	   $("#btn2").addClass("Activo").prop('disabled', false);
 	  }
 	}
 
 	$("#combo1").change(function () {
-	  activarPrimerBoton();
+		var mitexto = $("#combo1 option:selected").text();
+		alert(mitexto);
+	  activarSegundoBoton();
 	});
-	</script>
+</script>
