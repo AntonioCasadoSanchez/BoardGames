@@ -24,7 +24,20 @@ function inicio() {
 	}
 };
 
+function loadPage(url) {
+	window.location.assign(url);
+};
+
 function elegirJuego(){
-	alert("hola");
-}
+	var select = document.getElementById("combo1");
+	//alert(select.value);
+	
+	if (select.value == "string:tictactoe") {
+		alert("tictactoe");
+	}else if (select.value == "string:Piedra, papel, tijera") {
+		loadPage("ppt.html");
+	}else {
+		alert("Error");
+	}
+};
 

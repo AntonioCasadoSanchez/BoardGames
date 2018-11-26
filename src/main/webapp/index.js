@@ -16,7 +16,7 @@ app.controller("GameController", function($scope, $http) {
 				function(response){
 					sessionStorage.userName=response.data.userName;
 					sessionStorage.email=response.data.email;
-					loadPage("salaEspera2.html");
+					loadPage("salaEspera.html");
 				},
 				function(response) {
 					$scope.estado = "Usuario/Contraseña incorrectos";
