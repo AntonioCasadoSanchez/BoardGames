@@ -29,7 +29,7 @@ function loadPage(url) {
 	window.location.assign(url);
 };
 function controlSeguridad() {
-	alert("eSTAMOS EN CONTROLSEGUIRDAD");
+	alert("eSTAMOS EN CONTROLSEGUsIRDAD");
 	if(sessionStorage.userName == null){
 		alert("Te he pillao intruso");
 		loadPage("error.html");
