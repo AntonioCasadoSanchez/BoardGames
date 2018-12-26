@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.json.JSONObject;
+
 import edu.uclm.esi.web.ws.WSServer;
 
 public abstract class Game {
@@ -42,4 +44,5 @@ public abstract class Game {
 	}
 
 	protected abstract Match createMatch();
+
 }

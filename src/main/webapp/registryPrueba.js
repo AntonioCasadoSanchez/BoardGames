@@ -37,6 +37,7 @@ app.controller("GameController", function($scope, $http) {
 		// request.send(datos);// cuando y que envia esto
 		request.send();
 	};
+	
 	function add(texto) {
 		$scope.estado = $scope.estado + texto;
 	}

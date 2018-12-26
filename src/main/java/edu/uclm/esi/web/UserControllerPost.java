@@ -59,7 +59,7 @@ public class UserControllerPost {
     if (player==null)
       throw new Exception("You need to be logged");
     Match match=Manager.get().joinGame(player, gameName.substring(0, gameName.length()-1));
-    WSServer.send(match.getPlayers(), match);
+  WSServer.send(match.getPlayers(), match);
     return match;
   }
 }

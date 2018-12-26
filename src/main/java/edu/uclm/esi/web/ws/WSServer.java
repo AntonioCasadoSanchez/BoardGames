@@ -3,9 +3,14 @@ package edu.uclm.esi.web.ws;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.swing.JOptionPane;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.http.codec.json.Jackson2CodecSupport;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
@@ -25,6 +30,7 @@ public class WSServer extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {//SE EJECUTA CUANDO SE ESTABLECE EL HANDSHAKE
+		//JOptionPane.showMessageDialog(null, "hola");
 		sessionsById.put(session.getId(), session);
 		Player player = (Player) session.getAttributes().get("player");
 		String userName=player.getUserName();
@@ -33,9 +39,9 @@ public class WSServer extends TextWebSocketHandler {
 		}
 		sessionsByPlayer.put(userName, session);
 	}
-	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		//JOptionPane.showMessageDialog(null, "hola");
 		System.out.println(message.getPayload());
 		JSONObject jso=new JSONObject(message.getPayload());
 		if(jso.getString("TYPE").equals("MOVEMENT")) {
@@ -62,8 +68,10 @@ public class WSServer extends TextWebSocketHandler {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		// TODO Auto-generated method stub
-		
-		
+		// TODO Auto-generated method stub	
+	}
+	@OnOpen
+	public void onOpen() {
+		JOptionPane.showMessageDialog(null, "Conectado");
 	}
 }
