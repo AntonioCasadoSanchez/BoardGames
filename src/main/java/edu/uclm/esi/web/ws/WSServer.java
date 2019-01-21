@@ -9,6 +9,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.springframework.stereotype.Component;
@@ -74,4 +75,19 @@ public class WSServer extends TextWebSocketHandler {
 	public void onOpen() {
 		JOptionPane.showMessageDialog(null, "Conectado");
 	}
+	/*@OnMessage
+	public void recibir(Session session, String msg)  {
+		JSONObject jso=new JSONObject(msg);
+		if(jso.getString("tipo").equals("mensajeChat")) {
+			int idPartida=jso.getInt("idPartida");
+			String jugador=jso.getString("nombreJugador");
+			String mensajeChat=jso.getString("mensajeUsuario");
+			try {
+				JSONObject mensaje=Manager.get().mensajeChat( idPartida,jugador, mensajeChat);
+				
+			} catch (Exception e) {
+			}
+		}
+		
+	}*/
 }
