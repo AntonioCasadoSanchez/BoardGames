@@ -1,59 +1,60 @@
 <html>
-<head>
-<title>Pepe Gamess</title>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="index.js"></script>
-<link rel="stylesheet" href="estilos/main.css">
-<link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
 
+<head>
+  <title>Pepe Gamess</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="index.js"></script>
+  <script src="https://apis.google.com/js/platform.js"async defer></script>
+  <meta name="google-signin-client_id" content="752546417008-ui0q4vihl5n4c33mlfsr42tsj08n9iu3.apps.googleusercontent.com" />
+  <link rel="stylesheet" href="estilos/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="fonts.css" type="text/css" charset="utf-8" />
 </head>
 
 <body data-ng-app="GameApp" data-ng-controller="GameController">
-  <div class="principal">
-    <div class="header">
-      <div class=header-content>
-        <p id="Alias">Alias</p>
-      </div>
-      <div class=header-content>
-        <p id="Correo">Correo</p>
-      </div>
-      <div class=header-content>
-        <p id="Puntos">Puntos??</p>
-      </div>
+
+  <div class="content" id="contenido">
+    <div class="content-text">
+      <p class="comicate">PEPE GAMES</p>
     </div>
-    <div class="content" id="contenido">
-      <div class="content-text">
-        <h3>PEPE GAMES</h3>
-        <p>
-          <strong>Iniciar Sesión</strong>
-        </p>
+    <div class="content-form">
+      <div class="ini-ses">
+        <p><strong>Iniciar Sesión</strong></p>
       </div>
-      <div class="content-form">
+      <div class="formu-ini">
+
         <form>
-          <input type="text" id="UserName" data-ng-model="userName"
-            placeholder="user name" value="User"><br> <input
-            type="password" id="Pwd" data-ng-model="pwd"
-            placeholder="password" value="User123"><br>
+          <div class="input-form">
+            <input type="text" id="UserName" data-ng-model="userName" placeholder="user name" value="User">
+          </div>
+          <div class="input-form">
+            <input type="password" id="Pwd" data-ng-model="pwd" placeholder="password" value="User123">
+          </div>
+
           <div class="inside-form">
-            <p>
-              ¿No tienes cuenta? <a href="registryPrueba.html">Registrate</a>
-            </p>
+            <div class="inside-content">
+              <p>
+                ¿No tienes cuenta? </p><p><a href="registryPrueba.html">Registrate</a>
+              </p>
+            </div>
+            <div class="inside-content inside-imgbutt">
+            <div class="g-sigin2" data-onsuccess="onSignIn"></div>
             <button data-ng-click="login2()">Entrar</button>
-            
+            </div>
           </div>
           <div class="estado">
-          	<label data-ng-bind="estado"></label>
+            <label data-ng-bind="estado"></label>
           </div>
         </form>
       </div>
     </div>
   </div>
-  
+
 </body>
 
 </html>

@@ -1,10 +1,10 @@
 function inicio() {
 	controlSeguridad();
-	alert(sessionStorage.userName);//mostrar el contenido de este mensaje en los divs de arriba.
-	alert(sessionStorage.email);
+	//alert(sessionStorage.userName);//mostrar el contenido de este mensaje en los divs de arriba.
+	//alert(sessionStorage.email);
 	ws = new WebSocket("ws://localhost:8080/gamews");
 	ws.onopen = function() {
-		alert("hehehe!");
+		mostrarInfoUsuario();
 	}
 	ws.onerror = function() {
 		alert("Error al conectar WS");
@@ -25,11 +25,15 @@ function inicio() {
 	}
 };
 
+function mostrarInfoUsuario(){
+	document.getElementById("usuario").innerHTML = sessionStorage.userName;
+	document.getElementById("mail").innerHTML = sessionStorage.email;
+	document.getElementById("puntos").innerHTML = "10 pts";
+}
 function loadPage(url) {
 	window.location.assign(url);
 };
 function controlSeguridad() {
-	alert("eSTAMOS EN CONTROLSEGUsIRDAD");
 	if(sessionStorage.userName == null){
 		alert("Te he pillao intruso");
 		loadPage("error.html");
