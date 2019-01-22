@@ -80,4 +80,6 @@ function enviarChat() {
 			ws.send( JSON.stringify(p));
 		}*/
 };
-
+function datos() {
+	
+}

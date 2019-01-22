@@ -21,13 +21,13 @@
   <div class="principal">
     <div class="header">
       <div class=header-content>
-        <p id="usuario">Alias</p>
+        <p id="avatar">Avatar</p>
       </div>
       <div class=header-content>
-        <p id="mail">E-Mail</p>
+       <p id= "nombreUsuario"></p>
       </div>
       <div class=header-content>
-        <p id="puntos">Puntos</p>
+        <p id="puntos">Opciones</p>
       </div>
     </div>
     <div class="content2">
@@ -66,7 +66,8 @@
             </div>
             <div>
               <select name="combo1" id="combo1" data-ng-model="game.name" data-ng-options="game for game in games"></select>
-              <button id="btn2" onclick="elegirJuego()" disabled="disabled">Join game</button>
+              <button id="btn2" onclick="elegirJuego()" disabled="disabled">Crear Partida</button>
+               <button id="btn3"  onclick="elegirJuego()" disabled="disabled">Unirse a la Partida</button>
             </div>
           </div>
         </div>
@@ -85,8 +86,9 @@
 <script>
   <!--ESTO ES JQUERY, PARA ACTIVAR EL BOTÓN UNA VEZ QUE ELEGIMOS JUEGO DEL COMBOBOX-->
   function activarSegundoBoton() {
-    if (!$("#btn2").hasClass("Activo")) {
+    if (!$("#btn2").hasClass("Activo") && !$("#btn3").hasClass("Activo") ) {
       $("#btn2").addClass("Activo").prop('disabled', false);
+      $("#btn3").addClass("Activo").prop('disabled', false);
     }
   }
 
@@ -95,4 +97,7 @@
     //alert(mitexto);
     activarSegundoBoton();
   });
+  
+	$("#nombreUsuario").append(sessionStorage.userName);
+
 </script>

@@ -21,7 +21,7 @@ app.controller("GameController", function($scope, $http) {
 					loadPage("index.html");
 				},
 				function(response) {
-					$scope.estado = "Error";
+					$scope.estado = "Mostrar el error aqui y no en la consola";
 				}
 		);
 	};
@@ -33,3 +33,5 @@ app.controller("GameController", function($scope, $http) {
 		$scope.estado = $scope.estado + "hola!";
 	};
 });
+
+
