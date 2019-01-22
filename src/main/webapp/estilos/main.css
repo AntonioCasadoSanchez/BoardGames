@@ -1,5 +1,6 @@
 @import url(http: //fonts.googleapis.com/css?family=Open+Sans);
 @import url(fonts.css);
+@import url(salaEspera.css);
 
 body {
     margin: 0;
@@ -15,27 +16,6 @@ a{
 a:hover{
     color: aqua;
 }
-/*.header {
-    width: 100%;
-    height: 40px;
-    display:flex;
-    flex-wrap:wrap;
-    background: rgb(34, 38, 41);
-    color: fff;
-    font-family: 'Raleway', sans-serif;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100; 
-}*/
-
-/*.header-content {
-    width: 32%;
-    margin: auto;
-    display: block;
-    text-align:center;
-   /* display: inline-block;
-}*/
 
 
 .content {

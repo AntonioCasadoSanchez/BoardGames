@@ -1,81 +1,96 @@
+<html>
 
-	<html>
-	<head>
-	<title>Pepe Games</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="estilos/main.css">
-	<link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="Game.js"></script>
-	<script src="salaEspera.js"></script>
-	<script src="index.js"></script>
+<head>
+  <title>Pepe Games</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="estilos/main.css">
+  <link rel="stylesheet" href="estilos/salaEspera.css">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="Game.js"></script>
+  <script src="salaEspera.js"></script>
+  <script src="index.js"></script>
 </head>
 
 <body onload="inicio()">
-	
-	<div class="principal">
-		<div class="header">
-			<div class=header-content>
-				<p id="usuario">Alias</p>
-			</div>
-			<div class=header-content>
-				<p id="mail">Recuadro</p>
-			</div>
-			<div class=header-content>
-				<p id="puntos">Recuadro2</p>
-			</div>
-		</div>
-		<div class="content">
-			<div class="content-text">
-				<h3>PEPE GAMES</h3>
-				<p><strong>Iniciar Sesión</strong></p>
-			</div>
-			<div class="content-form" data-ng-app="GameApp" data-ng-controller="GameController">
-				<h1>Esto es la sala de espera!! :D</h1>
-				<h2>Juegos</h2>
-		        <div>
-		        	<button data-ng-click="loadGames()">Juegos Disponibles</button>
-		         </div>
-		    	<div>
-					<select name= "combo1" id="combo1" data-ng-model="game.name" data-ng-options="game for game in games"></select>
-					<button id="btn2" onclick="elegirJuego()" disabled="disabled">Join game</button>
-				</div>
-			</div>
-		</div>
-		<div class="content">
-                    <span>Chat de la Sala</span>
-                    <textarea readonly id="chat">
-	
-                    </textarea>
-                    
-                    <div class="input-group">
-                        <input type="text" id="txtChat" class="form-control" placeholder="Decir algo..." >
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary" id="btnEnvioChat" type="submit" onclick="enviarChat()">
-                               Enviar
-                            </button>
-                        </span>
-                    </div>
+  <div class="principal">
+    <div class="header">
+      <div class=header-content>
+        <p id="usuario">Alias</p>
+      </div>
+      <div class=header-content>
+        <p id="mail">E-Mail</p>
+      </div>
+      <div class=header-content>
+        <p id="puntos">Puntos</p>
+      </div>
+    </div>
+    <div class="content2">
+      <div class="content-text">
+        <p class="comicate">PEPE GAMES</p>
+      </div>
+      <div class="content-salaEspera" data-ng-app="GameApp" data-ng-controller="GameController">
+
+
+
+        <div class="salaChat">
+          <h1 class="title">Chat de la Sala</h1>
+              <div class="chatContent">
+                <textarea readonly id="chat" placeholder="Aquí se muestra el chat..."></textarea>
+                <div class="input-group">
+                  <input type="text" id="txtChat" class="form-control" placeholder="Decir algo...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary" id="btnEnvioChat" type="submit" onclick="enviarChat()">
+                      Enviar
+                    </button>
+                  </span>
+
                 </div>
-	</div>
+              </div>
+
+
+
+
+              <div class="salaJuegos">
+                <h1 class="title">Sala Principal</h1>
+                <div class="JuegosContent">
+                  <h2>Elige un juego:</h2>
+                  <div>
+                    <button data-ng-click="loadGames()">Juegos Disponibles</button>
+                  </div>
+                  <div>
+                    <select name="combo1" id="combo1" data-ng-model="game.name" data-ng-options="game for game in games"></select>
+                    <button id="btn2" onclick="elegirJuego()" disabled="disabled">Join game</button>
+                  </div>
+                </div>
+              </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
 </body>
+
 </html>
 
 <script>
-<!--ESTO ES JQUERY, PARA ACTIVAR EL BOTÓN UNA VEZ QUE ELEGIMOS JUEGO DEL COMBOBOX-->
-function activarSegundoBoton() {
-	  if (!$("#btn2").hasClass("Activo")) {
-	   $("#btn2").addClass("Activo").prop('disabled', false);
-	  }
-	}
+  <!--ESTO ES JQUERY, PARA ACTIVAR EL BOTÓN UNA VEZ QUE ELEGIMOS JUEGO DEL COMBOBOX-->
+  function activarSegundoBoton() {
+    if (!$("#btn2").hasClass("Activo")) {
+      $("#btn2").addClass("Activo").prop('disabled', false);
+    }
+  }
 
-	$("#combo1").change(function () {
-		var mitexto = $("#combo1 option:selected").text();
-		//alert(mitexto);
-	  activarSegundoBoton();
-	});
+  $("#combo1").change(function() {
+    var mitexto = $("#combo1 option:selected").text();
+    //alert(mitexto);
+    activarSegundoBoton();
+  });
 </script>
