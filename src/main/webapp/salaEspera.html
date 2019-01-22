@@ -16,7 +16,8 @@
   <script src="index.js"></script>
 </head>
 
-<body onload="inicio()">
+<body>
+  <!--onload="inicio()"--->
   <div class="principal">
     <div class="header">
       <div class=header-content>
@@ -39,37 +40,37 @@
 
         <div class="salaChat">
           <h1 class="title">Chat de la Sala</h1>
-              <div class="chatContent">
-                <textarea readonly id="chat" placeholder="Aquí se muestra el chat..."></textarea>
-                <div class="input-group">
-                  <input type="text" id="txtChat" class="form-control" placeholder="Decir algo...">
-                  <span class="input-group-btn">
-                    <button class="btn btn-primary" id="btnEnvioChat" type="submit" onclick="enviarChat()">
-                      Enviar
-                    </button>
-                  </span>
+          <div class="chatContent">
+            <textarea readonly id="chat" placeholder="Aquí se muestra el chat..."></textarea>
+            <div class="input-group">
+              <input type="text" id="txtChat" class="form-control" placeholder="Decir algo...">
+              <span class="input-group-btn">
+                <button class="btn btn-primary" id="btnEnvioChat" type="submit" onclick="enviarChat()">
+                  Enviar
+                </button>
+              </span>
 
-                </div>
-              </div>
-
-
-
-
-              <div class="salaJuegos">
-                <h1 class="title">Sala Principal</h1>
-                <div class="JuegosContent">
-                  <h2>Elige un juego:</h2>
-                  <div>
-                    <button data-ng-click="loadGames()">Juegos Disponibles</button>
-                  </div>
-                  <div>
-                    <select name="combo1" id="combo1" data-ng-model="game.name" data-ng-options="game for game in games"></select>
-                    <button id="btn2" onclick="elegirJuego()" disabled="disabled">Join game</button>
-                  </div>
-                </div>
-              </div>
-
+            </div>
+          </div>
         </div>
+
+
+
+        <div class="salaJuegos">
+          <h1 class="title">Sala Principal</h1>
+          <div class="JuegosContent">
+            <h2>Elige un juego:</h2>
+            <div>
+              <button data-ng-click="loadGames()">Juegos Disponibles</button>
+            </div>
+            <div>
+              <select name="combo1" id="combo1" data-ng-model="game.name" data-ng-options="game for game in games"></select>
+              <button id="btn2" onclick="elegirJuego()" disabled="disabled">Join game</button>
+            </div>
+          </div>
+        </div>
+
+
 
 
       </div>
