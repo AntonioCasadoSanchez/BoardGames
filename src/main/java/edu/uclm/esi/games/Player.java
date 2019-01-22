@@ -50,7 +50,6 @@ public class Player {
 		player.setEmail(email);
 		player.setUserName(userName);
 		player.setPwd(pwd);
-		System.out.println("Estoy en el player"+player.toString());
 		MongoBroker.get().insert(player);
 		return player;
 	}

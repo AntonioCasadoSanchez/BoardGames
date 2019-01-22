@@ -33,4 +33,3 @@ app.controller("GameController", function($scope, $http) {
 		$scope.estado = $scope.estado + "hola!";
 	};
 });
-
