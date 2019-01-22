@@ -70,13 +70,14 @@ function elegirJuego(){
 };
 
 function enviarChat() {
-	if(document.getElementById("txtChat").value!=""){
+	ws.send("***" + sessionStorage.userName + "se ha unido!!");
+	/*if(document.getElementById("txtChat").value!=""){
 		var p = {
 			tipo : "mensajeChat",
 			nombreJugador: document.getElementById("usuario").innerHTML,
 			mensajeUsuario : document.getElementById("txtChat").value
 			};
 			ws.send( JSON.stringify(p));
-		}
+		}*/
 };
 
