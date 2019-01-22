@@ -2,43 +2,35 @@ var app = angular.module("GameApp", []);
 var estado;
 app.controller("GameController", function($scope, $http) {
 	$scope.userName = "";
-	$scope.pwd = "";
+	$scope.pwd1 = "";
 	$scope.pwd2 = "";
 	$scope.email = "";
-	$scope.estado = "Sin enviar";
-	$scope.register = function() {
-		var request = new XMLHttpRequest();
-		request.open("GET", "http://localhost:8080/register?email="
-				+ $scope.email + "&userName=" + $scope.userName + "&pwd1="
-				+ $scope.pwd + "&pwd2=" + $scope.pwd2);
-		// request.setRequestHeader('Content-type',
-		// 'application/x-www-form-urlencoded');
-		$scope.estado = "Conectando";
-		request.onreadystatechange = function() {
-			if (request.readyState == 4) {
-				add(request.responseText);// esto que es?
-				ws = new WebSocket("ws://localhost:8080/gamews");
-				ws.onopen = function() {
-					$scope.estado = "Conectado";
+	$scope.estado = "";
+	$scope.register = function(){
+		var recurso="/register";
+		var data= "email=" + $scope.email + "&userName=" + $scope.userName + "&pwd1=" + $scope.pwd1 + "&pwd2=" + $scope.pwd2;
+		var config = {
+				headers : {
+					'Content-Type' : 'application/x-www-form-urlencoded'
 				}
-				ws.onerror = function() {
-					add("Error al conectar WS");
-				}
-				ws.onmessage = function(message) {
-					var data = message.data;
-					data = JSON.parse(data);
-					$scope.estado(data);
-				}
-			}
 		};
-		// var datos= $scope.email +"&" + $scope.userName + "&"+ $scope.pwd +
-		// "&" + $scope.pwd2;
-		// $scope.estado=datos;
-		// request.send(datos);// cuando y que envia esto
-		request.send();
+		$http.post(recurso, data, config).then(
+				function(response){
+					sessionStorage.setItem('email', email.value);
+					alert("Registro correcto");
+					loadPage("index.html");
+				},
+				function(response) {
+					$scope.estado = "Error";
+				}
+		);
 	};
-	
-	function add(texto) {
+	function loadPage(url) {
+		window.location.assign(url);
+	};
+	function add(texto, parametro) {
 		$scope.estado = $scope.estado + texto;
-	}
+		$scope.estado = $scope.estado + "hola!";
+	};
 });
+

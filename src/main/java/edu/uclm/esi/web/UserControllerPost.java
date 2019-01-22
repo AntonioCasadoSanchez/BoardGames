@@ -33,7 +33,7 @@ public class UserControllerPost {
   @RequestMapping(value="/register", method=RequestMethod.POST, consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
   public Player register( String email,String userName,  String pwd1, String pwd2) throws Exception {
     if (!pwd1.equals(pwd2))
-      throw new Exception ("Error: las contraseÃ±as no coinciden");
+      throw new Exception ("Error: las contraseñas no coinciden");
     Player player=Player.register(email, userName, pwd1);
       return player;
   }
