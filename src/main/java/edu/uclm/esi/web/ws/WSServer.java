@@ -1,5 +1,6 @@
 package edu.uclm.esi.web.ws;
 
+import java.io.IOException;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -31,7 +32,6 @@ public class WSServer extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {//SE EJECUTA CUANDO SE ESTABLECE EL HANDSHAKE
-		//JOptionPane.showMessageDialog(null, "hola");
 		sessionsById.put(session.getId(), session);
 		Player player = (Player) session.getAttributes().get("player");
 		String userName=player.getUserName();
@@ -43,7 +43,7 @@ public class WSServer extends TextWebSocketHandler {
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		//JOptionPane.showMessageDialog(null, "hola");
-		System.out.println(message.getPayload());
+		/**System.out.println(message.getPayload());
 		JSONObject jso=new JSONObject(message.getPayload());
 		if(jso.getString("TYPE").equals("MOVEMENT")) {
 			Player player = (Player) session.getAttributes().get("player");
@@ -51,9 +51,29 @@ public class WSServer extends TextWebSocketHandler {
 			Match match = Manager.get().move(player, coordinates);//PREGUNTAR ESTA LINEA. mas o menos ya lo entiendo
 			send(match.getPlayers(), match);
 			
+		}**/
+		JSONObject jso=new JSONObject(message.getPayload());
+		if(jso.getString("TYPE").equals("MENSAJE")) {
+			sendChat(session, jso);
 		}
 	}
-
+	
+	public static void sendChat(WebSocketSession session, JSONObject jso ) throws Exception {
+		//ObjectMapper mapper=new ObjectMapper();
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("TYPE",	"CHAT");
+			obj.put("remitente", jso.getString("remitente"));
+			obj.put("contenido", jso.getString("contenido"));
+			
+			WebSocketMessage<?> message= new TextMessage(obj.toString());
+			session.sendMessage(message);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		// TODO Auto-generated method stub	
+	}
+	
 	public static void send(Vector<Player> players, Match match) {
 		ObjectMapper mapper=new ObjectMapper();
 		JSONObject jso;
@@ -71,10 +91,21 @@ public class WSServer extends TextWebSocketHandler {
 		}
 		// TODO Auto-generated method stub	
 	}
-	@OnOpen
+
+	/**private void enviar(Session session, String tipo, String remitente, String texto) throws JSONException {
+		JSONObject jso=new JSONObject();
+		try {
+			jso.put("tipo", tipo);
+			jso.put("remitente", remitente);
+			jso.put("contenido", texto);
+			session.getBasicRemote().sendText(jso.toString());
+		}catch(IOException e) {
+		}
+	}**/
+	/*@OnOpen
 	public void onOpen() {
 		JOptionPane.showMessageDialog(null, "Conectado");
-	}
+	}*/
 	/*@OnMessage
 	public void recibir(Session session, String msg)  {
 		JSONObject jso=new JSONObject(msg);

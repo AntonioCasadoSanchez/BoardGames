@@ -1,33 +1,30 @@
 <html>
-
-<head>
-  <title>Pepe Games</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-  <link rel="stylesheet" href="estilos/main.css">
-  <link rel="stylesheet" href="estilos/salaEspera.css">
-  <link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="Game.js"></script>
-  <script src="salaEspera.js"></script>
-  <script src="index.js"></script>
+	<head>
+	<title>Pepe Games</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="estilos/main.css">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="Game.js"></script>
+	<script src="salaEspera.js"></script>
+	<script src="index.js"></script>
 </head>
 
-<body>
-  <!--onload="inicio()"--->
+<body onload="inicio()">
   <div class="principal">
     <div class="header">
       <div class=header-content>
-        <p id="avatar">Avatar</p>
+        <p id="usuario">Alias</p>
       </div>
       <div class=header-content>
-       <p id= "nombreUsuario"></p>
+        <p id="mail">E-Mail</p>
       </div>
       <div class=header-content>
-        <p id="puntos">Opciones</p>
+        <p id="puntos">Puntos</p>
       </div>
     </div>
     <div class="content2">
@@ -45,7 +42,7 @@
             <div class="input-group">
               <input type="text" id="txtChat" class="form-control" placeholder="Decir algo...">
               <span class="input-group-btn">
-                <button class="btn btn-primary" id="btnEnvioChat" type="submit" onclick="enviarChat()">
+                <button onclick="enviarChat()" class="btn btn-primary" id="btnEnvioChat" type="submit">
                   Enviar
                 </button>
               </span>
@@ -66,8 +63,7 @@
             </div>
             <div>
               <select name="combo1" id="combo1" data-ng-model="game.name" data-ng-options="game for game in games"></select>
-              <button id="btn2" onclick="elegirJuego()" disabled="disabled">Crear Partida</button>
-               <button id="btn3"  onclick="elegirJuego()" disabled="disabled">Unirse a la Partida</button>
+              <button id="btn2" onclick="elegirJuego()" disabled="disabled">Join game</button>
             </div>
           </div>
         </div>
@@ -86,9 +82,8 @@
 <script>
   <!--ESTO ES JQUERY, PARA ACTIVAR EL BOTÓN UNA VEZ QUE ELEGIMOS JUEGO DEL COMBOBOX-->
   function activarSegundoBoton() {
-    if (!$("#btn2").hasClass("Activo") && !$("#btn3").hasClass("Activo") ) {
+    if (!$("#btn2").hasClass("Activo")) {
       $("#btn2").addClass("Activo").prop('disabled', false);
-      $("#btn3").addClass("Activo").prop('disabled', false);
     }
   }
 
@@ -97,7 +92,4 @@
     //alert(mitexto);
     activarSegundoBoton();
   });
-  
-	$("#nombreUsuario").append(sessionStorage.userName);
-
 </script>

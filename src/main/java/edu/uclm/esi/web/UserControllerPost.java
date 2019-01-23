@@ -33,13 +33,13 @@ public class UserControllerPost {
   @RequestMapping(value="/register", method=RequestMethod.POST, consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
   public Player register( String email,String userName,  String pwd1, String pwd2) throws Exception {
     if (!pwd1.equals(pwd2))
-      throw new Exception ("Error: las contraseñass no coinciden");
+      throw new Exception ("Error: las contraseï¿½ass no coinciden");
     if (email.length()==0)
-		throw new Exception("El email no puede ser vacío");
+		throw new Exception("El email no puede ser vacï¿½o");
     if (pwd1.length()<3)
-		throw new Exception("La contraseña tiene que tener 4 caracteres por lo menos");
+		throw new Exception("La contraseï¿½a tiene que tener 4 caracteres por lo menos");
     Player player=Player.register(email, userName, pwd1);
-      return player;
+      return player;//y esto?asdf
   }
   
   @ExceptionHandler(Exception.class)

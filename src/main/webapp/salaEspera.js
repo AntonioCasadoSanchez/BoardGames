@@ -10,9 +10,25 @@ function inicio() {
 		alert("Error al conectar WS");
 	}
 	ws.onmessage = function(message) {
-		var mensaje=message.data;
-		mensaje=JSON.parse(mensaje);
-		alert("recibo cosas!");
+		var data = message.data;
+		data = JSON.parse(data);
+		if(data.TYPE=="CHAT"){
+			  muestra(JSON.stringify(data));
+		  }
+	}
+};
+		
+		/**if (mensaje.tipo=="mensajeChat"){
+		message=JSON.parse(message.data);
+		var tipo=message.tipo;
+		var remitente=message.remitente;
+		var contenido=message.contenido;
+		
+		var texto=areaMensajes.innerHTML; //coge en texto lo que ya habia en el recuadro
+		texto=texto+"\n" + remitente + ": " + contenido; //añade a texto el ultimo mensaje
+		areaMensajes.innerHTML=texto; //actualiza el textarea con el contenido de texto.
+		
+		
 		/*if (mensaje.tipo=="mensajeChat"){
 			var mensajeChat=document.getElementById("chat");
 			var jugador=mensaje.nombreJugador;
@@ -20,7 +36,7 @@ function inicio() {
 			mensajeChat.value+="CHAT: "+jugador+": "+mensajeMostrar+".\n\n";
 			document.getElementById("txtChat").value="";
 			mensajeChat.scrollTop = mensajeChat.scrollHeight;
-		}*/
+		}**/
 		/*var mensaje=datos.data;
 		mensaje=JSON.parse(mensaje);
 		console.log(mensaje);
@@ -39,8 +55,7 @@ function inicio() {
 		//} else
 			//add("Mensaje desconocido");
 		
-	}
-};
+
 
 function mostrarInfoUsuario(){
 	document.getElementById("usuario").innerHTML = sessionStorage.userName;
@@ -70,16 +85,33 @@ function elegirJuego(){
 };
 
 function enviarChat() {
-	ws.send("***" + sessionStorage.userName + "se ha unido!!");
-	/*if(document.getElementById("txtChat").value!=""){
+	var areaMensajes=document.getElementById("chat");
+	var cajaMensaje=document.getElementById("txtChat");
+	var email=sessionStorage.email;
+	var texto=cajaMensaje.value;
+	if(texto.length==0){
+		return;
+	}
+	var mensaje={
+			TYPE : "MENSAJE",
+			remitente : email,
+			contenido: texto
+	}
+	ws.send(JSON.stringify(mensaje));
+	cajaMensaje.value="";
+	/*alert("se envia");
+	if(document.getElementById("txtChat").value!=""){
 		var p = {
 			tipo : "mensajeChat",
 			nombreJugador: document.getElementById("usuario").innerHTML,
 			mensajeUsuario : document.getElementById("txtChat").value
 			};
-			ws.send( JSON.stringify(p));
+			ws.send(JSON.stringify(p));
 		}*/
 };
-function datos() {
-	
-}
+
+function muestra(datos){
+	var areaMensajes=document.getElementById("chat");
+	areaMensajes.innerHTML = datos;
+};
+
