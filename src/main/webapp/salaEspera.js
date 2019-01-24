@@ -13,7 +13,7 @@ function inicio() {
 		var data = message.data;
 		data = JSON.parse(data);
 		if(data.TYPE=="CHAT"){
-			  muestra(JSON.stringify(data));
+			  muestra(data);
 		  }
 	}
 };
@@ -22,12 +22,7 @@ function inicio() {
 		message=JSON.parse(message.data);
 		var tipo=message.tipo;
 		var remitente=message.remitente;
-		var contenido=message.contenido;
-		
-		var texto=areaMensajes.innerHTML; //coge en texto lo que ya habia en el recuadro
-		texto=texto+"\n" + remitente + ": " + contenido; //añade a texto el ultimo mensaje
-		areaMensajes.innerHTML=texto; //actualiza el textarea con el contenido de texto.
-		
+		var contenido=message.contenido;	
 		
 		/*if (mensaje.tipo=="mensajeChat"){
 			var mensajeChat=document.getElementById("chat");
@@ -67,7 +62,7 @@ function loadPage(url) {
 };
 function controlSeguridad() {
 	if(sessionStorage.userName == null){
-		alert("Te he pillao intruso");
+		alert("Has llegado aqui sin autenticarte, por favor, no seas tramposo.");
 		loadPage("error.html");
 	}
 };
@@ -85,16 +80,15 @@ function elegirJuego(){
 };
 
 function enviarChat() {
-	var areaMensajes=document.getElementById("chat");
 	var cajaMensaje=document.getElementById("txtChat");
-	var email=sessionStorage.email;
+	var user=sessionStorage.userName;
 	var texto=cajaMensaje.value;
 	if(texto.length==0){
 		return;
 	}
 	var mensaje={
 			TYPE : "MENSAJE",
-			remitente : email,
+			remitente : user,
 			contenido: texto
 	}
 	ws.send(JSON.stringify(mensaje));
@@ -112,6 +106,8 @@ function enviarChat() {
 
 function muestra(datos){
 	var areaMensajes=document.getElementById("chat");
-	areaMensajes.innerHTML = datos;
+	var msgMostrado = areaMensajes.innerHTML;//guarda en msgmostrado lo que ya habia en el recuadro
+	msgMostrado = msgMostrado + "\n" + datos.remitente + ": " + datos.contenido //añade a msgmostrado el ultimo mensaje
+	areaMensajes.innerHTML = msgMostrado;//actualiza el textarea con el contenido de msgmostrado.
 };
 

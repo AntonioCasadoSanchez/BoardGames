@@ -1,6 +1,7 @@
 package edu.uclm.esi.web.ws;
 
 import java.io.IOException;
+import java.util.Map.Entry;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -31,7 +32,7 @@ public class WSServer extends TextWebSocketHandler {
 	private static ConcurrentHashMap<String, WebSocketSession> sessionsByPlayer=new ConcurrentHashMap<>();
 	
 	@Override
-	public void afterConnectionEstablished(WebSocketSession session) throws Exception {//SE EJECUTA CUANDO SE ESTABLECE EL HANDSHAKE
+	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		sessionsById.put(session.getId(), session);
 		Player player = (Player) session.getAttributes().get("player");
 		String userName=player.getUserName();
@@ -67,7 +68,9 @@ public class WSServer extends TextWebSocketHandler {
 			obj.put("contenido", jso.getString("contenido"));
 			
 			WebSocketMessage<?> message= new TextMessage(obj.toString());
-			session.sendMessage(message);
+			for(Entry<String, WebSocketSession> entry : sessionsByPlayer.entrySet()) {
+				entry.getValue().sendMessage(message);
+			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
