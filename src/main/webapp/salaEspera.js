@@ -1,6 +1,7 @@
 function inicio() {
 	controlSeguridad();
-
+	//alert(sessionStorage.userName);//mostrar el contenido de este mensaje en los divs de arriba.
+	//alert(sessionStorage.email);
 	ws = new WebSocket("ws://localhost:8080/gamews");
 	ws.onopen = function() {
 		mostrarInfoUsuario();
@@ -67,6 +68,8 @@ function controlSeguridad() {
 };
 function elegirJuego(){
 	var select = document.getElementById("combo1");
+	//alert(select.value);
+	
 	if (select.value == "string:tictactoe") {
 		alert("tictactoe");
 	}else if (select.value == "string:Piedra, papel, tijera") {
@@ -88,22 +91,23 @@ function enviarChat() {
 			remitente : user,
 			contenido: texto
 	}
-	if(cajaMensaje!=""){
-		ws.send(JSON.stringify(mensaje));
-		cajaMensaje.value="";
-	}
+	ws.send(JSON.stringify(mensaje));
+	cajaMensaje.value="";
+	/*alert("se envia");
+	if(document.getElementById("txtChat").value!=""){
+		var p = {
+			tipo : "mensajeChat",
+			nombreJugador: document.getElementById("usuario").innerHTML,
+			mensajeUsuario : document.getElementById("txtChat").value
+			};
+			ws.send(JSON.stringify(p));
+		}*/
 };
 
 function muestra(datos){
 	var areaMensajes=document.getElementById("chat");
 	var msgMostrado = areaMensajes.innerHTML;//guarda en msgmostrado lo que ya habia en el recuadro
-	var usuario = "Yo";
-	if (datos.remitente == sessionStorage.userName) {
-		msgMostrado = msgMostrado + "\n" + usuario+ ": " + datos.contenido //añade a msgmostrado el ultimo mensaje
-	}
-	else {
-		msgMostrado = msgMostrado + "\n" + datos.remitente + ": " + datos.contenido //añade a msgmostrado el ultimo mensaje	
-	}
+	msgMostrado = msgMostrado + "\n" + datos.remitente + ": " + datos.contenido //añade a msgmostrado el ultimo mensaje
 	areaMensajes.innerHTML = msgMostrado;//actualiza el textarea con el contenido de msgmostrado.
 };
 
