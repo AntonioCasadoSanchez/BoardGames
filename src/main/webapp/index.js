@@ -22,7 +22,10 @@ app.controller("GameController", function($scope, $http) {
 					$scope.estado = "Usuario/Contraseña incorrectos";
 				}
 		);
-	};	
+	};
+	$scope.recuperarPwd= function(){
+		loadPage("recuperarCredenciales.html");
+	}
 	function loadPage(url) {
 		window.location.assign(url);
 	};

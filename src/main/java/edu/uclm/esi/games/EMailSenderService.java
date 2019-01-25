@@ -20,10 +20,10 @@ public class EMailSenderService {
 		this.smtpHost="smtp.gmail.com";
 		this.startTTLS="true";
 		this.port="465";
-		this.remitente="";
-		this.serverUser="edu.uclm.esi.tysw@gmail.com";
+		this.remitente="boardgamespepe@gmail.com";
+		this.serverUser="boardgamespepe@gmail.com";
 		this.userAutentication="true";
-		this.pwd="";
+		this.pwd="TecySisWeb1$";
 		properties.put("mail.smtp.host", this.smtpHost);  
         properties.put("mail.smtp.starttls.enable", this.startTTLS);  
         properties.put("mail.smtp.port", this.port);  

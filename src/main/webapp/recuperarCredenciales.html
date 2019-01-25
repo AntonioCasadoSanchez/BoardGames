@@ -1,0 +1,23 @@
+<html>
+
+	<head>
+	  <title>Pepe Games</title>
+	
+	  <meta charset="utf-8" />
+	  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	
+	  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	
+	
+	  <link rel="stylesheet" href="">
+	  <link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
+	  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
+	
+	</head>
+	
+	<body data-ng-app="GameApp" data-ng-controller="GameController">
+		<input type="text" id="UserName" data-ng-model="userName" placeholder="Usuario">
+		<button class="btnEnviar" data-ng-click="getUser()">Enviar</button>
+	</body>
+</html>
