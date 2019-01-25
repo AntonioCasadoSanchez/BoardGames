@@ -29,11 +29,22 @@ public class UserControllerPost {
 		result.setStatus(HttpStatus.UNAUTHORIZED);
 		return result;
 	}
-
+	@RequestMapping(value = "/registarOloguear", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public Player logWithGoogle(HttpSession session, String idGoogle, String nombre, String email) throws Exception{
+		Player player= null;
+		try {
+			player=Player.identifyGoogle(idGoogle, nombre, email);
+		}catch(Exception e) {
+			Player.registerGoogle(idGoogle, nombre, email);
+			player=Player.identifyGoogle(idGoogle, nombre, email);
+		}
+		session.setAttribute("player", player);
+		return player;
+	}
 	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public Player register(String email, String userName, String pwd1, String pwd2) throws Exception {
 		if (!pwd1.equals(pwd2))
-			throw new Exception("Error: las contrase�ass no coinciden");
+			throw new Exception("Error: las password no coinciden");
 		if (email.length() == 0)
 			throw new Exception("El email no puede ser vac�o");
 		if (pwd1.length() < 3)

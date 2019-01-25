@@ -21,6 +21,9 @@ public class Token {
 	public String getValor() {
 		return this.valor;
 	}
+	public void setValor(String valor) {
+		this.valor=valor;
+	}
 	
 	
 }

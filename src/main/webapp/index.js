@@ -22,15 +22,7 @@ app.controller("GameController", function($scope, $http) {
 					$scope.estado = "Usuario/Contraseña incorrectos";
 				}
 		);
-	};
-	
-	function onSignIn(googleUser){
-		var profile = googleUser.getBasicProfile();
-		console.log('ID: ' + profile.getId());
-		console.log('Name:' + profile.getName());
-		console.log('Image URL: ' + profile.getImageUrl());
-		console.log('Email: ' + profile.getEmail());
-	}
+	};	
 	function loadPage(url) {
 		window.location.assign(url);
 	};
@@ -39,3 +31,25 @@ app.controller("GameController", function($scope, $http) {
 		$scope.estado = $scope.estado + "hola!";
 	};
 });
+
+function onSignIn(googleUser){
+	var profile = googleUser.getBasicProfile();		
+	var idGoogle= profile.getId();
+	var nombre= profile.getName();
+	var email= profile.getEmail();
+	
+	var req= new XMLHttpRequest();
+	req.open("POST", "registarOloguear");
+	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	req.onreadystatechange = function(){
+		if(request.readyState==4 && request.status==200){
+			sessionStorage.userName=response.data.userName;
+			sessionStorage.email=response.data.email;
+			loadPage("salaEspera.html");
+		}else{
+			alert("Problema iniciando sesion con Google");
+		}
+	};
+	var p="idGoogle=" + idGoogle + "&nombre=" + nombre + "&email=" + email;
+	req.send(p);
+};
