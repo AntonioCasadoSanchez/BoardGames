@@ -38,7 +38,7 @@ public class EMailSenderService {
         Session session = Session.getInstance(properties, auth);
 
         MimeMessage msg = new MimeMessage(session);
-        msg.setSubject("Sudokus - recuperación de contraseña");
+        msg.setSubject("GamesPePe - recuperación de contraseña");
         msg.setText("Pulsa en el siguiente enlace para crear una nueva contraseña: http://localhost:8080/actualizarPwd?code=" + codigo);
         msg.setFrom(new InternetAddress(this.remitente));
         msg.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));

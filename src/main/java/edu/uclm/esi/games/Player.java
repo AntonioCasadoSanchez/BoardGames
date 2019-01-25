@@ -17,7 +17,16 @@ public class Player {
 	private String pwd;
 	@JsonIgnore
 	private Match currentMatch;
+	@Bsonable
+	private byte[] foto;
+	@Bsonable
+	private String type; //Si es de google, se le pone google, y si no, se le pone normal
+	@Bsonable
+	private String a;
+	@Bsonable
+	private String c;
 	
+	/** Getters y Setters **/
 	public String getUserName() {
 		return userName;
 	}
@@ -30,6 +39,9 @@ public class Player {
 		return email;
 	}
 	
+	public void setFoto(byte[] bytes) {
+		this.foto=bytes;
+	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -37,7 +49,12 @@ public class Player {
 	private void setPwd(String pwd) {
 		this.pwd=pwd;
 	}
-
+	
+	
+	/********************************/
+	/** Metodos de la clase Player **/
+	/********************************/
+	
 	public static Player identify(String userName, String pwd) throws Exception {
 		BsonDocument criterion=new BsonDocument();
 		criterion.append("userName", new BsonString(userName)).put("pwd", new BsonString(pwd));
@@ -65,4 +82,6 @@ public class Player {
 	public Match move(int[] coordinates) throws Exception {
 		return this.currentMatch.move(this, coordinates);
 	}
+
+	
 }

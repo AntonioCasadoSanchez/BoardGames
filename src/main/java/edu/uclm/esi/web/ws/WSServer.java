@@ -10,11 +10,15 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 
+import org.bson.BsonDocument;
+import org.bson.BsonString;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.BinaryMessage;
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -24,6 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.uclm.esi.games.Match;
 import edu.uclm.esi.games.Player;
+import edu.uclm.esi.mongolabels.dao.MongoBroker;
 import edu.uclm.esi.web.Manager;
 
 @Component
@@ -31,6 +36,7 @@ public class WSServer extends TextWebSocketHandler {
 	private static ConcurrentHashMap<String, WebSocketSession> sessionsById=new ConcurrentHashMap<>();
 	private static ConcurrentHashMap<String, WebSocketSession> sessionsByPlayer=new ConcurrentHashMap<>();
 	
+	/**OnOpen**/
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		sessionsById.put(session.getId(), session);
@@ -41,26 +47,45 @@ public class WSServer extends TextWebSocketHandler {
 		}
 		sessionsByPlayer.put(userName, session);
 	}
+	
+	/**OnMessage**/
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		//JOptionPane.showMessageDialog(null, "hola");
-		/**System.out.println(message.getPayload());
 		JSONObject jso=new JSONObject(message.getPayload());
-		if(jso.getString("TYPE").equals("MOVEMENT")) {
-			Player player = (Player) session.getAttributes().get("player");
-			JSONArray coordinates = jso.getJSONArray("coordinates");
-			Match match = Manager.get().move(player, coordinates);//PREGUNTAR ESTA LINEA. mas o menos ya lo entiendo
-			send(match.getPlayers(), match);
-			
-		}**/
-		JSONObject jso=new JSONObject(message.getPayload());
+		
+		/**Si el mensaje es del Chat**/
 		if(jso.getString("TYPE").equals("MENSAJE")) {
 			sendChat(session, jso);
 		}
 	}
 	
+	@Override
+	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
+		Player player = (Player) session.getAttributes().get("player");
+		byte[] bytes= message.getPayload().array();
+		player.setFoto(bytes);
+		BsonDocument criterion=new BsonDocument();
+		criterion.append("userName", new BsonString(player.getUserName()));
+		MongoBroker.get().delete("Player",criterion);
+		try {
+			MongoBroker.get().insert(player);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**OnClose**/
+	@Override
+	public void afterConnectionClosed (WebSocketSession session, CloseStatus status) throws Exception {
+		//Deberemos comprobar si la session estaba en partida, y si es asi dar la sesion por finalizada
+	}
+	
+	/*******************************************************/
+	/**Metodos que son llamados desde la parte de Override**/
+	/*******************************************************/
+	
 	public static void sendChat(WebSocketSession session, JSONObject jso ) throws Exception {
-		//ObjectMapper mapper=new ObjectMapper();
 		JSONObject obj = new JSONObject();
 		try {
 			obj.put("TYPE",	"CHAT");
@@ -74,7 +99,6 @@ public class WSServer extends TextWebSocketHandler {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		// TODO Auto-generated method stub	
 	}
 	
 	public static void send(Vector<Player> players, Match match) {
@@ -92,36 +116,5 @@ public class WSServer extends TextWebSocketHandler {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		// TODO Auto-generated method stub	
 	}
-
-	/**private void enviar(Session session, String tipo, String remitente, String texto) throws JSONException {
-		JSONObject jso=new JSONObject();
-		try {
-			jso.put("tipo", tipo);
-			jso.put("remitente", remitente);
-			jso.put("contenido", texto);
-			session.getBasicRemote().sendText(jso.toString());
-		}catch(IOException e) {
-		}
-	}**/
-	/*@OnOpen
-	public void onOpen() {
-		JOptionPane.showMessageDialog(null, "Conectado");
-	}*/
-	/*@OnMessage
-	public void recibir(Session session, String msg)  {
-		JSONObject jso=new JSONObject(msg);
-		if(jso.getString("tipo").equals("mensajeChat")) {
-			int idPartida=jso.getInt("idPartida");
-			String jugador=jso.getString("nombreJugador");
-			String mensajeChat=jso.getString("mensajeUsuario");
-			try {
-				JSONObject mensaje=Manager.get().mensajeChat( idPartida,jugador, mensajeChat);
-				
-			} catch (Exception e) {
-			}
-		}
-		
-	}*/
 }

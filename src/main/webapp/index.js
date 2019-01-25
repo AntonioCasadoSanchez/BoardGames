@@ -23,7 +23,8 @@ app.controller("GameController", function($scope, $http) {
 				}
 		);
 	};
-	function onSignin(googleUser){
+	
+	function onSignIn(googleUser){
 		var profile = googleUser.getBasicProfile();
 		console.log('ID: ' + profile.getId());
 		console.log('Name:' + profile.getName());
@@ -36,13 +37,5 @@ app.controller("GameController", function($scope, $http) {
 	function add(texto, parametro) {
 		$scope.estado = $scope.estado + texto;
 		$scope.estado = $scope.estado + "hola!";
-	};
-	$scope.loadGames = function() {
-		$http.get("/games").then(
-			function(respuesta) {
-				$scope.games=respuesta.data;
-			}
-		);
-		sessionStorage.userName=response.userName;
 	};
 });

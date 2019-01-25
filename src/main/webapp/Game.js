@@ -4,7 +4,7 @@ class Game {
 	constructor() {
 		this.match=null;
 	}
-}//que es esto?
+}
 
 class Match {
 	constructor(board) {

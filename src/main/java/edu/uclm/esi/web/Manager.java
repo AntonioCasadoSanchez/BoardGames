@@ -21,6 +21,7 @@ public class Manager {
 		games.put(tictactoe.getName(), tictactoe);
 		Game ppt = new PPT();
 		games.put(ppt.getName(),ppt);
+		//HABRA QUE QUITAR EL TICTACTOE Y METER EL DESTAPE.
 	}
 	
 	private static class ManagerHolder {
@@ -31,6 +32,10 @@ public class Manager {
 		return ManagerHolder.singleton;
 	}
 
+	/*******************************/
+	/**Metodos de la clase Manager**/
+	/*******************************/
+	
 	public Match joinGame(Player player, String gameName) {
 		Game game=this.games.get(gameName);
 		return game.getMatch(player);

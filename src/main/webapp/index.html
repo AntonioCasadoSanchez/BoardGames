@@ -1,19 +1,21 @@
 <html>
 
 <head>
-  <title>Pepe Gamess</title>
+  <title>Pepe Games</title>
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <meta name="google-signin-client_id" content="442599158402-if0jd44ni0f8roi54j6inb1o6uavm9cp.apps.googleusercontent.com" />
+
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script src="index.js"></script>
-  <script src="https://apis.google.com/js/platform.js"async defer></script>
-  <meta name="google-signin-client_id" content="752546417008-ui0q4vihl5n4c33mlfsr42tsj08n9iu3.apps.googleusercontent.com" />
+
   <link rel="stylesheet" href="estilos/main.css">
   <link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
-  <link rel="stylesheet" href="fonts.css" type="text/css" charset="utf-8" />
+
 </head>
 
 <body data-ng-app="GameApp" data-ng-controller="GameController">
@@ -30,21 +32,31 @@
 
         <form>
           <div class="input-form">
-            <input type="text" id="UserName" data-ng-model="userName" placeholder="user name" value="User">
+            <p>Nombre de usuario</p>
+            <input type="text" id="UserName" data-ng-model="userName" placeholder="Usuario">
           </div>
           <div class="input-form">
-            <input type="password" id="Pwd" data-ng-model="pwd" placeholder="password" value="User123">
+            <p>Contraseña</p>
+            <input type="password" id="Pwd" data-ng-model="pwd" placeholder="Contraseña">
           </div>
 
           <div class="inside-form">
             <div class="inside-content">
-              <p>
-                ¿No tienes cuenta? </p><p><a href="registryPrueba.html">Registrate</a>
-              </p>
+              <div class="googlecontent">
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+              </div>
+              <div class="botoncontent"><button class="btnInicio" data-ng-click="login2()">Iniciar Sesion</button> </div>
             </div>
-            <div class="inside-content inside-imgbutt">
-            <div class="g-sigin2" data-onsuccess="onSignIn"></div>
-            <button data-ng-click="login2()">Entrar</button>
+            <div class="inside-content" id="inside-content2">
+              <div class="cuenta">
+                <p>¿No tienes cuenta? </p>
+                <a class="enlaceboton" href="registryPrueba.html">Crea una cuenta</a>
+              </div>
+              <div class="contrase">
+                <p>No puedo iniciar sesion</p>
+                <a class="enlaceboton" href="registryPrueba.html">Recuperar credenciales</a>
+              </div>
+
             </div>
           </div>
           <div class="estado">
