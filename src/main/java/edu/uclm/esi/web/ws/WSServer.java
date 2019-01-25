@@ -12,6 +12,7 @@ import javax.websocket.Session;
 
 import org.bson.BsonDocument;
 import org.bson.BsonString;
+import org.bson.internal.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,9 +46,27 @@ public class WSServer extends TextWebSocketHandler {
 		if (sessionsByPlayer.get(userName)!=null) {
 			sessionsByPlayer.remove(userName);
 		}
+		//comprobamos si tiene foto
+		byte[]foto=player.loadFoto();
+		if(foto!=null)//si hay foto, la mandamos a la sesion
+			sendBinary(session,foto);
 		sessionsByPlayer.put(userName, session);
 	}
 	
+	private void sendBinary(WebSocketSession session, byte[] foto) throws IOException {
+		String imagen= Base64.encode(foto); //tenemos la imagen en base 64
+		//ahora se la mandamos al cliente. le mandamos un json con el campo type correspondiente.
+		JSONObject jso = new JSONObject();
+		try {
+			jso.put("TYPE", "FOTO");
+			jso.put("foto", imagen);
+			WebSocketMessage<?> message= new TextMessage(jso.toString());
+			session.sendMessage(message);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**OnMessage**/
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
@@ -63,17 +82,13 @@ public class WSServer extends TextWebSocketHandler {
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
 		Player player = (Player) session.getAttributes().get("player");
 		byte[] bytes= message.getPayload().array();
-		player.setFoto(bytes);
-		BsonDocument criterion=new BsonDocument();
-		criterion.append("userName", new BsonString(player.getUserName()));
-		MongoBroker.get().delete("Player",criterion);
 		try {
-			MongoBroker.get().insert(player);
+			MongoBroker.get().insertBinary("Fotos", player.getUserName(), bytes);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}//Fotos es el nombre de la coleccion.
 	
 	/**OnClose**/
 	@Override
@@ -87,18 +102,20 @@ public class WSServer extends TextWebSocketHandler {
 	
 	public static void sendChat(WebSocketSession session, JSONObject jso ) throws Exception {
 		JSONObject obj = new JSONObject();
-		try {
+		
 			obj.put("TYPE",	"CHAT");
 			obj.put("remitente", jso.getString("remitente"));
 			obj.put("contenido", jso.getString("contenido"));
 			
 			WebSocketMessage<?> message= new TextMessage(obj.toString());
 			for(Entry<String, WebSocketSession> entry : sessionsByPlayer.entrySet()) {
+				try {
 				entry.getValue().sendMessage(message);
+				}catch (Exception e) {
+					e.printStackTrace();//dar partida por perdida y eso.
+				}
 			}
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 	}
 	
 	public static void send(Vector<Player> players, Match match) {

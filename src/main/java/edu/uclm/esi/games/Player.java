@@ -35,7 +35,7 @@ public class Player {
 
 	private void setIdGoogle(String idGoogle2) {
 		this.idGoogle = idGoogle2;
-
+		this.type="Google";
 	}
 
 	public String getEmail() {
@@ -88,9 +88,9 @@ public class Player {
 
 	public static Player identifyGoogle(String idGoogle, String nombre, String email) throws Exception {
 		BsonDocument criterion = new BsonDocument();
-		criterion.append("idGoogle", new BsonString(idGoogle)).put("nombre", new BsonString(nombre));
+		criterion.append("idGoogle", new BsonString(idGoogle)).put("userName", new BsonString(nombre));//en azul los campos que tengas en la BD?
 		criterion.append("email", new BsonString(email));
-		criterion.append("tipo", new BsonString("Google"));
+		criterion.append("type", new BsonString("Google"));
 		Player player = (Player) MongoBroker.get().loadOne(Player.class, criterion);
 		return player;
 	}
@@ -123,5 +123,18 @@ public class Player {
 		MongoBroker.get().insert(token);
 		EMailSenderService email = new EMailSenderService();
 		email.enviarPorGmail(this.email, token.getValor());
+	}
+
+	public byte[] loadFoto() {
+		//Hay que ir al mongo, buscar la tabla Fotos, la columna bytes, de este userName.
+		try {
+			BsonDocument criterion = new BsonDocument();
+			criterion.append("userName",  new BsonString(this.userName));
+			//el criterio es que en el campo user name sea este user name.
+			BsonDocument result= MongoBroker.get().loadBinary("Fotos", criterion);
+			return result.getBinary("bytes").getData();
+		}catch(Exception e){
+			return null;
+		}
 	}
 }

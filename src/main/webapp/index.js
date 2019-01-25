@@ -49,13 +49,12 @@ function onSignIn(googleUser){
 	var req= new XMLHttpRequest();
 	req.open("POST", "registarOloguear");
 	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	req.onreadystatechange = function(){
-		if(request.readyState==4 && request.status==200){
-			sessionStorage.userName=response.data.userName;
-			sessionStorage.email=response.data.email;
-			loadPage("salaEspera.html");
+	req.onreadystatechange = function(response){
+		if(req.readyState==4 && req.status==200){
+			sessionStorage.userName=nombre;
+			sessionStorage.email=email;
+			window.location="salaEspera.html";
 		}else{
-			alert("Problema iniciando sesion con Google");
 		}
 	};
 	var p="idGoogle=" + idGoogle + "&nombre=" + nombre + "&email=" + email;

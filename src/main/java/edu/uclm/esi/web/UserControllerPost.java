@@ -35,7 +35,7 @@ public class UserControllerPost {
 		try {
 			player=Player.identifyGoogle(idGoogle, nombre, email);
 		}catch(Exception e) {
-			Player.registerGoogle(idGoogle, nombre, email);
+			player=Player.registerGoogle(idGoogle, nombre, email);
 			player=Player.identifyGoogle(idGoogle, nombre, email);
 		}
 		session.setAttribute("player", player);

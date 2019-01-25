@@ -14,6 +14,8 @@ function inicio() {
 		data = JSON.parse(data);
 		if(data.TYPE=="CHAT"){
 			  muestra(data);
+		  }else if (data.TYPE=="FOTO"){
+			  loadFoto(data);
 		  }
 	}
 };
@@ -103,4 +105,9 @@ function muestra(datos){
 	}
 	areaMensajes.innerHTML = msgMostrado;//actualiza el textarea con el contenido de msgmostrado.
 };
+function loadFoto(data){
+	imgFoto.src="data:image/jpeg;base64," + data.foto; //si admitimos otros tipos de archivos habria que
+	//controlarlo, y luego dependiendo del tipo(añadido en el wserver donde ponermos el type foto) aqui se pone el image/jpeg
+	//o image/loquesea.
+}
 
