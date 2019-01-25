@@ -4,6 +4,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="estilos/main.css">
+	<link rel="stylesheet" href="estilos/ventanaEmergente.css">
 	<link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
@@ -64,12 +65,20 @@
             </div>
             <div>
               <select name="combo1" id="combo1" data-ng-model="game.name" data-ng-options="game for game in games"></select>
-              <button id="btn2" onclick="elegirJuego()" disabled="disabled">Join game</button>
+              <button id="btn2" onclick="mostrarVentanaEmergente()" disabled="disabled">Jugar</button>
             </div>
           </div>
         </div>
 
-
+		<div id="openModal" class="modalDialog">
+			<div>
+				<a href="#close" title="Close" class="close">X</a>
+				<p class="comicate">PEPE GAMES</p>
+				<p>¿Quieres empezar una partida?</p>
+				<button type="submit" name="Aceptar" onclick= "aceptar()">Aceptar</button>
+				<button type="reset" onclick= "cancelar()">Cancelar</button>
+			</div>
+		</div>
 
 
       </div>
@@ -93,4 +102,30 @@
     //alert(mitexto);
     activarSegundoBoton();
   });
+  
+  function mostrarVentanaEmergente() {
+	  if ($("#combo1 option:selected").text()== "tictactoe") {
+	      window.location.href = '#openModal';
+	    }
+	  else if ($("#combo1 option:selected").text()== "Piedra, papel, tijera") {
+		  window.location.href = '#openModal';
+	  }
+	  else {
+		  alert("Error");
+	  }
+  }
+  function aceptar () {
+	  if ($("#combo1 option:selected").text()== "tictactoe") {
+		  alert("tictactoe");
+	    }
+	  else if ($("#combo1 option:selected").text()== "Piedra, papel, tijera") {
+		  alert("Piedra, papel y tijera");
+	  }
+	  else {
+		  alert("Error");
+	  }
+  }
+  function cancelar () {
+	  window.location.href = 'salaEspera.html';
+  }
 </script>

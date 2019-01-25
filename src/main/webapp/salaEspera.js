@@ -66,18 +66,6 @@ function controlSeguridad() {
 		loadPage("error.html");
 	}
 };
-function elegirJuego(){
-	var select = document.getElementById("combo1");
-	//alert(select.value);
-	
-	if (select.value == "string:tictactoe") {
-		alert("tictactoe");
-	}else if (select.value == "string:Piedra, papel, tijera") {
-		loadPage("ppt.html");
-	}else {
-		alert("Error");
-	}
-};
 
 function enviarChat() {
 	var cajaMensaje=document.getElementById("txtChat");
@@ -106,8 +94,13 @@ function enviarChat() {
 
 function muestra(datos){
 	var areaMensajes=document.getElementById("chat");
+	var usuario = "Yo";
 	var msgMostrado = areaMensajes.innerHTML;//guarda en msgmostrado lo que ya habia en el recuadro
-	msgMostrado = msgMostrado + "\n" + datos.remitente + ": " + datos.contenido //añade a msgmostrado el ultimo mensaje
+	if (datos.remitente == sessionStorage.userName) {
+		msgMostrado = msgMostrado + "\n" + usuario + ": " + datos.contenido //añade a msgmostrado el ultimo mensaje
+	} else {
+		msgMostrado = msgMostrado + "\n" + datos.remitente + ": " + datos.contenido //añade a msgmostrado el ultimo mensaje
+	}
 	areaMensajes.innerHTML = msgMostrado;//actualiza el textarea con el contenido de msgmostrado.
 };
 
