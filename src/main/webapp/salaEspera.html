@@ -68,10 +68,12 @@
               <button data-ng-click="loadGames()">Juegos Disponibles</button>
             </div>
             <div>
-              <select name="combo1" id="combo1" data-ng-model="game.name" data-ng-options="game for game in games"></select>
-              <button id="btn2" onclick="mostrarVentanaEmergente()" disabled="disabled">Jugar</button>
+              <ul>
+			    <li data-ng-repeat="game in games">
+			       <a href="#openModal"><span id="juegoElegido" data-ng-bind="game"></span></a>
+			    </li>
+			  </ul>
             </div>
-            
           </div>
         </div>
 
@@ -85,9 +87,7 @@
 			</div>
 		</div>
 
-
       </div>
-
     </div>
   </div>
 </body>
@@ -96,40 +96,19 @@
 
 <script>
   <!--ESTO ES JQUERY, PARA ACTIVAR EL BOTÓN UNA VEZ QUE ELEGIMOS JUEGO DEL COMBOBOX-->
-  function activarSegundoBoton() {
-    if (!$("#btn2").hasClass("Activo")) {
-      $("#btn2").addClass("Activo").prop('disabled', false);
-    }
+  function cancelar () {
+	  window.location.href = 'salaEspera.html';
   }
-
-  $("#combo1").change(function() {
-    var mitexto = $("#combo1 option:selected").text();
-    activarSegundoBoton();
-  });
   
-  function mostrarVentanaEmergente() {
-	  if ($("#combo1 option:selected").text()== "tictactoe") {
-	      window.location.href = '#openModal';
-	    }
-	  else if ($("#combo1 option:selected").text()== "Piedra, papel, tijera") {
-		  window.location.href = '#openModal';
-	  }
-	  else {
-		  alert("Error");
-	  }
-  }
-  function aceptar () {
-	  if ($("#combo1 option:selected").text()== "tictactoe") {
+  function aceptar() {
+	  if ($("#juegoElegido").text()== "tictactoe" ) {
 		  alert("tictactoe");
 	    }
-	  else if ($("#combo1 option:selected").text()== "Piedra, papel, tijera") {
+	  else if ($("#juegoElegido").text()== "Piedra, papel y tijera" ) {
 		  alert("Piedra, papel y tijera");
 	  }
 	  else {
 		  alert("Error");
 	  }
-  }
-  function cancelar () {
-	  window.location.href = 'salaEspera.html';
   }
 </script>

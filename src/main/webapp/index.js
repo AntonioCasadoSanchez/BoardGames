@@ -39,7 +39,6 @@ app.controller("GameController", function($scope, $http) {
 	        $scope.games=respuesta.data;
 	      }
 	    );
-	    sessionStorage.userName=response.userName;
 	  };
 });
 
