@@ -3,8 +3,9 @@
 	<title>Pepe Games</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="estilos/ventanaEmergente.css">
 	<link rel="stylesheet" href="estilos/main.css">
-	<!--  <link rel="stylesheet" href="estilos/ventanaEmergente.css">-->
+	
 	<link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet">
@@ -65,12 +66,12 @@
             <h2>Elige un juego:</h2>
             <div>
               <button data-ng-click="loadGames()">Juegos Disponibles</button>
-              <a href="ejemplochat.html">ir a chat</a>
             </div>
             <div>
               <select name="combo1" id="combo1" data-ng-model="game.name" data-ng-options="game for game in games"></select>
               <button id="btn2" onclick="mostrarVentanaEmergente()" disabled="disabled">Jugar</button>
             </div>
+            
           </div>
         </div>
 
@@ -103,7 +104,6 @@
 
   $("#combo1").change(function() {
     var mitexto = $("#combo1 option:selected").text();
-    //alert(mitexto);
     activarSegundoBoton();
   });
   
