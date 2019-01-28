@@ -46,9 +46,9 @@ public class UserControllerPost {
 		if (!pwd1.equals(pwd2))
 			throw new Exception("Error: las password no coinciden");
 		if (email.length() == 0)
-			throw new Exception("El email no puede ser vac�o");
+			throw new Exception("El email no puede ser vacio");
 		if (pwd1.length() < 3)
-			throw new Exception("La contrase�a tiene que tener 4 caracteres por lo menos");
+			throw new Exception("La password debe tener 4 caracteres por lo menos");
 		Player player = Player.register(email, userName, pwd1);
 		return player;// y esto?asdf
 	}
@@ -60,11 +60,10 @@ public class UserControllerPost {
 		return player;
 	}
 	
-	@RequestMapping(value = "/solicitarToken", method = RequestMethod.POST)
+	@RequestMapping(value = "/solicitarToken", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public Player solicitarToken(HttpSession session, String userName) throws Exception{
 		return Player.solicitarToken(userName);
 	}
-	
 	@RequestMapping(value = { "/joinGame",
 			"/post/joinGame" }, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public Match joinGamePost(HttpSession session, @RequestBody String gameName) throws Exception {

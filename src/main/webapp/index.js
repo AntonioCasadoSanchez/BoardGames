@@ -52,11 +52,14 @@ function onSignIn(googleUser){
 	req.open("POST", "registarOloguear");
 	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	req.onreadystatechange = function(response){
-		if(req.readyState==4 && req.status==200){
+		if(req.readyState==4){
+			if(req.status==200){
 			sessionStorage.userName=nombre;
 			sessionStorage.email=email;
 			window.location="salaEspera.html";
-		}else{
+			}else{
+				alert("problema cargando el perfil de google");
+			}
 		}
 	};
 	var p="idGoogle=" + idGoogle + "&nombre=" + nombre + "&email=" + email;

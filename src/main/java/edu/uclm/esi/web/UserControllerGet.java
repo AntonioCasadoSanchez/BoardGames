@@ -66,4 +66,6 @@ public class UserControllerGet {
 	public JSONArray games() throws Exception {
 		return Manager.get().getGames();
 	}
+	
+	
 }
