@@ -22,6 +22,7 @@
     <div class="header">
       <div class=header-foto>
     	<img id="imgFoto">
+    	<p id="fotoUsuario">FOTO</p>
       </div>
     
       <div class=header-content>
@@ -30,7 +31,7 @@
         <p class="parrafoHeader" id="showRanking">Ver Ranking</p>
         <p class="parrafoHeader" id="mail">E-Mail</p>
         <p class="parrafoHeader" id="opciones"><a href="cambiarOpciones.html">Opciones</a></p>
-        <p class="parrafoHeader" id="cerrarsesion" onclick="closeSession()">CerrarSesion</p>
+        <p class="parrafoHeader" id="cerrarsesion"><a href="#closeSession">CerrarSesion</a></p>
       </div>
       
     </div>
@@ -62,9 +63,10 @@
           <h1 class="title">Sala Principal</h1>
           <div class="JuegosContent">
             <h2>Elige un juego:</h2>
-            <ul>
-             <li><span><a id="selectGames" href='#openModal'></a></span></li>
-			  </ul>
+              <div>
+				<button  onclick="joinGame(this.id)" id="boton_ppt"><img src="/imagenes/ppt.jpg" height="200" width="300"/></button>
+				<button onclick="joinGame(this.id)" id="boton_destape"><img src="/imagenes/destape.jpg" height="200" width="300"/></button>
+			</div>
           </div>
         </div>
 
@@ -73,8 +75,18 @@
 				<a href="#close" title="Close" class="close">X</a>
 				<p class="comicate">PEPE GAMES</p>
 				<p>¿Quieres empezar una partida?</p>
-				<button type="submit" name="Aceptar" onclick= "aceptar()">Aceptar</button>
-				<button type="reset" onclick= "cancelar()">Cancelar</button>
+				<button type="submit" name="Aceptar">Aceptar</button>
+				<button type="reset" onclick= "cancelarCloseJuego()">Cancelar</button>
+			</div>
+		</div>
+		
+		<div id="closeSession" class="modalDialog">
+			<div>
+				<a href="#close" title="Close" class="close">X</a>
+				<p class="comicate">PEPE GAMES</p>
+				<p>¿Quieres cerrar la Sesión?</p>
+				<button type="submit" name="Si"onclick="closeSession()">Si</button>
+				<button type="reset" name="No" onclick= "cancelarCloseSession()">No</button>
 			</div>
 		</div>
 
@@ -86,20 +98,11 @@
 </html>
 
 <script>
-  <!--ESTO ES JQUERY, PARA ACTIVAR EL BOTÓN UNA VEZ QUE ELEGIMOS JUEGO DEL COMBOBOX-->
-  function cancelar () {
-	  window.location.href = 'salaEspera.html';
+
+  function cancelarCloseSession () {
+	  $("#closeSession").hide();
   }
-  
-  function aceptar() {
-	  if ($("#juegoElegido").text()== "tictactoe" ) {
-		  alert("tictactoe");
-	    }
-	  else if ($("#juegoElegido").text()== "Piedra, papel y tijera" ) {
-		  alert("Piedra, papel y tijera");
-	  }
-	  else {
-		  alert("Error");
-	  }
+  function cancelarCloseJuego () {
+	  $("#openModal").hide();
   }
 </script>

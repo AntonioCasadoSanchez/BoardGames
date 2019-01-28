@@ -1,6 +1,6 @@
 function inicio() {
 	controlSeguridad();
-	loadGames();
+	//loadGames();
 	ws = new WebSocket("ws://localhost:8080/gamews");
 	ws.onopen = function() {
 		mostrarInfoUsuario();
@@ -32,6 +32,23 @@ function loadGames() {
 				$("#selectGames").append(option);
 				
 			}
+		}
+	});
+}
+function joinGame(b) {
+	alert(b);
+	var gameName;
+	if (b == "boton_ppt") {
+		gameName="tictactoe";
+	}else if (b == "boton_destape") {
+		gameName="Destape";
+	}else {
+		alert("error");
+	}
+	
+	$.post("joinGame", gameName, function(respuesta, estado) {
+		if (estado=="success") {
+			alert("hola");
 		}
 	});
 }
