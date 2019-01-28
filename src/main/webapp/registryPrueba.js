@@ -21,7 +21,7 @@ app.controller("GameController", function($scope, $http) {
 					loadPage("index.html");
 				},
 				function(response) {
-					$scope.estado = "Mostrar el error aqui y no en la consola";
+					add("Error", "");
 				}
 		);
 	};
@@ -30,7 +30,6 @@ app.controller("GameController", function($scope, $http) {
 	};
 	function add(texto, parametro) {
 		$scope.estado = $scope.estado + texto;
-		$scope.estado = $scope.estado + "hola!";
 	};
 });
 function subirFoto(){

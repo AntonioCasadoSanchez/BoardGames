@@ -1,0 +1,21 @@
+.cambioContent{
+    width: 40%;
+    margin: auto;
+    height: 400px;
+    color:fff;
+    background-color: rgb(50, 55, 60);
+}
+.cambioPwdContent, .cambioFotoContent{
+    width: 70%;
+    margin: auto;
+    display: block;
+}
+.cambioFotoContent{
+    margin-top: 40px;
+}
+.cambioPwdContentButton{
+    width: 100%;
+}
+#btnCambio, #btnGuardar {
+    float: right;
+}

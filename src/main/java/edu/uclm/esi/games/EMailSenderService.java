@@ -39,7 +39,7 @@ public class EMailSenderService {
 
         MimeMessage msg = new MimeMessage(session);
         msg.setSubject("GamesPePe - recuperación de contraseña");
-        msg.setText("Pulsa en el siguiente enlace para crear una nueva contraseña: http://localhost:8080/actualizarPwd?code=" + codigo);
+        msg.setText("Pulsa en el siguiente enlace para crear una nueva contraseña: http://localhost:8080/cambiarOpciones?code=" + codigo);
         msg.setFrom(new InternetAddress(this.remitente));
         msg.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
         Transport.send(msg);

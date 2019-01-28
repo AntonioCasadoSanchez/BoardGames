@@ -53,7 +53,9 @@ function inicio() {
 			//add("Mensaje desconocido");
 		
 
-
+function closeSession(){
+	alert("Has cerrado sesion");
+}
 function mostrarInfoUsuario(){
 	document.getElementById("usuario").innerHTML = sessionStorage.userName;
 	document.getElementById("mail").innerHTML = sessionStorage.email;
@@ -64,8 +66,8 @@ function loadPage(url) {
 };
 function controlSeguridad() {
 	if(sessionStorage.userName == null){
-		alert("Has llegado aqui sin autenticarte, por favor, no seas tramposo.");
-		loadPage("error.html");
+		alert("Has llegado aqui sin autenticarte, por favor, inicia sesion.");
+		loadPage("index.html");
 	}
 };
 
@@ -106,7 +108,7 @@ function muestra(datos){
 	areaMensajes.innerHTML = msgMostrado;//actualiza el textarea con el contenido de msgmostrado.
 };
 function loadFoto(data){
-	imgFoto.src="data:image/jpeg;base64," + data.foto; //si admitimos otros tipos de archivos habria que
+	fotoUsuario.src="data:image/jpeg;base64," + data.foto; //si admitimos otros tipos de archivos habria que
 	//controlarlo, y luego dependiendo del tipo(añadido en el wserver donde ponermos el type foto) aqui se pone el image/jpeg
 	//o image/loquesea.
 }
