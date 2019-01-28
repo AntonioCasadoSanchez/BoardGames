@@ -1,6 +1,6 @@
 function inicio() {
 	controlSeguridad();
-	loadGames() ;
+	loadGames();
 	ws = new WebSocket("ws://localhost:8080/gamews");
 	ws.onopen = function() {
 		mostrarInfoUsuario();
@@ -16,6 +16,9 @@ function inicio() {
 		  }else if (data.TYPE=="FOTO"){
 			  loadFoto(data);
 		  }
+	}
+	ws.onclose = function(){
+		alert("adios");
 	}
 };
 
@@ -73,7 +76,8 @@ function mostrarInfoUsuario(){
 	document.getElementById("usuario").innerHTML = sessionStorage.userName;
 	document.getElementById("mail").innerHTML = sessionStorage.email;
 	document.getElementById("puntos").innerHTML = "10 pts";
-	document.getElementById("imgFoto").src = "data:image/jpeg;base64," + data.foto;
+	
+	//document.getElementById("imgFoto").src = "data:image/jpeg;base64," + data.foto;
 
 }
 function loadPage(url) {
@@ -123,7 +127,11 @@ function muestra(datos){
 	areaMensajes.innerHTML = msgMostrado;//actualiza el textarea con el contenido de msgmostrado.
 };
 function loadFoto(data){
-	fotoUsuario.src="data:image/jpg;base64," + data.foto; //si admitimos otros tipos de archivos habria que
+	
+	imgFoto.src="data:image/jpg;base64," + data.foto; 
+	logo = document.getElementById("imgFoto");
+	sessionStorage.foto = logo;
+	//si admitimos otros tipos de archivos habria que
 	//controlarlo, y luego dependiendo del tipo(añadido en el wserver donde ponermos el type foto) aqui se pone el image/jpeg
 	//o image/loquesea.
 }

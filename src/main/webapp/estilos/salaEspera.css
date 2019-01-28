@@ -14,9 +14,9 @@
 .header-foto{
   width:20%;
 }
-imgFoto{
-  width: 120px;
-  height: 100px;
+#imgFoto{	
+	width:100%;
+	max-height: 102px;
 }
 .header-content {
     width: 80%;

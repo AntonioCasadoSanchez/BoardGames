@@ -48,8 +48,9 @@ public class WSServer extends TextWebSocketHandler {
 		}
 		//comprobamos si tiene foto
 		byte[]foto=player.loadFoto();
-		if(foto!=null)//si hay foto, la mandamos a la sesion
+		if(foto!=null) {//si hay foto, la mandamos a la sesion
 			sendBinary(session,foto);
+		}
 		sessionsByPlayer.put(userName, session);
 	}
 	
@@ -94,6 +95,7 @@ public class WSServer extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed (WebSocketSession session, CloseStatus status) throws Exception {
 		//Deberemos comprobar si la session estaba en partida, y si es asi dar la sesion por finalizada
+		System.out.println("Cierre de sesion");
 	}
 	
 	/*******************************************************/
