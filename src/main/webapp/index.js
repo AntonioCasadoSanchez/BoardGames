@@ -33,13 +33,13 @@ app.controller("GameController", function($scope, $http) {
 		$scope.estado = $scope.estado + texto;
 		$scope.estado = $scope.estado + "hola!";
 	};
-	$scope.loadGames = function() {
+	/*$scope.loadGames = function() {
 	    $http.get("/games").then(
 	      function(respuesta) {
 	        $scope.games=respuesta.data;
 	      }
 	    );
-	  };
+	  };*/
 });
 
 function onSignIn(googleUser){

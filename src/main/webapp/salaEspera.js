@@ -1,7 +1,6 @@
 function inicio() {
 	controlSeguridad();
-	//alert(sessionStorage.userName);//mostrar el contenido de este mensaje en los divs de arriba.
-	//alert(sessionStorage.email);
+	loadGames() ;
 	ws = new WebSocket("ws://localhost:8080/gamews");
 	ws.onopen = function() {
 		mostrarInfoUsuario();
@@ -19,6 +18,20 @@ function inicio() {
 		  }
 	}
 };
+
+function loadGames() {
+	$.get("/games", function(respuesta, estado) {
+		if (estado=="success") {
+			for (var i=0; i<respuesta.length; i++) {
+				var option=document.createElement("option");
+				option.setAttribute("value", respuesta[i]);
+				option.innerHTML=respuesta[i];
+				$("#selectGames").append(option);
+				
+			}
+		}
+	});
+}
 		
 		/**if (mensaje.tipo=="mensajeChat"){
 		message=JSON.parse(message.data);

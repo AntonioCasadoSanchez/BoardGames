@@ -59,22 +59,13 @@
           </div>
         </div>
 
-
-
-        <div class="salaJuegos">
+         <div class="salaJuegos">
           <h1 class="title">Sala Principal</h1>
           <div class="JuegosContent">
             <h2>Elige un juego:</h2>
-            <div>
-              <button data-ng-click="loadGames()">Juegos Disponibles</button>
-            </div>
-            <div>
-              <ul>
-			    <li data-ng-repeat="game in games">
-			       <a href="#openModal"><span id="juegoElegido" data-ng-bind="game"></span></a>
-			    </li>
+            <ul>
+             <li><span><a id="selectGames" href='#openModal'></a></span></li>
 			  </ul>
-            </div>
           </div>
         </div>
 
