@@ -48,7 +48,10 @@ public class UserControllerGet {
 		session.setAttribute("player", player);
 		return player;
 	}
-	
+	@RequestMapping(value = "/cambiarOpciones", method = RequestMethod.GET)
+	public void cambiarOpciones(HttpSession session, @RequestParam(value = "code") String code) throws Exception {
+		//System.out.println("hola");
+	}
 	/***********************************/
 	/** METODO PARA EMPEZAR LA PARTIDA**/
 	/***********************************/

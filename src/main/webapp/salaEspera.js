@@ -60,6 +60,8 @@ function mostrarInfoUsuario(){
 	document.getElementById("usuario").innerHTML = sessionStorage.userName;
 	document.getElementById("mail").innerHTML = sessionStorage.email;
 	document.getElementById("puntos").innerHTML = "10 pts";
+	document.getElementById("imgFoto").src = "data:image/jpeg;base64," + data.foto;
+
 }
 function loadPage(url) {
 	window.location.assign(url);
@@ -108,8 +110,38 @@ function muestra(datos){
 	areaMensajes.innerHTML = msgMostrado;//actualiza el textarea con el contenido de msgmostrado.
 };
 function loadFoto(data){
-	fotoUsuario.src="data:image/jpeg;base64," + data.foto; //si admitimos otros tipos de archivos habria que
+	fotoUsuario.src="data:image/jpg;base64," + data.foto; //si admitimos otros tipos de archivos habria que
 	//controlarlo, y luego dependiendo del tipo(añadido en el wserver donde ponermos el type foto) aqui se pone el image/jpeg
 	//o image/loquesea.
 }
+function previewFile() {
+	  var preview = document.querySelector('img');
+	  var file    = document.querySelector('input[type=file]').files[0];
+	  var reader  = new FileReader();
 
+	  reader.onloadend = function () {
+	    preview.src = reader.result;
+	  }
+
+	  if (file) {
+	    reader.readAsDataURL(file);
+	  } else {
+	    preview.src = "";
+	  }
+	}
+
+	function subirFoto(){
+		var file=fotofile.files[0];
+		var reader=new FileReader();
+		
+		reader.onload=function(e){
+			var blob = new Blob([reader.result, 'P']);
+			var blobReader = new FileReader();
+			blobReader.onload = function(event) {
+				var buffer = event.target.result;
+				ws.send(buffer);
+			};
+			blobReader.readAsArrayBuffer(blob);
+		}
+		reader.readAsArrayBuffer(file);
+	}

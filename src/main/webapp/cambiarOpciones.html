@@ -15,7 +15,7 @@
 	<script src="index.js"></script>
 </head>
 
-<body>
+<body onload="inicio()">
 	<div class="contentMain">
 		<!-- onload="inicio()"-->
 		<div class=header-content>
@@ -30,7 +30,7 @@
 		<div class="cambioContent">
 			
 			<div class="cambioPwdContent">
-<p class="title">Cambio de Contraseña</p>
+				<p class="title">Cambio de Contraseña</p>
 				<p>Contraseña antigua</p>
 				<input type="password" id="oldPass" />
 				<p>Contraseña nueva</p>
@@ -45,7 +45,8 @@
 			
 			<div class="cambioFotoContent">
 				<p class="title">Cambio de Avatar</p>
-				<input type="file">
+				<input type="file" id="fotofile" onchange="previewFile()"><br>
+				<img src="" height="200" alt="Image preview...">
 				<div class="cambioPwdContentButton">
 				<button onclick="subirFoto()" class="btnInicio" id="btnGuardar">Guardar</button>
 				</div>

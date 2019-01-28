@@ -32,21 +32,7 @@ app.controller("GameController", function($scope, $http) {
 		$scope.estado = $scope.estado + texto;
 	};
 });
-function subirFoto(){
-	var file=fileToUpload.files[0];
-	var reader=new FileReader();
-	
-	reader.onload=function(e){
-		var blob = new Blob([reader.result, 'P']);
-		var blobReader = new FileReader();
-		blobReader.onload = function(event) {
-			var buffer = event.target.result;
-			chat.send(buffer);
-		};
-		blobReader.readAsArrayBuffer(blob);
-	}
-	reader.readAsArrayBuffer(file);
-}
+
 
 
 
