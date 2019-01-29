@@ -17,12 +17,21 @@ public class Token {
 		this.caducidad=System.currentTimeMillis() + 5*60*1000;
 		this.valor= UUID.randomUUID().toString();
 	}
+	public Token() {
+		
+	}
 	
 	public String getValor() {
 		return this.valor;
 	}
 	public void setValor(String valor) {
 		this.valor=valor;
+	}
+	public long getCaducidad() {
+		return this.caducidad;
+	}
+	public String getUserName() {
+		return this.userName;
 	}
 	
 	

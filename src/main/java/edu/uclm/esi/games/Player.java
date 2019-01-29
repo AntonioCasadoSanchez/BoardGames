@@ -2,8 +2,11 @@ package edu.uclm.esi.games;
 
 import org.bson.BsonDocument;
 import org.bson.BsonString;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.uclm.esi.mongolabels.dao.MongoBroker;
 import edu.uclm.esi.mongolabels.labels.Bsonable;
@@ -136,5 +139,54 @@ public class Player {
 		}catch(Exception e){
 			return null;
 		}
+	}
+
+	public boolean changePass(JSONObject jso) throws JSONException {
+		boolean resultado = false;
+		String old = jso.getString("vieja");
+		String nueva = jso.getString("nueva");
+		BsonDocument criterion = new BsonDocument();
+		criterion.append("userName",  new BsonString(this.userName));
+		Player playera = null;
+		if(old.equals(this.pwd)) {
+			try {
+					playera = (Player) MongoBroker.get().loadOne(Player.class, criterion);
+					MongoBroker.get().delete("Player", criterion);
+					playera.setPwd(nueva);
+					MongoBroker.get().insert(playera);
+					resultado= true;
+			}catch(Exception e) {
+				System.out.println("Ha habido algun problema cambiando la password");
+				return resultado;
+			}
+		}
+		return resultado;
+		
+	}
+
+	public static boolean actualizarPass(JSONObject jso) throws JSONException {
+		boolean resultado = false;
+		String nueva = jso.getString("nueva");
+		String token = jso.getString("token");
+		BsonDocument criterion = new BsonDocument();
+		criterion.append("valor",  new BsonString(token));
+		Player playera = null;
+		Token toki = null;
+		try {
+			toki = (Token) MongoBroker.get().loadOne(Token.class, criterion);
+			if(toki.getCaducidad() < System.currentTimeMillis()) {
+				return resultado;
+			}
+			BsonDocument criterion2 = new BsonDocument();
+			criterion2.append("userName", new BsonString(toki.getUserName()));
+			playera = (Player) MongoBroker.get().loadOne(Player.class, criterion2);
+			MongoBroker.get().delete("Player", criterion2);
+			playera.setPwd(nueva);
+			MongoBroker.get().insert(playera);
+			resultado = true;
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		return resultado;
 	}
 }

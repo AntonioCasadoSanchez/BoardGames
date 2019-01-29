@@ -40,18 +40,22 @@ public class WSServer extends TextWebSocketHandler {
 	/**OnOpen**/
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		sessionsById.put(session.getId(), session);
-		Player player = (Player) session.getAttributes().get("player");
-		String userName=player.getUserName();
-		if (sessionsByPlayer.get(userName)!=null) {
-			sessionsByPlayer.remove(userName);
+		if(session.getAttributes().get("tipo") != null) {
+			sessionsById.put(session.getId(), session);
+			Player player = (Player) session.getAttributes().get("player");
+			String userName=player.getUserName();
+			if (sessionsByPlayer.get(userName)!=null) {
+				sessionsByPlayer.remove(userName);
+			}
+			//comprobamos si tiene foto
+			byte[]foto=player.loadFoto();
+			if(foto!=null) {//si hay foto, la mandamos a la sesion
+				sendBinary(session,foto);
+			}
+			sessionsByPlayer.put(userName, session);
+		}else {
+			
 		}
-		//comprobamos si tiene foto
-		byte[]foto=player.loadFoto();
-		if(foto!=null) {//si hay foto, la mandamos a la sesion
-			sendBinary(session,foto);
-		}
-		sessionsByPlayer.put(userName, session);
 	}
 	
 	private void sendBinary(WebSocketSession session, byte[] foto) throws IOException {
@@ -77,8 +81,34 @@ public class WSServer extends TextWebSocketHandler {
 		if(jso.getString("TYPE").equals("MENSAJE")) {
 			sendChat(session, jso);
 		}
+		if(jso.getString("TYPE").equals("PASSWORDTOKEN")) {
+			changePassToken(session, jso);
+		}
+		if(jso.getString("TYPE").equals("PASSWORD")) {
+			changePass(session,jso);
+		}
 	}
 	
+	private static void changePass(WebSocketSession session, JSONObject jso) throws JSONException, IOException {
+		Player player = (Player) session.getAttributes().get("player");
+		if(player.changePass(jso)) {
+		JSONObject obj = new JSONObject();
+		obj.put("TYPE",	"PASS");
+		WebSocketMessage<?> message= new TextMessage(obj.toString());
+		session.sendMessage(message);
+		}
+	}
+
+	private static void changePassToken(WebSocketSession session, JSONObject jso) throws JSONException, IOException {
+		if(Player.actualizarPass(jso)) {
+			JSONObject obj = new JSONObject();
+			obj.put("TYPE",	"PASS");
+			WebSocketMessage<?> message= new TextMessage(obj.toString());
+			session.sendMessage(message);
+		}
+		
+	}
+
 	@Override
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
 		Player player = (Player) session.getAttributes().get("player");
@@ -96,6 +126,7 @@ public class WSServer extends TextWebSocketHandler {
 	public void afterConnectionClosed (WebSocketSession session, CloseStatus status) throws Exception {
 		//Deberemos comprobar si la session estaba en partida, y si es asi dar la sesion por finalizada
 		System.out.println("Cierre de sesion");
+		//Debemos tambien sacarlos de la lista de cosas.
 	}
 	
 	/*******************************************************/

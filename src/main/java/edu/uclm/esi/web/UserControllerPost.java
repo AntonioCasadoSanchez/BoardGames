@@ -57,6 +57,7 @@ public class UserControllerPost {
 	public Player loginPost(HttpSession session, String userName, String pwd) throws Exception {
 		Player player = Player.identify(userName, pwd);
 		session.setAttribute("player", player);
+		session.setAttribute("tipo", "login");
 		return player;
 	}
 	
