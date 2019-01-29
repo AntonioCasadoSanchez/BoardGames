@@ -39,6 +39,7 @@ public class UserControllerPost {
 			player=Player.identifyGoogle(idGoogle, nombre, email);
 		}
 		session.setAttribute("player", player);
+		session.setAttribute("tipo", "login");
 		return player;
 	}
 	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
