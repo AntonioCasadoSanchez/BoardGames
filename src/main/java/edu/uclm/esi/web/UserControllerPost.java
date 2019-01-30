@@ -61,7 +61,15 @@ public class UserControllerPost {
 		session.setAttribute("tipo", "login");
 		return player;
 	}
-	
+
+	@RequestMapping(value = "/controlSeguridad", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public boolean controlSeguridad(HttpSession session) throws Exception {
+		boolean resultado = false;
+		if(session.getAttribute("player")!=null) {
+			resultado=true;
+		}
+		return resultado;
+	}
 	@RequestMapping(value = "/solicitarToken", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public Player solicitarToken(HttpSession session, String userName) throws Exception{
 		return Player.solicitarToken(userName);

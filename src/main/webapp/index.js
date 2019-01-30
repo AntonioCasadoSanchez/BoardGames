@@ -14,8 +14,10 @@ app.controller("GameController", function($scope, $http) {
 		};
 		$http.post(recurso, data, config).then(
 				function(response){
+					/**borrar luego**/
 					sessionStorage.userName=response.data.userName;
 					sessionStorage.email=response.data.email;
+					/****************/
 					loadPage("salaEspera.html");
 				},
 				function(response) {

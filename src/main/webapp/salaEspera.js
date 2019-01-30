@@ -37,6 +37,9 @@ function loadGames() {
 }
 function joinGame(b) {
 	alert(b);
+	loadPage
+	
+	alert(b);
 	var gameName;
 	if (b == "boton_ppt") {
 		gameName="tictactoe";
@@ -100,11 +103,23 @@ function mostrarInfoUsuario(){
 function loadPage(url) {
 	window.location.assign(url);
 };
-function controlSeguridad() {
-	if(sessionStorage.userName == null){
-		alert("Has llegado aqui sin autenticarte, por favor, inicia sesion.");
-		loadPage("index.html");
-	}
+function controlSeguridad() {	
+	var req= new XMLHttpRequest();
+	req.open("POST", "controlSeguridad");
+	req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	req.onreadystatechange = function(response){
+		if(req.readyState==4){
+			if(req.status==200){
+				if(!response.returnValue){
+					alert("Has llegado aqui sin autenticarte, por favor, inicia sesion.");
+					loadPage("index.html");
+				}
+			}else{
+				alert("problema con la peticion http");
+			}
+		}
+	};
+	req.send();
 };
 
 function enviarChat() {

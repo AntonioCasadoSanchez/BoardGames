@@ -1,9 +1,6 @@
 var token = "";
 function inicio() {
 	controlSeguridad();
-	if(token){
-		var tipo = "mail";
-	}
 	ws = new WebSocket("ws://localhost:8080/gamews");
 	ws.onopen = function() {
 		mostrarInfoUsuario();
@@ -83,7 +80,7 @@ function controlSeguridad() {
 		document.getElementById("oldPass").style.display = "none";
 		token = true;
 		
-	}else if(sessionStorage.userName == null){
+	}else if(sessionStorage.userName == null){//Aqui tambien hay que hacer la comprobacion
 		alert("Has llegado aqui sin autenticarte, por favor, inicia sesion.");
 		loadPage("index.html");
 	}else{
