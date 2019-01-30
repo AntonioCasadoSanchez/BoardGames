@@ -100,13 +100,18 @@ public class WSServer extends TextWebSocketHandler {
 	}
 
 	private static void changePassToken(WebSocketSession session, JSONObject jso) throws JSONException, IOException {
-		if(Player.actualizarPass(jso)) {
 			JSONObject obj = new JSONObject();
+		try {
+			Player.actualizarPass(jso) ;
 			obj.put("TYPE",	"PASS");
-			WebSocketMessage<?> message= new TextMessage(obj.toString());
-			session.sendMessage(message);
+			
 		}
-		
+		catch (Exception e) {
+			obj.put("TYPE",	"ERROR");
+			obj.put("TEXTO",  e.getMessage());
+		}
+		WebSocketMessage<?> message= new TextMessage(obj.toString());
+		session.sendMessage(message);
 	}
 
 	@Override

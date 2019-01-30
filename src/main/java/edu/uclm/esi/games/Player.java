@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.uclm.esi.mongolabels.dao.MongoBroker;
+import edu.uclm.esi.mongolabels.dao.Object2Bson;
 import edu.uclm.esi.mongolabels.labels.Bsonable;
 
 public class Player {
@@ -153,7 +154,8 @@ public class Player {
 					playera = (Player) MongoBroker.get().loadOne(Player.class, criterion);
 					MongoBroker.get().delete("Player", criterion);
 					playera.setPwd(nueva);
-					MongoBroker.get().insert(playera);
+					BsonDocument bsoPlayer = Object2Bson.getBsonDocument(playera);
+					MongoBroker.get().insertBson(Player.class, bsoPlayer);
 					resultado= true;
 			}catch(Exception e) {
 				System.out.println("Ha habido algun problema cambiando la password");
@@ -164,7 +166,7 @@ public class Player {
 		
 	}
 
-	public static boolean actualizarPass(JSONObject jso) throws JSONException {
+	public static boolean actualizarPass(JSONObject jso) throws Exception {
 		boolean resultado = false;
 		String nueva = jso.getString("nueva");
 		String token = jso.getString("token");
@@ -172,7 +174,6 @@ public class Player {
 		criterion.append("valor",  new BsonString(token));
 		Player playera = null;
 		Token toki = null;
-		try {
 			toki = (Token) MongoBroker.get().loadOne(Token.class, criterion);
 			if(toki.getCaducidad() < System.currentTimeMillis()) {
 				return resultado;
@@ -184,9 +185,6 @@ public class Player {
 			playera.setPwd(nueva);
 			MongoBroker.get().insert(playera);
 			resultado = true;
-		}catch(Exception e) {
-			System.out.println(e);
-		}
 		return resultado;
 	}
 }
