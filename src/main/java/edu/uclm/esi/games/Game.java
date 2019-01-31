@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.uclm.esi.web.ws.WSServer;
@@ -23,13 +24,15 @@ public abstract class Game {
 
 	public abstract String getName();
 
-	public Match getMatch(Player player) {
+	public Match getMatch(Player player) throws JSONException {
 		Match match;
 		if (this.pendingMatches.size()==0) {
 			match=createMatch();
 			match.addPlayer(player);
 			pendingMatches.add(match);
+			WSServer.waitPlayer(player);
 		} else {
+			//VOY POR AQUI.
 			match=this.pendingMatches.get(0);
 			match.addPlayer(player);
 			if (match.getPlayers().size()==this.numberOfPlayers) {

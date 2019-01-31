@@ -110,7 +110,7 @@ function controlSeguridad() {
 	req.onreadystatechange = function(response){
 		if(req.readyState==4){
 			if(req.status==200){
-				if(!response.returnValue){
+				if(req.responseText != "true"){
 					alert("Has llegado aqui sin autenticarte, por favor, inicia sesion.");
 					loadPage("index.html");
 				}

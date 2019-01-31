@@ -10,6 +10,7 @@ import edu.uclm.esi.games.Game;
 import edu.uclm.esi.games.Match;
 import edu.uclm.esi.games.Player;
 import edu.uclm.esi.games.ppt.PPT;
+import edu.uclm.esi.games.sudoku.SudokuGame;
 import edu.uclm.esi.games.tictactoe.TictactoeGame;
 
 public class Manager {
@@ -21,7 +22,8 @@ public class Manager {
 		games.put(tictactoe.getName(), tictactoe);
 		Game ppt = new PPT();
 		games.put(ppt.getName(),ppt);
-		//HABRA QUE QUITAR EL TICTACTOE Y METER EL DESTAPE.
+		Game sudoku = new SudokuGame();
+		games.put(sudoku.getName(),sudoku);
 	}
 	
 	private static class ManagerHolder {
@@ -34,9 +36,10 @@ public class Manager {
 
 	/*******************************/
 	/**Metodos de la clase Manager**/
-	/*******************************/
+	/**
+	 * @throws JSONException *****************************/
 	
-	public Match joinGame(Player player, String gameName) {
+	public Match joinGame(Player player, String gameName) throws JSONException {
 		Game game=this.games.get(gameName);
 		return game.getMatch(player);
 	}
