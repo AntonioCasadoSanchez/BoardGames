@@ -1,0 +1,71 @@
+@import url(http: //fonts.googleapis.com/css?family=Open+Sans);
+@font-face {
+	font-family: 'Conv_COMICATE';
+	src: url('fonts/COMICATE.eot');
+	src: local('☺'), url('fonts/COMICATE.woff') format('woff'), url('fonts/COMICATE.ttf') format('truetype'), url('fonts/COMICATE.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+	
+}
+body {
+  margin: 0;
+  /*font-family: 'Open Sans'sans-serif;*/
+  font-family: 'Raleway', sans-serif;
+  background-color:lightsteelblue
+}
+.comicate {
+  font-family: 'Conv_COMICATE', Sans-Serif;
+  text-align: center;
+  font-size: 35px;
+  margin-top: 30px;
+  margin-bottom: 5px;
+    color: white;
+}
+.ppttableCont{
+    width: 50%;
+	margin: auto;
+    margin-top: 30px;
+	display: flex;
+	flex-wrap: wrap;
+}
+th {
+    background-color: darkgreen;
+    color: white;
+    height: 40px;
+}
+.celdaj{
+     background-color: yellowgreen;
+    color: white;
+    
+}
+.seleccion{
+    width: 40%;
+	margin: auto;
+	margin-top: 10px;
+	display: flex;
+	flex-wrap: wrap;
+}
+.selj{
+    width:auto;
+    margin: auto;
+    border-color: black;
+    border: 6px solid darkblue;
+}
+
+.opcionesPpt{
+	width: 50%;
+	margin: auto;
+	margin-top: 10px;
+	display: flex;
+	flex-wrap: wrap;
+}
+.btnPpt{
+	width: auto;
+	margin: auto;
+    border: 6px solid #0074a5;
+	border-top: 1px solid #004370;
+	border-left: 1px solid #004370;
+}
+.btnPpt img{
+  	cursor: pointer;
+}

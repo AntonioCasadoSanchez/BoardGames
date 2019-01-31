@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: games
 Implementation-Version: 0.1.0
-Built-By: Anton
+Built-By: rizos
 Implementation-Vendor-Id: edu.uclm.esi
-Build-Jdk: 1.8.0_191
+Build-Jdk: 1.8.0_171
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/games
 Created-By: Maven Integration for Eclipse

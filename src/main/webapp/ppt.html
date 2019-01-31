@@ -1,10 +1,85 @@
 
 <html>
-	<head>
-		
-	</head>
-	
-	<body>
-		Esto es Piedra, papel y tijera
-	</body>
+<head>
+    <title>PPTgame</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, inital-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
+    <link href="http: //fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+    <link rel="stylesheet" href="estilos/main.css">
+    <script src="indexppt.js"></script>
+</head>
+
+<body>
+    <div class="tablero_ppt">
+        <div class="content-text">
+            <p class="comicate">pepegames</p>
+        </div>
+        <div class="content-text">
+            <p class="comicate">Piedra Papel Tijera</p>
+        </div>
+        <div class="ppttableCont">
+            <table class="tablejugadas">
+                <tr>
+                    <th class="enc_table">Players</th>
+                    <th class="enc_table">Jugada 1</th>
+                    <th class="enc_table">Jugada 2</th>
+                    <th class="enc_table">Jugada 3</th>
+                </tr>
+                <tr>
+                    <td>
+                        <input  type="text" class="celdaj" id="cej1">
+                    </td>
+                    <td>
+                        <input maxlength="1" type="text" class="celda" id="ce01">
+                    </td>
+                    <td>
+                        <input maxlength="1" type="text" class="celda" id="ce02">
+                    </td>
+                    <td>
+                        <input maxlength="1" type="text" class="celda" id="ce03">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                         <input type="text" class="celdaj" id="cej2">
+                    </td>
+                    <td>
+                         <input maxlength="1" type="text" class="celda" id="ce04">
+                    </td>
+                    <td>
+                         <input maxlength="1" type="text" class="celda" id="ce05">
+                    </td>
+                    <td> <input maxlength="1" type="text" class="celda" id="ce06"></td>
+                </tr>
+
+            </table>
+
+        </div>
+        <div class="seleccion">
+           <div class="selj" id="selj1">
+               <img src="img/interrogante.png" alt="">
+               
+           </div>
+           <div class="selj"  id="selj2">
+             <img src="/imagenes/interrogante.png" alt="">
+           </div>
+            
+        </div>
+        <div class="opcionesPpt">
+            <div class="btnPpt">
+                <button class="btnUser" onclick="opcion(0);"><img src="/imagenes/piedra.JPG"></button>
+            </div>
+            <div class="btnPpt">
+                <button class="btnUser" onclick="opcion(1);"> <img src="/imagenes/papel.JPG" /></button>
+            </div>
+            <div class="btnPpt">
+                <button class="btnUser" onclick="opcion(3);"> <img src="/imagenes/tijera.JPG" /></button>
+            </div>
+
+        </div>
+    </div>
+</body>
 </html>
