@@ -1,3 +1,4 @@
+var cont = 0;
 function inicio() {
 	controlSeguridad();
 };
@@ -55,4 +56,27 @@ function joinGame() {
 function empezarPartida(data) {
 	alert("La partida entre " + data.Player1 + " y " + data.Player2
 			+ " va a comenzar");
+	timerOn();
+	setInterval('timerOn()',2000);
+}
+function timerOn(){
+	var contador = document.getElementById("timer");
+	var hours = 00;
+	var minutes = 00;
+	var seconds = cont;
+	if(cont>59){
+		var aux = Math.floor(cont/60);
+		seconds = cont - (60*aux);
+		minutes = aux;
+		if(minutes>59){
+			var aux2=60*24;
+			var aux3= Math.floor(aux/aux2);
+			minutes = aux - (60*aux3);
+			hours=aux3;
+		}
+		
+	}
+	contador.innerHTML = hours + ":"
+	  + minutes + ":" + seconds;
+	cont++;
 }
