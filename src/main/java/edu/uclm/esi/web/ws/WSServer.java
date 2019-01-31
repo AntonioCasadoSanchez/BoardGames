@@ -262,8 +262,7 @@ public class WSServer extends TextWebSocketHandler {
 			obj.put("tablero", SudokuBoard.cargarTableroInicial());
 			WebSocketMessage<?> message = new TextMessage(obj.toString());
 			session.sendMessage(message);
-		}
-		
+		}	
 	}
 
 	// Metodo que crea un objeto de tipo Match para crear la partida

@@ -35,11 +35,13 @@ function abrirWS() {
 		data = JSON.parse(data);
 		if (data.TYPE == "WAIT") {
 			alert(data.mensaje);
-		} else if (data.TYPE == "PARTIDA") {
+		}else if (data.TYPE == "PARTIDA") {
 			empezarPartida(data);
 		}else if (data.TYPE=="CERRAR"){
 			  ws.onclose();
-		  }
+		}else if (data.TYPE=="TABLEROINICIAL"){
+			cargarTableroInicial(data.tablero);
+		}
 	}
 	ws.onclose = function() {
 		alert("Conexion cerrada por el servidor");
@@ -87,4 +89,23 @@ function timerOn(){
 	contador.innerHTML = hours + ":"
 	  + minutes + ":" + seconds;
 	cont++;
+}
+function cargarTableroInicial(tablero){
+	var tablerito=tablero.toString();
+	var valor="";
+	var i,j,cont=0;
+	var id="c";
+	var casilla;
+	for (i = 0; i < 9; i++) {
+		for(j=0; j<9; j++){
+			var res = id.concat(i).concat(j);
+			casilla= document.getElementById(res);
+			valor = tablerito.charAt(cont);
+			if(valor=="0"){
+				valor="";
+			}
+			casilla.value=valor;
+			cont++;
+		}
+	}
 }
