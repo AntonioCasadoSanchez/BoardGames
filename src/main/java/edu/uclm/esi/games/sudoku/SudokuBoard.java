@@ -5,6 +5,10 @@ import edu.uclm.esi.games.Player;
 import edu.uclm.esi.games.ppt.PPTMatch;
 
 public class SudokuBoard extends Board {
+	
+	private final static String BoardSolucion ="762184935149235678358796124935428716871659342624317859483561297297843561516972483";
+	private final static String BoardInicial = "060000030009000008008700104000400006801600300004307050400001007097000060500000400";
+	
 
 	/**private final static int PIEDRA = 0;
 	private final static int PAPEL = 1;
@@ -27,6 +31,12 @@ public class SudokuBoard extends Board {
 		} else {
 			//pos = rellenar(tiradas1, coordinates[0]);
 		}
+	}
+	public static String cargarTableroSolucion() {
+		return BoardSolucion;
+	}
+	public static String cargarTableroInicial() {
+		return BoardInicial;
 	}
 /**
 	private int rellenar(int[] tiradas, int valor) {

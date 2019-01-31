@@ -49,7 +49,7 @@ function abrirWS() {
 function joinGame() {
 	var mensaje = {
 		TYPE : "JUGAR",
-		juego : "sudoku",
+		juego : "sudoku"
 	}
 	ws.send(JSON.stringify(mensaje));
 }
@@ -58,6 +58,14 @@ function empezarPartida(data) {
 			+ " va a comenzar");
 	timerOn();
 	setInterval('timerOn()',2000);
+	var mensaje = {
+			TYPE : "SUDOKU",
+			funcion : "cargar",
+			player1: data.Player1,
+			player2: data.Player2,
+			
+		}
+		ws.send(JSON.stringify(mensaje));
 }
 function timerOn(){
 	var contador = document.getElementById("timer");

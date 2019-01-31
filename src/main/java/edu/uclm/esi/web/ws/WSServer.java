@@ -31,8 +31,10 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import edu.uclm.esi.games.Board;
 import edu.uclm.esi.games.Match;
 import edu.uclm.esi.games.Player;
+import edu.uclm.esi.games.sudoku.SudokuBoard;
 import edu.uclm.esi.mongolabels.dao.MongoBroker;
 import edu.uclm.esi.web.Manager;
 
@@ -96,8 +98,12 @@ public class WSServer extends TextWebSocketHandler {
 				sendBinary(session, foto);
 			}
 		}
+		if (jso.getString("TYPE").equals("SUDOKU")) {
+			manejadorSudoku(session, jso);
+		}
 
 	}
+
 
 	/** OnMessage para recibir ristras binarias **/
 	@Override
@@ -245,8 +251,20 @@ public class WSServer extends TextWebSocketHandler {
 	}
 
 	/**********************************************************/
-	/** Metodos que se comunican con la parte del dominio **/
+	/*** Metodos que se comunican con la parte del dominio ***/
 	/********************************************************/
+	
+	//Metodo que maneja la comunicacion del juego del Sudoku
+	private void manejadorSudoku(WebSocketSession session, JSONObject jso) throws JSONException, IOException {
+		if(jso.getString("funcion").equals("cargar")) {
+			JSONObject obj = new JSONObject();
+			obj.put("TYPE", "TABLEROINICIAL");
+			obj.put("tablero", SudokuBoard.cargarTableroInicial());
+			WebSocketMessage<?> message = new TextMessage(obj.toString());
+			session.sendMessage(message);
+		}
+		
+	}
 
 	// Metodo que crea un objeto de tipo Match para crear la partida
 	public static void joinGame(WebSocketSession session, JSONObject jso) throws JSONException, IOException {
