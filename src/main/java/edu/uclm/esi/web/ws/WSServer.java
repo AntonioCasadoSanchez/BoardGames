@@ -264,7 +264,7 @@ public class WSServer extends TextWebSocketHandler {
 			session.sendMessage(message);
 		}	
 	}
-
+	
 	// Metodo que crea un objeto de tipo Match para crear la partida
 	public static void joinGame(WebSocketSession session, JSONObject jso) throws JSONException, IOException {
 		String gameName = jso.getString("juego");
