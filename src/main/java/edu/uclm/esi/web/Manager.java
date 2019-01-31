@@ -1,5 +1,6 @@
 package edu.uclm.esi.web;
 
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
@@ -37,9 +38,10 @@ public class Manager {
 	/*******************************/
 	/**Metodos de la clase Manager**/
 	/**
-	 * @throws JSONException *****************************/
+	 * @throws JSONException 
+	 * @throws IOException *****************************/
 	
-	public Match joinGame(Player player, String gameName) throws JSONException {
+	public Match joinGame(Player player, String gameName) throws JSONException, IOException {
 		Game game=this.games.get(gameName);
 		return game.getMatch(player);
 	}

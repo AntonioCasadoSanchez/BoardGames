@@ -1,5 +1,6 @@
 package edu.uclm.esi.games;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +25,7 @@ public abstract class Game {
 
 	public abstract String getName();
 
-	public Match getMatch(Player player) throws JSONException {
+	public Match getMatch(Player player) throws JSONException, IOException {
 		Match match;
 		if (this.pendingMatches.size()==0) {
 			match=createMatch();
@@ -32,14 +33,14 @@ public abstract class Game {
 			pendingMatches.add(match);
 			WSServer.waitPlayer(player);
 		} else {
-			//VOY POR AQUI.
 			match=this.pendingMatches.get(0);
 			match.addPlayer(player);
 			if (match.getPlayers().size()==this.numberOfPlayers) {
 				match=this.pendingMatches.remove(0);
 				inPlayMatches.put(match.getId(), match);
 				match.calculateFirstPlayer();
-				WSServer.send(match.getPlayers(), match);
+				WSServer.inicioPartida(match.getPlayers(), match);
+				//WSServer.send(match.getPlayers(), match);
 				
 			}
 		}

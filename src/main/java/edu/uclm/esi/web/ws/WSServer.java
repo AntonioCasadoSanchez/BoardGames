@@ -49,53 +49,28 @@ public class WSServer extends TextWebSocketHandler {
 	/** OnOpen **/
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		if (session.getAttributes().get("tipo") != null) {
-						
-			sessionsById.put(session.getId(), session);
-			Player player = (Player) session.getAttributes().get("player");
-			String userName = player.getUserName();
-			
-			for (Iterator<Map.Entry<String, WebSocketSession>> it2 = sessionsByPlayer.entrySet().iterator(); it2
-					.hasNext();) {
-				Map.Entry<String, WebSocketSession> entry2 = it2.next();
-				if (entry2.getValue().equals(userName)) {
-					//No dejar que ws se abra.
-				}
+		// if (session.getAttributes().get("tipo") != null) {
+		sessionsById.put(session.getId(), session);
+		Player player = (Player) session.getAttributes().get("player");
+		String userName = player.getUserName();
 
-			}
-			
-			sessionsByPlayer.put(userName, session);
-			
-			/**if (sessionsByPlayer.get(userName) != null) {
-				sessionsByPlayer.remove(userName);
-			}**/
-			// comprobamos si tiene foto
-			byte[] foto = player.loadFoto();
-			if (foto != null) {// si hay foto, la mandamos a la sesion
-				sendBinary(session, foto);
-			}
-			
+		WebSocketSession entry = sessionsByPlayer.get(userName);
+		if (entry != null) {
+			// session.close no vale?
+			CloseStatus status = new CloseStatus(4000);// codigo de cierre reservado para las aplicaciones
+			// https://developer.mozilla.org/es/docs/Web/API/CloseEvent
+			afterConnectionClosed(session, status);
+			cerrarConexion(session);
 		} else {
-session.close();
+			sessionsByPlayer.put(userName, session);
 		}
+
+		/**
+		 * } else { session.close(); }
+		 **/
 	}
 
-	private void sendBinary(WebSocketSession session, byte[] foto) throws IOException {
-		String imagen = Base64.encode(foto); // tenemos la imagen en base 64
-		// ahora se la mandamos al cliente. le mandamos un json con el campo type
-		// correspondiente.
-		JSONObject jso = new JSONObject();
-		try {
-			jso.put("TYPE", "FOTO");
-			jso.put("foto", imagen);
-			WebSocketMessage<?> message = new TextMessage(jso.toString());
-			session.sendMessage(message);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/** OnMessage **/
+	/** OnMessage para recibir cadenas de texto **/
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		JSONObject jso = new JSONObject(message.getPayload());
@@ -113,18 +88,115 @@ session.close();
 		if (jso.getString("TYPE").equals("JUGAR")) {
 			joinGame(session, jso);
 		}
+		if (jso.getString("TYPE").equals("FOTO")) {
+			// comprobamos si tiene foto
+			Player player = (Player) session.getAttributes().get("player");
+			byte[] foto = player.loadFoto();
+			if (foto != null) {// si hay foto, la mandamos a la sesion
+				sendBinary(session, foto);
+			}
+		}
+
 	}
 
-	private static void changePass(WebSocketSession session, JSONObject jso) throws JSONException, IOException {
+	/** OnMessage para recibir ristras binarias **/
+	@Override
+	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
 		Player player = (Player) session.getAttributes().get("player");
-		if (player.changePass(jso)) {
-			JSONObject obj = new JSONObject();
-			obj.put("TYPE", "PASS");
-			WebSocketMessage<?> message = new TextMessage(obj.toString());
-			session.sendMessage(message);
+		byte[] bytes = message.getPayload().array();
+		try {
+			MongoBroker.get().insertBinary("Fotos", player.getUserName(), bytes);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
+	/** OnClose **/
+	@Override
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+
+		// ELIMINAMOS PRIMERO LA SESION DE LA HASHMAP DE SESIONES POR ID
+		sessionsById.remove(session.getId());
+
+		// AHORA, ELIMINAMOS LA SESION DE LA HASHMAP DE SESIONES POR USUARIO
+		if (status.getCode() != 4000) {
+			Player player = (Player) session.getAttributes().get("player");
+			String userName = player.getUserName();
+			for (Iterator<Map.Entry<String, WebSocketSession>> it2 = sessionsByPlayer.entrySet().iterator(); it2
+					.hasNext();) {
+				Map.Entry<String, WebSocketSession> entry2 = it2.next();
+				if (entry2.getKey().equals(userName)) {
+					if (entry2.getValue().equals(session)) {
+						it2.remove();
+					}
+				}
+			}
+		} // Meter que si esta en partida, darla por perdida y llamar a losmetodos
+			// correspondientes para perder pts y tal.
+	}
+
+	/**********************************************************/
+	/** Metodos que se comunican con la parte del cliente **/
+	/********************************************************/
+
+	// Metodo que comunica a la parte del cliente datos en formato binario
+	private void sendBinary(WebSocketSession session, byte[] foto) throws IOException {
+		String imagen = Base64.encode(foto);
+		JSONObject jso = new JSONObject();
+		try {
+			jso.put("TYPE", "FOTO");
+			jso.put("foto", imagen);
+			WebSocketMessage<?> message = new TextMessage(jso.toString());
+			session.sendMessage(message);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Metodo que cierra las conexiones
+	public static void cerrarConexion(WebSocketSession session) throws Exception {
+		JSONObject obj = new JSONObject();
+		obj.put("TYPE", "CERRAR");
+		WebSocketMessage<?> message = new TextMessage(obj.toString());
+		session.sendMessage(message);
+
+	}
+
+	// Metodo que comunica a la parte del cliente un mensaje de chat
+	public static void sendChat(WebSocketSession session, JSONObject jso) throws Exception {
+		JSONObject obj = new JSONObject();
+		obj.put("TYPE", "CHAT");
+		obj.put("remitente", jso.getString("remitente"));
+		obj.put("contenido", jso.getString("contenido"));
+
+		WebSocketMessage<?> message = new TextMessage(obj.toString());
+
+		for (Entry<String, WebSocketSession> entry : sessionsByPlayer.entrySet()) {
+			try {
+				entry.getValue().sendMessage(message);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// Metodo que comunica a la parte del cliente un mensaje de esperar al jugador
+	public static void waitPlayer(Player player) throws JSONException {
+		JSONObject obj = new JSONObject();
+
+		obj.put("TYPE", "WAIT");
+		obj.put("mensaje", "Esperando oponente");
+
+		WebSocketMessage<?> message = new TextMessage(obj.toString());
+		WebSocketSession session = sessionsByPlayer.get(player.getUserName());
+		try {
+			session.sendMessage(message);
+		} catch (IOException e) {
+			e.printStackTrace();// Controlar esto.
+		}
+	}
+
+	// Metodo que cambia la contraseña de un usuario no logueado
 	private static void changePassToken(WebSocketSession session, JSONObject jso) throws JSONException, IOException {
 		JSONObject obj = new JSONObject();
 		try {
@@ -139,96 +211,56 @@ session.close();
 		session.sendMessage(message);
 	}
 
-	@Override
-	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
+	// Metodo que cambia la contraseña de un usuario logueado
+	private static void changePass(WebSocketSession session, JSONObject jso) throws JSONException, IOException {
 		Player player = (Player) session.getAttributes().get("player");
-		byte[] bytes = message.getPayload().array();
-		try {
-			MongoBroker.get().insertBinary("Fotos", player.getUserName(), bytes);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}// Fotos es el nombre de la coleccion.
-
-	/** OnClose **/
-	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		//Meter que si esta en partida, darla por perdida y llamar a losmetodos correspondientes para perder pts y tal.
-		String a="";
-		for (Iterator<Map.Entry<String, WebSocketSession>> it = sessionsById.entrySet().iterator(); it.hasNext();) {
-			Map.Entry<String, WebSocketSession> entry = it.next();
-			if (entry.getValue().equals(session.getId())) {
-				it.remove();
-			}
-		}
-
-		Player player = (Player) session.getAttributes().get("player");
-		String userName = player.getUserName();
-
-		for (Iterator<Map.Entry<String, WebSocketSession>> it2 = sessionsByPlayer.entrySet().iterator(); it2
-				.hasNext();) {
-			Map.Entry<String, WebSocketSession> entry2 = it2.next();
-			if (entry2.getKey().equals(userName)) {
-				it2.remove();
-			}
-
-		}
-		System.out.println("Cierre de sesion");
-		// Debemos tambien sacarlos de la lista de cosas.
-	}
-
-	/*******************************************************/
-	/** Metodos que son llamados desde la parte de Override **/
-	/*******************************************************/
-
-	public static void sendChat(WebSocketSession session, JSONObject jso) throws Exception {
 		JSONObject obj = new JSONObject();
-
-		obj.put("TYPE", "CHAT");
-		obj.put("remitente", jso.getString("remitente"));
-		obj.put("contenido", jso.getString("contenido"));
-
-		WebSocketMessage<?> message = new TextMessage(obj.toString());
-		for (Entry<String, WebSocketSession> entry : sessionsByPlayer.entrySet()) {
+		if (player.changePass(jso)) {
 			try {
-				entry.getValue().sendMessage(message);
+				obj.put("TYPE", "PASS");
 			} catch (Exception e) {
-				e.printStackTrace();
+				obj.put("TYPE", "ERROR");
+				obj.put("TEXTO", e.getMessage());
 			}
+			WebSocketMessage<?> message = new TextMessage(obj.toString());
+			session.sendMessage(message);
 		}
-
 	}
 
-	public static void joinGame(WebSocketSession session, JSONObject jso) throws JSONException {
+	// Metodo que se comunica con el cliente para dar comienzo la partida
+	public static void inicioPartida(Vector<Player> players, Match match) throws JSONException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		Player player1 = players.get(0);
+		Player player2 = players.get(1);
+		JSONObject obj = new JSONObject();
+		obj = new JSONObject(mapper.writeValueAsString(match));//
+		obj.put("TYPE", "PARTIDA");
+		obj.put("Player1", player1.getUserName());
+		obj.put("Player2", player2.getUserName());
+		for (Player player : players) {
+			WebSocketSession session = sessionsByPlayer.get(player.getUserName());
+			WebSocketMessage<?> message = new TextMessage(obj.toString());
+			session.sendMessage(message);
+		}
+	}
+
+	/**********************************************************/
+	/** Metodos que se comunican con la parte del dominio **/
+	/********************************************************/
+
+	// Metodo que crea un objeto de tipo Match para crear la partida
+	public static void joinGame(WebSocketSession session, JSONObject jso) throws JSONException, IOException {
 		String gameName = jso.getString("juego");
 		Player player = (Player) session.getAttributes().get("player");
 		Match match = Manager.get().joinGame(player, gameName);
-		//Match match = Manager.get().joinGame(player, gameName.substring(0, gameName.length() - 1));
-		//WSServer.send(match.getPlayers(), match);
-		//return match;
 	}
-	public static void waitPlayer(Player player) throws JSONException {
-		JSONObject obj = new JSONObject();
 
-		obj.put("TYPE", "WAIT");
-		obj.put("mensaje", "Esperando oponente");
-
-		WebSocketMessage<?> message = new TextMessage(obj.toString());
-		WebSocketSession session = sessionsByPlayer.get(player.getUserName());
-		try {
-			session.sendMessage(message);
-		} catch (IOException e) {
-			e.printStackTrace();//Controlar esto.
-		}
-		
-	}
+	// Metodo que tendrá que ser borrado en algun momento.
 	public static void send(Vector<Player> players, Match match) {
 		ObjectMapper mapper = new ObjectMapper();
 		JSONObject jso;
 		try {
 			// jso=mapper.writeValueAsString(match);//convierte partida a cadena en formato
-			// json.
 			jso = new JSONObject(mapper.writeValueAsString(match));
 			jso.put("TYPE", "MATCH");
 			for (Player player : players) {
@@ -240,4 +272,5 @@ session.close();
 			e.printStackTrace();
 		}
 	}
+
 }
