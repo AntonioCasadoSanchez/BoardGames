@@ -117,7 +117,7 @@ function controlSeguridad() {
 			}else{
 				alert("problema con la peticion http");
 			}
-		}
+		}//CANSINA!
 	};
 	req.send();
 };
