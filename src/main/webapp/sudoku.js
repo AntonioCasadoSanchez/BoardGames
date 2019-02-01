@@ -155,7 +155,17 @@ function KeyUp(x){
 		ComprobarLinea(valor, id, idI);
 		ComprobarColumna(valor, id, idJ);
 		ComprobarCuadrado(valor, id, idI, idJ);
+		if(valor!=""){
 		EnviarDato(idI,idJ);
+		}//COMPROBAR ESTE ULTIMO IF--> TELEGRAM MIS COSAS. incluso se podria poner el if justo debajo del ese (linea 155)???
+		//Creo que esto no lo manda, solo no pone X. habria que quitar la X si el valor es "", por tanto habria uqe llamar
+		//a la funcion de enviar dato y añadir un modulo donde, si el valor es "", en vez de funcion: marcar sea
+		//funcion : desmarcar y en WS añadir modulo en texthandlemessage con desmarcar y llamar al metodo manejador Sudoku
+		//que compruebe que esa funcion es desmarcar y mande mensaje con TYPE: DESMARCAR en vez de marcar. Por ultimo, en el cliente
+		//Añadir funcion en @OnMessage para que, si el valor es "" en las coordenadas se ponga "" en vez de X
+		//Seguir pensando si el if puesto ahora mismo (linea 158) podria ir de la 155 a la 157 porque ahi si que podria ser util
+		//Todo esto quizas se puede hacer mas sencillo si enviamos con la opcion MARCAR el dato que ponemos, y en los mismo metodos controlar
+		//que si es "", se ponga "" en vez de X.
 	}
 }
 function ComprobarLinea(valor, id, idI){
