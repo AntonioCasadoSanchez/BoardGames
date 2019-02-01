@@ -62,12 +62,22 @@
 .bordeTabla td{
 	border-bottom: 3px solid black;
 }
+.bordeTablao td{
+	border-bottom: 2px solid black;
+}
 .celdaBorde{
 	border-left: 3px solid black;
+}
+.celdaBordeo{
+	border-left: 2px solid black;
 }
 .casilla{
 	width: 46px;
 	height: 46px;
+	color: #5b5b5b;
+	text-align: center;
+	font-size: 24px;
+	font-family: arial;
 }
 
 .opcionesUser{
@@ -95,6 +105,7 @@
 .casillao{
 	width:20px;
 	height: 20px;
+	text-align: center;
 }
 #rivalName{
 	width: 100%;

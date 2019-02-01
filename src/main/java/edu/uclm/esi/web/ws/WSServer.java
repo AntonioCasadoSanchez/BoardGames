@@ -43,11 +43,6 @@ public class WSServer extends TextWebSocketHandler {
 	private static ConcurrentHashMap<String, WebSocketSession> sessionsById = new ConcurrentHashMap<>();
 	private static ConcurrentHashMap<String, WebSocketSession> sessionsByPlayer = new ConcurrentHashMap<>();
 
-	// Porque cierra sesion(parece) cada vez que abro otra
-	// Porque no hace bien controlseguridad.
-	// ver error que da la consola de eclipse.
-	// en mozilla se funciona diferente control de seguridad. quizas la response va
-	// de otra forma???
 	/** OnOpen **/
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -66,10 +61,6 @@ public class WSServer extends TextWebSocketHandler {
 		} else {
 			sessionsByPlayer.put(userName, session);
 		}
-
-		/**
-		 * } else { session.close(); }
-		 **/
 	}
 
 	/** OnMessage para recibir cadenas de texto **/
@@ -90,11 +81,10 @@ public class WSServer extends TextWebSocketHandler {
 		if (jso.getString("TYPE").equals("JUGAR")) {
 			joinGame(session, jso);
 		}
-		if (jso.getString("TYPE").equals("FOTO")) {
-			// comprobamos si tiene foto
+		if (jso.getString("TYPE").equals("AVATAR")) {
 			Player player = (Player) session.getAttributes().get("player");
 			byte[] foto = player.loadFoto();
-			if (foto != null) {// si hay foto, la mandamos a la sesion
+			if (foto != null) {
 				sendBinary(session, foto);
 			}
 		}
@@ -262,7 +252,13 @@ public class WSServer extends TextWebSocketHandler {
 			obj.put("tablero", SudokuBoard.cargarTableroInicial());
 			WebSocketMessage<?> message = new TextMessage(obj.toString());
 			session.sendMessage(message);
-		}	
+		}
+		if(jso.getString("funcion").equals("marcar")) {
+			JSONObject obj = new JSONObject();
+			obj.put("TYPE", "MARCAR");
+			
+			
+		}
 	}
 	
 	// Metodo que crea un objeto de tipo Match para crear la partida

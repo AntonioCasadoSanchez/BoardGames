@@ -42,7 +42,11 @@ public class Manager {
 	 * @throws IOException *****************************/
 	
 	public Match joinGame(Player player, String gameName) throws JSONException, IOException {
+		//Crea un objeto game de tipo Game y hace que sea igual a uno de los que tiene en la lista
+		//lista llamada games. Hace un get de esa lista --> get(sudoku) o get(ppt) y le da el Game
+		//ppt o sudoku del constructor de esta clase.
 		Game game=this.games.get(gameName);
+		//Como devuelve un match, devuelve uno llamando al metodo getMatch.
 		return game.getMatch(player);
 	}
 

@@ -93,7 +93,10 @@ function mostrarInfoUsuario() {
 	pedirFoto();
 }
 function pedirFoto(){
-	
+	var mensaje = {
+			TYPE : "AVATAR",		
+		}
+		ws.send(JSON.stringify(mensaje));
 }
 function loadPage(url) {
 	window.location.assign(url);
