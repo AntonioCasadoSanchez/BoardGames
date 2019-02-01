@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -254,10 +255,19 @@ public class WSServer extends TextWebSocketHandler {
 			session.sendMessage(message);
 		}
 		if(jso.getString("funcion").equals("marcar")) {
+			UUID id = UUID.fromString(jso.getString("matchID"));
+			Player p = (Player) session.getAttributes().get("player");
+			Player player = Manager.get().marcar(id, p);
+			String userName = player.getUserName();
+			String coordI = jso.getString("coordI");
+			String coordJ = jso.getString("coordJ");
 			JSONObject obj = new JSONObject();
 			obj.put("TYPE", "MARCAR");
-			
-			
+			obj.put("coordI", coordI);
+			obj.put("coordJ", coordJ);
+			WebSocketMessage<?> message = new TextMessage(obj.toString());
+			WebSocketSession sesion = sessionsByPlayer.get(userName);
+			sesion.sendMessage(message);
 		}
 	}
 	

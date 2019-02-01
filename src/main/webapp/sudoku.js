@@ -1,5 +1,6 @@
 var cont = 0;
-var oponente="";
+var idPartida;
+var oponente;
 function inicio() {
 	controlSeguridad();
 };
@@ -43,6 +44,8 @@ function abrirWS() {
 		} else if (data.TYPE == "TABLEROINICIAL") {
 			cargarTableroInicial(data.tablero);
 			cargarTableroOponente(data.tablero);
+		} else if (data.TYPE == "MARCAR"){
+			marcar(data.coordI, data.coordJ);
 		}
 	}
 	ws.onclose = function() {
@@ -60,7 +63,7 @@ function joinGame() {
 function empezarPartida(data) {
 	alert("La partida entre " + data.Player1 + " y " + data.Player2
 			+ " va a comenzar");
-	registraroOponente(data.Player1 + data.Player2);
+	idPartida= data.id;
 	timerOn();
 	setInterval('timerOn()', 2000);
 	var mensaje = {
@@ -208,13 +211,22 @@ function ComprobarColumna(valor, id, idJ){
 function ComprobarCuadrado(valor, id, idI, idJ){
 	
 }
-function EnviarDato{
+function EnviarDato(idI, idJ){
 	var mensaje = {
 			TYPE : "SUDOKU",
 			funcion : "marcar",
 			coordI : idI,
-			coordJ : idJ				
+			coordJ : idJ,
+			matchID : idPartida
 		}
 		ws.send(JSON.stringify(mensaje));
+}
+function marcar(coordI, coordJ){
+	var valor = "";
+	var i, j, cont = 0;
+	var id = "co";
+	var res= id.concat(coordI).concat(coordJ);
+	var casilla = document.getElementById(res);
+	casilla.value="X";
 }
 

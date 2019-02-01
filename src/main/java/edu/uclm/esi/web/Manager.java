@@ -3,6 +3,7 @@ package edu.uclm.esi.web;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.UUID;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +41,10 @@ public class Manager {
 	/**
 	 * @throws JSONException 
 	 * @throws IOException *****************************/
+	public Player marcar(UUID id, Player player) {
+		Game game=this.games.get("sudoku");
+		return game.marcar(id, player);
+	}
 	
 	public Match joinGame(Player player, String gameName) throws JSONException, IOException {
 		//Crea un objeto game de tipo Game y hace que sea igual a uno de los que tiene en la lista

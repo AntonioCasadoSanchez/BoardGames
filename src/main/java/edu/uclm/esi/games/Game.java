@@ -3,12 +3,16 @@ package edu.uclm.esi.games;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.web.socket.WebSocketSession;
 
 import edu.uclm.esi.web.ws.WSServer;
 
@@ -49,4 +53,12 @@ public abstract class Game {
 
 	protected abstract Match createMatch();
 
+	public Player marcar(UUID id, Player player) {
+		Match match= inPlayMatches.get(id);
+		Vector<Player> vector = match.getPlayers();
+		if(vector.get(0) == player) {
+			return vector.get(1);
+		}
+		return vector.get(0);
+	}
 }
