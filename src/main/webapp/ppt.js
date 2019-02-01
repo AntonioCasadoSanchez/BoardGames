@@ -54,6 +54,27 @@ function joinGame() {
 	ws.send(JSON.stringify(mensaje));
 }
 function empezarPartida(data) {
-	alert("La partida entre " + data.Player1 + " y " + data.Player2
-			+ " va a comenzar");
+	var player1 = document.getElementById("cej1");
+	var player2 = document.getElementById("cej2");
+	player1.value = data.Player1;
+	player2.value = data.Player2;
+	if (player1.value != "" && player2.value != "") {
+		timerOn();
+	}
+}
+var totalTiempo=20;
+
+function timerOn() {
+	var contador = document.getElementById("timer");
+	 if(totalTiempo==0)
+     {
+		 document.getElementById('timer').innerHTML = "Se acabó el tiempo"; 
+		 
+     }else{
+         /* Restamos un segundo al tiempo restante */
+    	 contador.innerHTML = totalTiempo;
+         totalTiempo-=1;
+         /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
+         setTimeout("timerOn()",1000);
+     }
 }
