@@ -40,6 +40,9 @@ function abrirWS() {
 		}else if (data.TYPE=="CERRAR"){
 			  ws.onclose();
 		  }
+		else if (data.TYPE == "WAIT_SIGUIENTE_TIRADA") {
+			empezarPartida(data);
+			}
 	}
 	ws.onclose = function() {
 		alert("Conexion cerrada por el servidor");
@@ -62,14 +65,16 @@ function empezarPartida(data) {
 		timerOn();
 	}
 }
-var totalTiempo=20;
+var totalTiempo=5;
 
 function timerOn() {
 	var contador = document.getElementById("timer");
+	 var btnSiguiente;
 	 if(totalTiempo==0)
      {
 		 document.getElementById('timer').innerHTML = "Se acabó el tiempo"; 
-		 
+		 btnSiguiente = document.getElementById("btnSiguienteRonda");
+		 btnSiguiente.style.display = 'inline';
      }else{
          /* Restamos un segundo al tiempo restante */
     	 contador.innerHTML = totalTiempo;
@@ -77,4 +82,7 @@ function timerOn() {
          /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
          setTimeout("timerOn()",1000);
      }
+}
+function siguienteTirada() {
+alert("hola");
 }

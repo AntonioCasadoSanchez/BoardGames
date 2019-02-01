@@ -59,28 +59,7 @@ function loadGames() {
 		}
 	});
 }
-/*********BORRAR???????****************/
-/*********BORRAR???????****************/
-function joinGame(b) {
-	alert(b);
-	loadPage
 
-	alert(b);
-	var gameName;
-	if (b == "boton_ppt") {
-		gameName = "tictactoe";
-	} else if (b == "boton_destape") {
-		gameName = "Destape";
-	} else {
-		alert("error");
-	}
-
-	$.post("joinGame", gameName, function(respuesta, estado) {
-		if (estado == "success") {
-			alert("hola");
-		}
-	});
-}
 /*********BORRAR???????****************/
 function closeSession() {
 	alert("Has cerrado sesion");

@@ -192,6 +192,23 @@ public class WSServer extends TextWebSocketHandler {
 			e.printStackTrace();// Controlar esto.
 		}
 	}
+	// Metodo que comunica a la parte del cliente un mensaje de esperar al jugador para la siguiente ronda de PPT
+		public static void waitSiguienteTirada(Player player) throws JSONException {
+			JSONObject obj = new JSONObject();
+
+			obj.put("TYPE", "WAIT_SIGUIENTE_TIRADA");
+			obj.put("mensaje", "Esperando oponente para la siguiente tirada");
+
+			WebSocketMessage<?> message = new TextMessage(obj.toString());
+			WebSocketSession session = sessionsByPlayer.get(player.getUserName());
+			try {
+				session.sendMessage(message);
+			} catch (IOException e) {
+				e.printStackTrace();// Controlar esto.
+			}
+		}
+		
+		
 
 	// Metodo que cambia la contraseña de un usuario no logueado
 	private static void changePassToken(WebSocketSession session, JSONObject jso) throws JSONException, IOException {
