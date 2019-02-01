@@ -63,8 +63,8 @@
           <div class="JuegosContent">
             <h2>Elige un juego:</h2>
               <div>
-				<a href="ppt.html"><img id="boton_ppt" src="/imagenes/ppt.jpg" height="200" width="300"/></a>
-				<a href="sudoku.html"><img id="boton_destape" src="/imagenes/destape.jpg" height="200" width="300"/></a>
+				<a href="#openModal"><img id="boton_ppt" src="/imagenes/ppt.jpg" height="200" width="300"/></a>
+				<a href="#openModal2"><img id="boton_destape" src="/imagenes/destape.jpg" height="200" width="300"/></a>
 			</div>
           </div>
         </div>
@@ -73,9 +73,18 @@
 			<div>
 				<a href="#close" title="Close" class="close">X</a>
 				<p class="comicate">PEPE GAMES</p>
-				<p>¿Quieres empezar una partida?</p>
-				<button type="submit" name="Aceptar">Aceptar</button>
-				<button type="reset" onclick= "cancelarCloseJuego()">Cancelar</button>
+				<p>¿Quieres empezar una partida a Piedra, papel y Tijera?</p>
+				<button type="submit" name="Aceptar" onclick= "aceptarJuego()">Aceptar</button>
+				<button type="reset" onclick= "cancelarClose()">Cancelar</button>
+			</div>
+		</div>
+		<div id="openModal2" class="modalDialog">
+			<div>
+				<a href="#close" title="Close" class="close">X</a>
+				<p class="comicate">PEPE GAMES</p>
+				<p>¿Quieres empezar una partida al Sudoku?</p>
+				<button type="submit" name="Aceptar" onclick= "aceptarJuego2()">Aceptar</button>
+				<button type="reset" onclick= "cancelarClose()">Cancelar</button>
 			</div>
 		</div>
 		
@@ -85,7 +94,7 @@
 				<p class="comicate">PEPE GAMES</p>
 				<p>¿Quieres cerrar la Sesión?</p>
 				<button type="submit" name="Si"onclick="closeSession()">Si</button>
-				<button type="reset" name="No" onclick= "cancelarCloseSession()">No</button>
+				<button type="reset" name="No" onclick= "cancelarClose()">No</button>
 			</div>
 		</div>
 
@@ -98,10 +107,13 @@
 
 <script>
 
-  function cancelarCloseSession () {
-	  $("#closeSession").hide();
+  function cancelarClose () {
+	  window.location.href = '#close';
   }
-  function cancelarCloseJuego () {
-	  $("#openModal").hide();
+  function aceptarJuego() {
+	  window.location.href = 'ppt.html';
+  }
+function aceptarJuego2() {
+	window.location.href = 'sudoku.html';
   }
 </script>
