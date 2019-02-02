@@ -15,7 +15,7 @@ public class InvalidMatch  extends Match {
 	}
 
 	@Override
-	protected void save() throws Exception {
+	public void save() throws Exception {
 		// TODO Auto-generated method stub
 		
 	}

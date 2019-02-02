@@ -11,8 +11,6 @@ public class LanzadoraP {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LanzadoraP.class, args);
-//Oliva
-		//mangeles
 	}
 
 }

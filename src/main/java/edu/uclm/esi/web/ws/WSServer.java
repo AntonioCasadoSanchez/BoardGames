@@ -243,11 +243,20 @@ public class WSServer extends TextWebSocketHandler {
 
 	// Metodo que se comunica con el cliente para dar comienzo la partida
 	public static void inicioPartida(Vector<Player> players, Match match) throws JSONException, IOException {
-		ObjectMapper mapper = new ObjectMapper();
+		//ObjectMapper mapper = new ObjectMapper();
+		
 		Player player1 = players.get(0);
 		Player player2 = players.get(1);
 		JSONObject obj = new JSONObject();
-		obj = new JSONObject(mapper.writeValueAsString(match));//
+		
+		Player winner = match.getWinner();
+		UUID id = match.getId();
+		Board board = match.getBoard();
+		
+		obj.put("winner", winner);
+		obj.put("id", id);
+		obj.put("board", board);
+		//obj = new JSONObject(mapper.writeValueAsString(match));//
 		obj.put("TYPE", "PARTIDA");
 		obj.put("Player1", player1.getUserName());
 		obj.put("Player2", player2.getUserName());
@@ -260,10 +269,11 @@ public class WSServer extends TextWebSocketHandler {
 
 	/**********************************************************/
 	/*** Metodos que se comunican con la parte del dominio ***/
-	/********************************************************/
+	/**
+	 * @throws Exception ******************************************************/
 	
 	//Metodo que maneja la comunicacion del juego del Sudoku
-	private void manejadorSudoku(WebSocketSession session, JSONObject jso) throws JSONException, IOException {
+	private void manejadorSudoku(WebSocketSession session, JSONObject jso) throws Exception {
 		if(jso.getString("funcion").equals("cargar")) {
 			JSONObject obj = new JSONObject();
 			obj.put("TYPE", "TABLEROINICIAL");
@@ -273,9 +283,9 @@ public class WSServer extends TextWebSocketHandler {
 		}
 		if(jso.getString("funcion").equals("marcar")) {
 			UUID id = UUID.fromString(jso.getString("matchID"));
-			Player p = (Player) session.getAttributes().get("player");
-			Player player = Manager.get().marcar(id, p);
-			String userName = player.getUserName();
+			Player jugador = (Player) session.getAttributes().get("player");
+			Player oponente = Manager.get().devolverOponente(id, jugador);
+			String userName = oponente.getUserName();
 			String coordI = jso.getString("coordI");
 			String coordJ = jso.getString("coordJ");
 			JSONObject obj = new JSONObject();
@@ -285,6 +295,37 @@ public class WSServer extends TextWebSocketHandler {
 			WebSocketMessage<?> message = new TextMessage(obj.toString());
 			WebSocketSession sesion = sessionsByPlayer.get(userName);
 			sesion.sendMessage(message);
+		}
+		if(jso.getString("funcion").equals("limpiar")) {
+			UUID id = UUID.fromString(jso.getString("matchID"));
+			Player jugador = (Player) session.getAttributes().get("player");
+			Player oponente = Manager.get().devolverOponente(id, jugador);
+			String userName = oponente.getUserName();
+			JSONObject obj = new JSONObject();
+			obj.put("TYPE", "LIMPIAR");
+			WebSocketMessage<?> message = new TextMessage(obj.toString());
+			WebSocketSession sesion = sessionsByPlayer.get(userName);
+			sesion.sendMessage(message);
+		}
+		if(jso.getString("funcion").equals("resolver")) {
+			String solucion = SudokuBoard.cargarTableroSolucion();
+			String candidato = jso.getString("tablero");
+			UUID id = UUID.fromString(jso.getString("matchID"));
+			Player jugador = (Player) session.getAttributes().get("player");
+			String userName = jugador.getUserName();
+			if(solucion.equals(candidato)) {
+				//Partida acabada, session.getplayer es el ganador.
+				Match match = Manager.get().devolverPartido(id);
+				match.setWinner(jugador);
+				match.save();
+				match.getBoard().end(jugador, id);
+			}else {
+				JSONObject obj = new JSONObject();
+				obj.put("TYPE", "RESOLVERFALLIDO");
+				WebSocketMessage<?> message = new TextMessage(obj.toString());
+				WebSocketSession sesion = sessionsByPlayer.get(userName);
+				sesion.sendMessage(message);
+			}
 		}
 	}
 	
@@ -311,6 +352,28 @@ public class WSServer extends TextWebSocketHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void finSudokuGanador(Player player) throws JSONException, IOException {
+		String userName = player.getUserName();
+		JSONObject obj = new JSONObject();
+		obj.put("TYPE", "WIN");
+		WebSocketMessage<?> message = new TextMessage(obj.toString());
+		WebSocketSession sesion = sessionsByPlayer.get(userName);
+		sesion.sendMessage(message);
+		sessionsByPlayer.remove(userName);
+		
+	}
+
+	public static void finSudokuPerdedor(Player player) throws JSONException, IOException {
+		String userName = player.getUserName();
+		JSONObject obj = new JSONObject();
+		obj.put("TYPE", "LOSE");
+		WebSocketMessage<?> message = new TextMessage(obj.toString());
+		WebSocketSession sesion = sessionsByPlayer.get(userName);
+		sesion.sendMessage(message);
+		sessionsByPlayer.remove(userName);
+		
 	}
 
 }

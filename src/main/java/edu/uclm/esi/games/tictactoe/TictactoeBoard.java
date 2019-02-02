@@ -1,5 +1,7 @@
 package edu.uclm.esi.games.tictactoe;
 
+import java.util.UUID;
+
 import edu.uclm.esi.games.Board;
 import edu.uclm.esi.games.Player;
 
@@ -72,5 +74,11 @@ public class TictactoeBoard extends Board {
 	public boolean end() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void end(Player player, UUID id) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 }

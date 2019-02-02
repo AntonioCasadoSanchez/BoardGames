@@ -36,25 +36,28 @@ public abstract class Match {
 	public Player getWinner() {
 		return winner;
 	}
+	public void setWinner(Player player) {
+		this.winner=player;
+	}
 	
 	public int getCurrentPlayer() {
 		return currentPlayer;
 	}
 
-	public Match move(Player player, int[] coordinates) throws Exception {
+	/**public Match move(Player player, int[] coordinates) throws Exception {
 		if (!tieneElTurno(player))
 			throw new Exception("You are not the current player");
 		if (this.board.end())
 			throw new Exception("The match is finished");
 		this.board.move(player, coordinates);
 		this.currentPlayer=(this.currentPlayer+1)%this.players.size();//Revisar
-		this.winner=this.board.getWinner();
+		//this.winner=this.board.getWinner();
 		if(this.board.end())
 			save();
 		return this;
-	}
+	}**/
 
-	protected abstract void save() throws Exception;
+	public abstract void save() throws Exception;
 		//MongoBroker, toma un objeto y lo guarda en la BD vamos a crear una clase enfrentamiento y vamos a almacenar esos objetos en la BD
 	public abstract void calculateFirstPlayer();
 	public abstract boolean tieneElTurno(Player player);

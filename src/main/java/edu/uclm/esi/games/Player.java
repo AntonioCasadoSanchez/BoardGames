@@ -86,9 +86,9 @@ public class Player {
 		return player;
 	}
 
-	public Match move(int[] coordinates) throws Exception {
+	/**public Match move(int[] coordinates) throws Exception {
 		return this.currentMatch.move(this, coordinates);
-	}
+	}**/
 
 	public static Player identifyGoogle(String idGoogle, String nombre, String email) throws Exception {
 		BsonDocument criterion = new BsonDocument();

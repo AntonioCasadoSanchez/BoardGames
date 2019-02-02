@@ -42,7 +42,6 @@ public abstract class Game {
 			if (match.getPlayers().size()==this.numberOfPlayers) {
 				match=this.pendingMatches.remove(0);
 				inPlayMatches.put(match.getId(), match);
-				match.calculateFirstPlayer();
 				WSServer.inicioPartida(match.getPlayers(), match);
 				//WSServer.send(match.getPlayers(), match);
 				
@@ -53,12 +52,29 @@ public abstract class Game {
 
 	protected abstract Match createMatch();
 
-	public Player marcar(UUID id, Player player) {
+	public Player devolverOponente(UUID id, Player player) {
 		Match match= inPlayMatches.get(id);
 		Vector<Player> vector = match.getPlayers();
 		if(vector.get(0) == player) {
 			return vector.get(1);
 		}
 		return vector.get(0);
+	}
+
+	public Match devolverPartido(UUID id) {
+		Match match = inPlayMatches.get(id);
+		return match;
+		
+	}
+
+	public void end(Player player, UUID id) throws JSONException, IOException {
+		Match match=inPlayMatches.remove(id);
+		if(match.getPlayers().get(0).getUserName().equals(player.getUserName())){
+			WSServer.finSudokuGanador(match.getPlayers().get(0));
+			WSServer.finSudokuPerdedor(match.getPlayers().get(1));
+		}else {
+			WSServer.finSudokuPerdedor(match.getPlayers().get(0));
+			WSServer.finSudokuGanador(match.getPlayers().get(1));
+		}
 	}
 }

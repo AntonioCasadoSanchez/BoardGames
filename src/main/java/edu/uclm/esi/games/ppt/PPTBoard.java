@@ -1,5 +1,7 @@
 package edu.uclm.esi.games.ppt;
 
+import java.util.UUID;
+
 import edu.uclm.esi.games.Board;
 import edu.uclm.esi.games.Match;
 import edu.uclm.esi.games.Player;
@@ -40,7 +42,6 @@ public class PPTBoard extends Board {
 
 	}
 
-	@Override
 	public Player getWinner() {
 			for (int i = 0; i < tiradas0.length; i++) 
 				if (tiradas0[i] == -1 || tiradas1[i] == -1) 
@@ -82,8 +83,6 @@ public class PPTBoard extends Board {
 	public int[] getTiradas1() {
 		return tiradas1;
 	}
-
-	@Override
 	public boolean end() {
 		if(this.getWinner()!=null)
 			return true;
@@ -91,6 +90,12 @@ public class PPTBoard extends Board {
 			if(tiradas0[i]== -1 || tiradas1[i]==1)
 				return false;
 		return true;
+	}
+
+	@Override
+	public void end(Player player, UUID id) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -13,8 +13,8 @@ import edu.uclm.esi.games.Player;
 @RestController
 public class MatchControllerGet {
 	
-	@RequestMapping(value="/move", method=RequestMethod.GET)
-	public Match move(HttpSession session, @RequestParam(value="coordinate") int[] coordinates) throws Exception {
+	/**@RequestMapping(value="/move", method=RequestMethod.GET)
+	/**public Match move(HttpSession session, @RequestParam(value="coordinate") int[] coordinates) throws Exception {
 		Player player=(Player) session.getAttribute("player");
 		try {
 			if (player==null)
@@ -25,5 +25,5 @@ public class MatchControllerGet {
 			return error;
 		}
 		
-	}
+	}**/
 }

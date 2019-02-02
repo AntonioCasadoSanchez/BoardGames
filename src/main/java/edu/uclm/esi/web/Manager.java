@@ -41,9 +41,17 @@ public class Manager {
 	/**
 	 * @throws JSONException 
 	 * @throws IOException *****************************/
-	public Player marcar(UUID id, Player player) {
+	public Player devolverOponente(UUID id, Player player) {
 		Game game=this.games.get("sudoku");
-		return game.marcar(id, player);
+		return game.devolverOponente(id, player);
+	}
+	public Match devolverPartido(UUID id) {
+		Game game=this.games.get("sudoku");
+		return game.devolverPartido(id);
+	}
+	public void end(Player player, UUID id) throws JSONException, IOException {
+		Game game=this.games.get("sudoku");
+		game.end(player, id);
 	}
 	
 	public Match joinGame(Player player, String gameName) throws JSONException, IOException {
@@ -63,13 +71,13 @@ public class Manager {
 		return jsa;
 	}
 
-	public Match move(Player player, JSONArray coordinates) throws Exception {
+	/**public Match move(Player player, JSONArray coordinates) throws Exception {
 		// TODO Auto-generated method stub
 		int[] iC = new int[coordinates.length()];
 		for(int i=0; i<iC.length; i++) {
 			iC[i]=coordinates.getInt(i);
 		}
 		return player.move(iC);
-	}
+	}**/
 
 }

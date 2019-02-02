@@ -23,7 +23,7 @@ public class TictactoeMatch extends Match {
 	}
 
 	@Override
-	protected void save() {
+	public void save() {
 		// TODO Auto-generated method stub
 		
 	}
