@@ -43,6 +43,7 @@ import edu.uclm.esi.web.Manager;
 public class WSServer extends TextWebSocketHandler {
 	private static ConcurrentHashMap<String, WebSocketSession> sessionsById = new ConcurrentHashMap<>();
 	private static ConcurrentHashMap<String, WebSocketSession> sessionsByPlayer = new ConcurrentHashMap<>();
+	private int par = 2;
 
 	/** OnOpen **/
 	@Override
@@ -92,9 +93,11 @@ public class WSServer extends TextWebSocketHandler {
 		if (jso.getString("TYPE").equals("SUDOKU")) {
 			manejadorSudoku(session, jso);
 		}
+		if (jso.getString("TYPE").equals("PPT")) {
+			manejadorPPT(session, jso);
+		}
 
 	}
-
 
 	/** OnMessage para recibir ristras binarias **/
 	@Override
@@ -192,24 +195,7 @@ public class WSServer extends TextWebSocketHandler {
 			e.printStackTrace();// Controlar esto.
 		}
 	}
-	// Metodo que comunica a la parte del cliente un mensaje de esperar al jugador para la siguiente ronda de PPT
-		public static void waitSiguienteTirada(Player player) throws JSONException {
-			JSONObject obj = new JSONObject();
-
-			obj.put("TYPE", "WAIT_SIGUIENTE_TIRADA");
-			obj.put("mensaje", "Esperando oponente para la siguiente tirada");
-
-			WebSocketMessage<?> message = new TextMessage(obj.toString());
-			WebSocketSession session = sessionsByPlayer.get(player.getUserName());
-			try {
-				session.sendMessage(message);
-			} catch (IOException e) {
-				e.printStackTrace();// Controlar esto.
-			}
-		}
-		
-		
-
+	
 	// Metodo que cambia la contraseña de un usuario no logueado
 	private static void changePassToken(WebSocketSession session, JSONObject jso) throws JSONException, IOException {
 		JSONObject obj = new JSONObject();
@@ -261,6 +247,7 @@ public class WSServer extends TextWebSocketHandler {
 		obj.put("Player1", player1.getUserName());
 		obj.put("Player2", player2.getUserName());
 		for (Player player : players) {
+			obj.put("Tu", player.getUserName());//MIRAR SI ESTO DA CONFLICTO EN SUDOKU.
 			WebSocketSession session = sessionsByPlayer.get(player.getUserName());
 			WebSocketMessage<?> message = new TextMessage(obj.toString());
 			session.sendMessage(message);
@@ -328,7 +315,26 @@ public class WSServer extends TextWebSocketHandler {
 			}
 		}
 	}
-	
+	//Metodo que maneja la comunicacion del juego del Sudoku
+	private void manejadorPPT(WebSocketSession session, JSONObject jso) throws Exception {
+		if(jso.getString("funcion").equals("tirada")) {
+			UUID id = UUID.fromString(jso.getString("matchID"));
+			int opcion = jso.getInt("opcion");
+			Player jugador = (Player) session.getAttributes().get("player");
+			Match match = Manager.get().move(jugador, opcion);
+		} else if (jso.getString("funcion").equals("FinPartida")) {
+			//Quitar este if si cojo el match con el id que le paso en el jso
+			//Despues busco el match en Game.InPlayMatches. y si está, hago la solucion del juego
+			//Si no, no hago nada. Cuando implemente esto, se puede quitar el if-else.
+		    if (par%2==0) {
+		    	Player jugador = (Player) session.getAttributes().get("player");
+		    	Manager.get().fin(jugador);
+		    	par++;
+		    }else {
+		    	par++;
+		    }
+		}
+	}
 	// Metodo que crea un objeto de tipo Match para crear la partida
 	public static void joinGame(WebSocketSession session, JSONObject jso) throws JSONException, IOException {
 		String gameName = jso.getString("juego");
@@ -375,5 +381,102 @@ public class WSServer extends TextWebSocketHandler {
 		sessionsByPlayer.remove(userName);
 		
 	}
+	
+	public static void esperarTirada(Player player) throws JSONException, IOException {
+		// TODO Auto-generated method stub
+		String userName = player.getUserName();
+		JSONObject obj = new JSONObject();
+		obj.put("TYPE", "WAITOPPONENT");
+		WebSocketMessage<?> message = new TextMessage(obj.toString());
+		WebSocketSession sesion = sessionsByPlayer.get(userName);
+		sesion.sendMessage(message);
+	}
+	
+	public static void finJugada(Player ganador, Player perdedor, String opcion0, String opcion1) throws JSONException, IOException {
+		String userNameWin = ganador.getUserName();
+		String userNameLose = perdedor.getUserName();
+		
+		JSONObject obj1 = new JSONObject();
+		obj1.put("TYPE", "RESOLVERJUGADAWIN");
+		obj1.put("win", opcion0);
+		obj1.put("lose", opcion1);
+		
+		JSONObject obj2 = new JSONObject();
+		obj2.put("TYPE", "RESOLVERJUGADALOSE");
+		obj2.put("win", opcion0);
+		obj2.put("lose", opcion1);
+		
+		WebSocketMessage<?> message1 = new TextMessage(obj1.toString());
+		WebSocketMessage<?> message2 = new TextMessage(obj2.toString());
+		
+		WebSocketSession sesion1 = sessionsByPlayer.get(userNameWin);
+		WebSocketSession sesion2 = sessionsByPlayer.get(userNameLose);
+		
+		sesion1.sendMessage(message1); 
+		sesion2.sendMessage(message2);
+		
+	}
 
+	public static void finJugada(Player j0, Player j1, String opcion) throws JSONException, IOException {
+		JSONObject obj = new JSONObject();
+		obj.put("TYPE", "RESOLVERJUGADATIE");
+		obj.put("opcion", opcion);
+		WebSocketMessage<?> message = new TextMessage(obj.toString());
+		WebSocketSession sesion1 = sessionsByPlayer.get(j0.getUserName());
+		WebSocketSession sesion2 = sessionsByPlayer.get(j1.getUserName());
+		sesion1.sendMessage(message); 
+		sesion2.sendMessage(message);
+	}
+
+	public static void finPPT(String estado, Player player, Player player2, UUID id) throws Exception {
+		if(estado.equals("Win")) {
+			String UserNamewin = player.getUserName();
+			String UserNamelose = player2.getUserName();
+			
+			JSONObject obj = new JSONObject();
+			obj.put("TYPE", "FINWIN");
+			
+			JSONObject obj2 = new JSONObject();
+			obj2.put("TYPE", "FINLOSE");
+			
+			WebSocketMessage<?> message = new TextMessage(obj.toString());
+			WebSocketMessage<?> message2 = new TextMessage(obj2.toString());
+			
+			WebSocketSession sesion1 = sessionsByPlayer.get(UserNamewin);
+			WebSocketSession sesion2 = sessionsByPlayer.get(UserNamelose);
+			
+			sesion1.sendMessage(message); 
+			sesion2.sendMessage(message2);
+			
+			Match match = Manager.get().devolverPartido(id);
+			match.setWinner(player);
+			match.save();
+			match.getBoard().end(player, id);
+
+			sessionsByPlayer.remove(UserNamewin);
+			sessionsByPlayer.remove(UserNamelose);
+			
+		}else {
+			String User1 = player.getUserName();
+			String User2 = player2.getUserName();
+			
+			JSONObject obj = new JSONObject();
+			obj.put("TYPE", "FINTIE");
+			
+			WebSocketMessage<?> message = new TextMessage(obj.toString());
+			
+			WebSocketSession sesion1 = sessionsByPlayer.get(User1);
+			WebSocketSession sesion2 = sessionsByPlayer.get(User2);
+			
+			sesion1.sendMessage(message); 
+			sesion2.sendMessage(message);
+			
+			Match match = Manager.get().devolverPartido(id);
+			match.save();
+			match.getBoard().end(player, id);
+
+			sessionsByPlayer.remove(User1);
+			sessionsByPlayer.remove(User2);
+		}	
+	}
 }

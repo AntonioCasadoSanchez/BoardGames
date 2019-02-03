@@ -12,7 +12,9 @@ public abstract class Board {
 		this.match=match;
 	}
 
-	public abstract void move(Player player, int[] coordinates) throws Exception;
+	public abstract void move(Player player, int n) throws Exception;
 	public abstract void end(Player player, UUID id) throws Exception;
 	public abstract boolean end() throws Exception;
+
+	public abstract void fin() throws Exception;
 }

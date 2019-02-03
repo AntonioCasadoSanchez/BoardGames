@@ -49,9 +49,9 @@ public class Manager {
 		Game game=this.games.get("sudoku");
 		return game.devolverPartido(id);
 	}
-	public void end(Player player, UUID id) throws JSONException, IOException {
-		Game game=this.games.get("sudoku");
-		game.end(player, id);
+	public void end(String juego, Player player, UUID id) throws JSONException, IOException {
+		Game game=this.games.get(juego);
+		game.end(juego, player, id);
 	}
 	
 	public Match joinGame(Player player, String gameName) throws JSONException, IOException {
@@ -70,14 +70,12 @@ public class Manager {
 			jsa.put(eGames.nextElement().getName());
 		return jsa;
 	}
-
-	/**public Match move(Player player, JSONArray coordinates) throws Exception {
+	public void fin(Player player) throws Exception {
+		player.fin();		
+	}
+	public Match move(Player player, int n) throws Exception {
 		// TODO Auto-generated method stub
-		int[] iC = new int[coordinates.length()];
-		for(int i=0; i<iC.length; i++) {
-			iC[i]=coordinates.getInt(i);
-		}
-		return player.move(iC);
-	}**/
+		return player.move(n);
+	}
 
 }

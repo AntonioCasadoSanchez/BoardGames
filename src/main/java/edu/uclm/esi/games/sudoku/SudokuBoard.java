@@ -20,14 +20,7 @@ public class SudokuBoard extends Board {
 	}
 
 	@Override
-	public void move(Player player, int[] coordinates) throws Exception {
-		int pos;
-		if (this.match.getPlayers().get(0) == player) { // si es la misma referencia que player hago una cosa sino la
-														// otra.
-			//pos = rellenar(tiradas0, coordinates[0]);
-		} else {
-			//pos = rellenar(tiradas1, coordinates[0]);
-		}
+	public void move(Player player, int coordinates) throws Exception {
 	}
 	public static String cargarTableroSolucion() {
 		return BoardSolucion;
@@ -38,13 +31,19 @@ public class SudokuBoard extends Board {
 
 	@Override
 	public void end(Player player, UUID id) throws JSONException, IOException {
-		Manager.get().end(player,id);
+		Manager.get().end("sudoku", player,id);
 	}
 
 	@Override
 	public boolean end() throws Exception {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void fin() throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

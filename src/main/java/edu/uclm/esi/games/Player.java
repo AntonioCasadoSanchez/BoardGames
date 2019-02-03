@@ -86,9 +86,9 @@ public class Player {
 		return player;
 	}
 
-	/**public Match move(int[] coordinates) throws Exception {
-		return this.currentMatch.move(this, coordinates);
-	}**/
+	public Match move(int n) throws Exception {
+		return this.currentMatch.move(this, n);
+	}
 
 	public static Player identifyGoogle(String idGoogle, String nombre, String email) throws Exception {
 		BsonDocument criterion = new BsonDocument();
@@ -186,5 +186,9 @@ public class Player {
 			MongoBroker.get().insert(playera);
 			resultado = true;
 		return resultado;
+	}
+
+	public void fin() throws Exception {
+		this.currentMatch.fin();
 	}
 }

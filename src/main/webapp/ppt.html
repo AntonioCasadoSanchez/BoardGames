@@ -2,17 +2,21 @@
 <html>
 <head>
     <title>PPTgame</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, inital-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
-    <link href="http: //fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-
+    
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<script src="ppt.js"></script>
+	    
+	<link href="https://fonts.googleapis.com/css?family=Raleway:200i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
     <link rel="stylesheet" href="estilos/main.css">
-    <script src="ppt.js"></script>
+
 </head>
 
-<body onload="inicio()">
+
+<body class="body" onload="inicio()">
     <div class="tablero_ppt">
         <div class="content-text">
             <p class="comicate">pepegames</p>
@@ -62,26 +66,27 @@
         <br>
         <div class="seleccion">
             <div class="btnPpt">
-                 <img src="/imagenes/interrogante.png" height="150" width="150"/>
+                 <img src="/imagenes/interrogante.png" id="jugadaUser" height="150" width="150"/>
             </div>
             <div class="btnPpt">
-                 <img src="/imagenes/interrogante.png" height="150" width="150"/>
+                 <img src="/imagenes/interrogante.png" id="jugadaOponente" height="150" width="150"/>
             </div>
             
         </div>
         <br>
         <div class="opcionesPpt">
             <div class="btnPpt">
-                 <button id="boton_ppt"><img src="/imagenes/piedra.JPG" height="150" width="140"/></button>
+                 <button class="boton_ppt" id="piedra" disabled="true" onclick="tirar(0)"><img src="/imagenes/piedra.JPG" height="150" width="140"/></button>
             </div>
             <div class="btnPpt">
-                 <button id="boton_ppt"><img src="/imagenes/papel.JPG" height="150" width="140"/></button>
+                 <button class="boton_ppt" id="papel" disabled="true" onclick="tirar(1)"><img src="/imagenes/papel.JPG" height="150" width="140"/></button>
             </div>
             <div class="btnPpt">
-                 <button id="boton_ppt"><img src="/imagenes/tijera.JPG" height="150" width="140"/></button>
+                 <button class="boton_ppt" id="tijera" disabled="true" onclick="tirar(2)"><img src="/imagenes/tijera.JPG" height="150" width="140"/></button>
             </div>
 
         </div>
+        	<div class="estado"><p id="estado">Partida Iniciada</p></div>
          <div class="content-text">
             <button  id="btnSiguienteRonda" onclick="siguienteTirada()"style='display:none;'>Siguiente Ronda</button>
         </div>

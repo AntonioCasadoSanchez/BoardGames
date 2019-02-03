@@ -18,13 +18,7 @@ public class TictactoeBoard extends Board {
 	}
 
 	@Override
-	public void move(Player player, int[] coordinates) throws Exception {
-		char symbol=player==this.match.getPlayers().get(0) ? 'X' : 'O';
-		int row=coordinates[0];
-		int col=coordinates[1];
-		if (squares[row][col]!=null)
-			throw new Exception("Square occupied");
-		squares[row][col]=symbol;
+	public void move(Player player, int coordinates) throws Exception {
 	}
 
 	public Player getWinner() {
@@ -78,6 +72,12 @@ public class TictactoeBoard extends Board {
 
 	@Override
 	public void end(Player player, UUID id) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fin() throws Exception {
 		// TODO Auto-generated method stub
 		
 	}
