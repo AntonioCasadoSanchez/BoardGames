@@ -37,7 +37,8 @@ function abrirWS() {
 		var data = message.data;
 		data = JSON.parse(data);
 		if (data.TYPE == "WAIT") {
-			alert(data.mensaje);
+			var mensaje = document.getElementById("mensaje");
+			mensaje.innerHTML =data.mensaje;
 		} else if (data.TYPE == "PARTIDA") {
 			empezarPartida(data);
 		} else if (data.TYPE == "CERRAR") {
@@ -72,8 +73,19 @@ function joinGame() {
 	ws.send(JSON.stringify(mensaje));
 }
 function empezarPartida(data) {
-	alert("La partida entre " + data.Player1 + " y " + data.Player2
-			+ " va a comenzar");
+	//alert("La partida entre " + data.Player1 + " y " + data.Player2 + " va a comenzar");
+	var mensaje = document.getElementById("mensaje");
+	mensaje.innerHTML = "";
+	NombreUsuario = data.Tu;
+	var player1 = document.getElementById("yourName");
+	var player2 = document.getElementById("rivalName");
+	if(NombreUsuario == data.Player1){
+		player1.innerHTML = data.Player1;
+		player2.innerHTML = data.Player2;
+	}else{
+		player1.innerHTML = data.Player2;
+		player2.innerHTML = data.Player1;
+	}
 	idPartida = data.id;
 	timerOn();
 	setInterval('timerOn()', 2000);
