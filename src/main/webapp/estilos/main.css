@@ -1,164 +1,236 @@
 @import url(http: //fonts.googleapis.com/css?family=Open+Sans);
+
 @import url(fonts.css);
+
 @import url(salaEspera.css);
+
 @import url(cambiarOpciones.css);
+
 @import url(sudoku.css);
+
 @import url(ppt.css);
 
 body {
-  margin: 0;
-  /*font-family: 'Open Sans'sans-serif;*/
-  font-family: 'Raleway', sans-serif;
-  background: gray;
+	margin: 0;
+	/*font-family: 'Open Sans'sans-serif;*/
+	font-family: 'Raleway', sans-serif;
+	background: gray;
 }
 
 a {
-  color: aqua;
-  text-decoration: none;
+	color: aqua;
+	text-decoration: none;
 }
 
 a:hover {
-  color: aqua;
+	color: aqua;
 }
 
-
 .content {
-  width: 50%;
-  position: relative;
-  margin: auto;
-  margin-top: 60px;
-  border: 1px solid white;
-  background: rgb(50, 55, 60);
-  color: white;
+	width: 50%;
+	position: relative;
+	margin: auto;
+	margin-top: 60px;
+	border: 1px solid white;
+	background: rgb(50, 55, 60);
+	color: white;
 }
 
 .content-text {
-  width: 100%;
-  margin-top: 0px;
+	width: 100%;
+	margin-top: 0px;
 }
 
 .comicate {
-  font-family: 'Conv_COMICATE', Sans-Serif;
-  text-align: center;
-  font-size: 35px;
-  margin-top: 30px;
-  margin-bottom: 5px;
+	font-family: 'Conv_COMICATE', Sans-Serif;
+	text-align: center;
+	font-size: 35px;
+	margin-top: 30px;
+	margin-bottom: 5px;
 }
 
 .content-form {
-  width: 85%;
-  margin: auto;
-  margin-top: 0px;
-  border: 1px solid gray;
+	width: 85%;
+	margin: auto;
+	margin-top: 0px;
+	border: 1px solid gray;
 }
 
 .ini-ses {
-  width: 100%;
-  margin: auto;
-  text-align: center;
-  font-size: 20px;
+	width: 100%;
+	margin: auto;
+	text-align: center;
+	font-size: 20px;
 }
 
 .formu-ini {
-  width: 100%;
-  margin: auto;
+	width: 100%;
+	margin: auto;
 }
 
 .input-form {
-  width: 90%;
-  margin: auto;
-  margin-bottom: 5px;
-  display: flex;
-  flex-wrap: wrap;
+	width: 90%;
+	margin: auto;
+	margin-bottom: 5px;
+	display: flex;
+	flex-wrap: wrap;
 }
+
 .input-form p {
-  width: 30%;
-  text-align: right;
+	width: 30%;
+	text-align: right;
 }
-.input-form input{
-  width: 65%;
-  margin-left: 5%;
-  margin-top: 2%;
-  height: 30px;
+
+.input-form input {
+	width: 65%;
+	margin-left: 5%;
+	margin-top: 2%;
+	height: 30px;
 }
 
 .inside-content {
-  width: 100%;
-  margin: auto;
-  display: flex;
-  flex-wrap: wrap;
-}
-#inside-content2{
-  width: 80%;
-  margin: 30px 10% 0 10%;
-}
-.googlecontent{
-  width: auto;
-  margin-left: 36.5%;
-}
-.g-signin2{
-   height: 25px;
-}
-.botoncontent{
-  width: auto;
-  margin-left: 11%;
+	width: 100%;
+	margin: auto;
+	display: flex;
+	flex-wrap: wrap;
 }
 
-.cuenta, .contrase{
-  width: 100%;
-  margin: auto;
-  display: flex;
-  flex-wrap: wrap;
+#inside-content2 {
+	width: 80%;
+	margin: 30px 10% 0 10%;
 }
 
-.cuenta p, .contrase p{
-  width: 35%;
-  text-align: right;
+.googlecontent {
+	width: auto;
+	margin-left: 36.5%;
+}
+
+.g-signin2 {
+	height: 25px;
+}
+
+.botoncontent {
+	width: auto;
+	margin-left: 11%;
+	margin-top: 2%;
+}
+
+.cuenta, .contrase {
+	width: 100%;
+	margin: auto;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.cuenta p, .contrase p {
+	width: 35%;
+	text-align: right;
 }
 
 .estado {
-  color: red;
+	color: red;
 }
 
-
-.btnInicio, .enlaceboton{
-    height: 25px;
-    width: 120px;
-    margin-top: 0;
-      margin-left: 10%;
-    font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: normal;
-    line-height: normal;
-    font-weight: bold;
-    line-height: 25px;
-    text-align: center;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 1px;
+.btnInicio, .enlaceboton {
+	height: 25px;
+	width: 120px;
+	margin-top: 0;
+	margin-left: 10%;
+	font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: normal;
+	line-height: normal;
+	font-weight: bold;
+	line-height: 25px;
+	text-align: center;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 1px;
 }
 
 .btnInicio:hover, .enlaceboton:hover {
-
-    background: #444;
-    background: -webkit-gradient(linear, left top, left bottom, from(#444), to(#656565));
-    background: -moz-linear-gradient(top, #444, #656565);
-
-}
-.btnInicio, .enlaceboton, .enlaceboton:hover, .btnInicio:hover, .enlaceboton:visited, .btnInicio:visited {
-
-    color: #fff;
-    border-bottom: 4px solid #414141;
-    text-shadow: 0px 1px 0px #2f2f2f;
-    background: #656565;
-    background: -webkit-gradient(linear, left top, left bottom, from(#656565), to(#444));
-    background: -moz-linear-gradient(top, #656565, #444);
-    box-shadow: inset 1px 1px 0 #939393;
-    background: -moz-linear-gradient(top, #e2e2e2, #eee);
+	background: #444;
+	background: -webkit-gradient(linear, left top, left bottom, from(#444),
+		to(#656565));
+	background: -moz-linear-gradient(top, #444, #656565);
 }
 
-.enlaceboton{
-  width: 150px;
-  margin-top: 12px;
+.btnInicio, .enlaceboton, .enlaceboton:hover, .btnInicio:hover,
+	.enlaceboton:visited, .btnInicio:visited {
+	color: #fff;
+	border-bottom: 4px solid #414141;
+	text-shadow: 0px 1px 0px #2f2f2f;
+	background: #656565;
+	background: -webkit-gradient(linear, left top, left bottom, from(#656565),
+		to(#444));
+	background: -moz-linear-gradient(top, #656565, #444);
+	box-shadow: inset 1px 1px 0 #939393;
+	background: -moz-linear-gradient(top, #e2e2e2, #eee);
 }
 
+.enlaceboton {
+	width: 150px;
+	margin-top: 12px;
+}
 
+@media ( max-width :1150px) {
+	.content {
+		width:70%;
+	}
+	.inside-content{
+	margin-top:4%;
+	}
+	.googlecontent {
+		width: auto;
+		padding: 10px;
+		margin-left: 20%;
+	}
+	.botoncontent {
+		width: auto;
+		margin: auto;
+		padding: 10px;
+	}
+	.btnInicio {
+		width: 120px;
+		margin-top: 4%;
+		margin-left: 0px;
+	}
+}
+
+@media ( max-width :850px) {
+	.content {
+		width:80%;
+	}
+	.input-form {
+		display: block;
+	}
+	.input-form p {
+		width: 100%;
+		text-align: left;
+		margin-left: 5%;
+	}
+	.input-form input {
+		width: 80%;
+	}
+	.inside-content {
+		display: block;
+	}
+	.googlecontent {
+		width: auto;
+		margin-left: 11%;
+	}
+	.botoncontent {
+		width: auto;
+		margin-left: 11%;
+		margin-top: 1%;
+	}
+	.cuenta p, a{
+	width: 100%;
+		text-align: left;
+		margin-left: 5%;
+	}
+		.contrase p, a{
+	width: 100%;
+		text-align: left;
+		margin-left: 5%;
+	}
+}

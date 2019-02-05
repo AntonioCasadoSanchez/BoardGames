@@ -25,6 +25,7 @@
     flex-wrap: wrap;
     text-align:center;
     background: rgb(34, 38, 41);
+    max-height: 102px;
     color: fff;
     font-family: 'Raleway', sans-serif;
 }
@@ -54,7 +55,12 @@
   width: 64%;
   border: 1px solid gray;
 }
-
+.JuegosContent {
+	padding:10px;
+}
+.JuegosContent a{
+ margin-left: 5%;
+}
 .chatContent{
   width: 97%;
   margin: auto;
@@ -85,4 +91,66 @@
 .btn-primary{
   width: 100%;
   height: 30px;
+}
+
+@media ( max-width:1100px) {
+
+#boton_ppt {
+	width:250px;
+	height:190px;
+}
+#boton_destape {
+	width:250px;
+	height:190px;
+}
+}
+@media ( max-width:950px) {
+
+#boton_ppt {
+	width:200px;
+	height:160px;
+}
+#boton_destape {
+	width:200px;
+	height:160px;
+}
+}
+@media ( max-width:750px) {
+	.parrafoHeader{
+	width: 50%;
+	margin:0px;
+	font-size:15px;
+	text-align: lefht;
+	
+	}
+	.content-salaEspera{
+  display: block;
+}
+.salaChat{
+  width: 90%;
+}
+.chatContent{
+	width:80%;
+}
+.salaJuegos{
+  width: 90%;
+ }
+
+#boton_ppt {
+	 display: block;
+  margin-left: auto;
+  margin-right: auto;
+	width:280px;
+	height:180px;
+
+	padding-bottom:10px;
+}
+#boton_destape {
+	width:280px;
+	height:180px;
+	 display: block;
+  margin-left: auto;
+  margin-right: auto;
+	
+}
 }
