@@ -28,10 +28,11 @@ public class Test_Pruebas {
 	  @Test
 	  public void testPruebas() throws Exception {
 		  login ();
-		  testSudoku();
+		  testPPT();
+		 // testSudoku();
 	  }
 	  
-	  public void login () {
+	  public void login ()  {
 		  driverA.get("http://localhost:8080/index.html");
 		  driverB.get("http://localhost:8080/");
 		  driverA.findElement(By.id("UserName")).click();
@@ -48,6 +49,37 @@ public class Test_Pruebas {
 		  driverB.findElement(By.id("Pwd")).clear();
 		  driverB.findElement(By.id("Pwd")).sendKeys("jose123");
 		  driverB.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Acceder'])[1]/following::button[1]")).click();
+	  }
+	  public void testPPT() throws InterruptedException  {
+		  
+		driverA.get("http://localhost:8080/salaEspera.html");
+		Thread.sleep(1000);
+		driverA.findElement(By.id("boton_ppt")).click();
+		driverA.findElement(By.name("Aceptar")).click();
+		driverB.get("http://localhost:8080/salaEspera.html");
+		Thread.sleep(1000);
+		driverB.findElement(By.id("boton_ppt")).click();
+		driverB.findElement(By.name("Aceptar")).click();
+		driverA.findElement(
+				By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Jugada 3'])[1]/following::img[3]"))
+				.click();
+		driverB.findElement(
+				By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Jugada 3'])[1]/following::img[4]"))
+				.click();
+		driverA.findElement(
+				By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Jugada 3'])[1]/following::img[4]"))
+				.click();
+		driverB.findElement(
+				By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Jugada 3'])[1]/following::img[5]"))
+				.click();
+		driverA.findElement(
+				By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Jugada 3'])[1]/following::img[5]"))
+				.click();
+		driverB.findElement(
+				By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Jugada 3'])[1]/following::img[3]"))
+				.click();
+
+		//assertEquals(closeAlertAndGetItsText(), "Has perdido la partida, lo sentimos");
 	  }
 	  public void testSudoku () {
 		  driverA.get("http://localhost:8080/salaEspera.html#close");

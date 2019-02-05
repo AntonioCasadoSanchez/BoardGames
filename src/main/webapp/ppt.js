@@ -37,7 +37,8 @@ function abrirWS() {
 		var data = message.data;
 		data = JSON.parse(data);
 		if (data.TYPE == "WAIT") {
-			alert(data.mensaje);
+			var mensaje = document.getElementById("frase");
+			mensaje.innerHTML =data.mensaje;
 		} else if (data.TYPE == "PARTIDA") {
 			empezarPartida(data);
 		} else if (data.TYPE == "CERRAR") {
@@ -75,8 +76,8 @@ function joinGame() {
 	ws.send(JSON.stringify(mensaje));
 }
 function empezarPartida(data) {
-	alert("La partida entre " + data.Player1 + " y " + data.Player2
-			+ " va a comenzar");
+	var mensaje = document.getElementById("frase");
+	mensaje.innerHTML = "";
 	NombreUsuario = data.Tu;
 	var player1 = document.getElementById("cej1");
 	var player2 = document.getElementById("cej2");
@@ -91,6 +92,7 @@ function empezarPartida(data) {
 	idPartida = data.id;
 	
 	document.getElementById("piedra").disabled = false;
+	document.getElementById("piedra").style.color = "grey";
 	document.getElementById("papel").disabled = false;
 	document.getElementById("tijera").disabled = false;
 
